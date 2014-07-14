@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="metadata">
+    <f:metadata>
+      <f:viewParam name="search" value="#{drugList.searchTerm}"></f:viewParam>
+    </f:metadata>
+  </ui:define>
+  <ui:define name="title">Drug List</ui:define>
+  <ui:define name="content">
+    <h:form>
+      <h:inputText value="#{drugList.searchTerm}"></h:inputText>
+      <h:commandButton action="#{drugList.search}" value="search" />
+    </h:form>
+    <h:dataTable value="#{drugList.drugs}" var="cur"
+      styleClass="data-table" headerClass="data-cell header-cell"
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"
+      rendered="#{not empty drugList.drugs}">
+      <h:column>
+        <f:facet name="header">PZN</f:facet>
+        #{cur.pzn}
+      </h:column>
+      <h:column>
+        <f:facet name="header">Name</f:facet>
+        #{cur.name}
+      </h:column>
+      
+      <h:column>
+        <f:facet name="header">Price</f:facet>
+        #{cur.price}
+      </h:column>
+      
+      <h:column>
+        <f:facet name="header">Stock</f:facet>
+        #{cur.stock}
+      </h:column>
+      <h:column>
+        <h:link outcome="/drug/details.xhtml" value="Details">
+          <f:param name="pzn" value="#{cur.pzn}"></f:param>
+        </h:link>
+      </h:column>
+    </h:dataTable>
+  </ui:define>
+</ui:composition>
+</html>

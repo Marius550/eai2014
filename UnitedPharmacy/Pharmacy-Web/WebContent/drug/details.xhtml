@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="metadata">
+    <f:metadata>
+      <f:viewParam name="pzn" value="#{drugPage.pzn}"></f:viewParam>
+      <f:event listener="#{drugPage.ensureInitialized}" type="preRenderView"></f:event>
+    </f:metadata>
+  </ui:define>
+  <ui:define name="title">Drug Details - #{drugPage.drug.name}</ui:define>
+  <ui:define name="content">
+    <h:form>
+      <h3>#{drugPage.drug.name} (PZN: #{drugPage.drug.pzn})</h3>
+      <h:panelGrid columns="2" columnClasses="label, value form-input"
+        footerClass="form-footer" styleClass="details-table">
+        PZN
+        <h:outputText value="#{drugPage.drug.pzn}" />
+        Name
+        <h:inputText tabindex="1" id="name" value="#{drugPage.drug.name}" />
+        Price
+        <h:inputText tabindex="2" id="price" value="#{drugPage.drug.price}" />
+        Description
+        <h:inputTextarea tabindex="3" id="description" value="#{drugPage.drug.description}" />
+        <f:facet name="footer">
+          <h:commandButton tabindex="4" value="Submit changes" action="#{drugPage.submitMasterDataChanges}" />
+        </f:facet>
+      </h:panelGrid>
+      <h:messages for="name" styleClass="error" />
+    </h:form>
+
+		<h:panelGrid columns="6" border="1">
+			<h:panelGroup></h:panelGroup>
+			<h:panelGroup><strong>Stock</strong></h:panelGroup>
+			<h:panelGroup><strong>Pending Positions</strong></h:panelGroup>
+			<h:panelGroup><strong>Unfulfilled Items</strong></h:panelGroup>
+			<h:panelGroup><strong>Minimum Inventory Level</strong></h:panelGroup>
+			<h:panelGroup><strong>Optimal Inventoy Level</strong></h:panelGroup>
+
+			<h:panelGroup>JaVa</h:panelGroup>
+			<h:panelGroup>#{drugPage.jDrug.stock}</h:panelGroup>
+			<h:panelGroup>#{drugPage.jDrug.pendingQuantity}</h:panelGroup>
+			<h:panelGroup>#{drugPage.jDrug.unfulfilledQuantity}</h:panelGroup>
+			<h:panelGroup>#{drugPage.jDrug.minimumInventoryLevel}</h:panelGroup>
+			<h:panelGroup>#{drugPage.jDrug.optimalInventoryLevel}</h:panelGroup>
+
+			<h:panelGroup>C. Sharpe</h:panelGroup>
+			<h:panelGroup>#{drugPage.cDrug.stock}</h:panelGroup>
+			<h:panelGroup>#{drugPage.cDrug.pendingQuantity}</h:panelGroup>
+			<h:panelGroup>#{drugPage.cDrug.unfulfilledQuantity}</h:panelGroup>
+			<h:panelGroup>#{drugPage.cDrug.minimumInventoryLevel}</h:panelGroup>
+			<h:panelGroup>#{drugPage.cDrug.optimalInventoryLevel}</h:panelGroup>
+			
+			<h:panelGroup><strong>Total</strong></h:panelGroup>
+			<h:panelGroup><strong>#{drugPage.cDrug.stock + drugPage.jDrug.stock}</strong></h:panelGroup>
+			<h:panelGroup><strong>#{drugPage.cDrug.pendingQuantity + drugPage.jDrug.pendingQuantity}</strong></h:panelGroup>
+			<h:panelGroup><strong>#{drugPage.cDrug.unfulfilledQuantity + drugPage.jDrug.unfulfilledQuantity}</strong></h:panelGroup>
+			<h:panelGroup></h:panelGroup>
+			<h:panelGroup></h:panelGroup>
+		</h:panelGrid>
+
+	</ui:define>
+</ui:composition>
+</html>

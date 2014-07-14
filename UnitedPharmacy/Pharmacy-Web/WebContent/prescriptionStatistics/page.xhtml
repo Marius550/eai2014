@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="title">Prescription Statistics</ui:define>
+  <ui:define name="content">
+    <h:form>
+      <h3>Drug statistics</h3>
+    	<h:panelGrid columns="2">
+	         <h:outputLabel value="Date from"></h:outputLabel>
+	          <h:inputText value="#{prescriptionStatisticsPage.dateFrom}" id="dateFrom">
+            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
+          </h:inputText>
+          <h:outputLabel value="Date to"></h:outputLabel>
+           <h:inputText value="#{prescriptionStatisticsPage.dateTo}" id="dateTo">
+            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
+          </h:inputText>
+          </h:panelGrid>
+			<h:commandButton value="Request statistics">
+				<f:ajax listener="#{prescriptionStatisticsPage.requestStatistics}"
+					render="totalNumberOfPrescriptionsInJava averageNumberOfItemsInJava averageTimespanOfFulfilmentInJava totalNumberOfPrescriptionsInDotNet averageNumberOfItemsInDotNet averageTimespanOfFulfilmentInDotNet" />
+			</h:commandButton>
+			<br></br>
+		<h:panelGrid columns="4" border="1">
+			<h:panelGroup></h:panelGroup>
+			<h:panelGroup><strong>Total Number of Prescriptions</strong></h:panelGroup>
+			<h:panelGroup><strong>Average number of items per prescription</strong></h:panelGroup>
+			<h:panelGroup><strong>Average timespan of fulfilment per prescription</strong></h:panelGroup>
+
+			<h:panelGroup>JaVa</h:panelGroup>
+			<h:panelGroup><h:outputText id="totalNumberOfPrescriptionsInJava" value="#{prescriptionStatisticsPage.totalNumberOfPrescriptionsInJava}" /></h:panelGroup>
+			<h:panelGroup><h:outputText id="averageNumberOfItemsInJava" value="#{prescriptionStatisticsPage.averageNumberOfItemsInJava}" /></h:panelGroup>
+			<h:panelGroup><h:outputText id="averageTimespanOfFulfilmentInJava" value="#{prescriptionStatisticsPage.averageTimespanOfFulfilmentInJava}" /></h:panelGroup>
+
+			<h:panelGroup>C. Sharpe</h:panelGroup>
+			<h:panelGroup><h:outputText id="totalNumberOfPrescriptionsInDotNet" value="#{prescriptionStatisticsPage.totalNumberOfPrescriptionsInDotNet}" /></h:panelGroup>
+			<h:panelGroup><h:outputText id="averageNumberOfItemsInDotNet" value="#{prescriptionStatisticsPage.averageNumberOfItemsInDotNet}" /></h:panelGroup>
+			<h:panelGroup><h:outputText id="averageTimespanOfFulfilmentInDotNet" value="#{prescriptionStatisticsPage.averageTimespanOfFulfilmentInDotNet}" /></h:panelGroup>
+		</h:panelGrid>
+	
+	
+	
+	</h:form>
+	</ui:define>
+</ui:composition>
+</html>

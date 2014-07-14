@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="metadata">
+    <f:metadata>
+      <f:viewParam name="pzn" value="#{drugHistory.pzn}"></f:viewParam>
+      <f:event listener="#{drugHistory.ensureInitialized}" type="preRenderView"></f:event>
+    </f:metadata>
+  </ui:define>
+  <ui:define name="title">Drug Inventory History - #{drugHistory.drug.name}</ui:define>
+  <ui:define name="content">
+    <h:form>
+        <h3>Inventory History - 
+        <h:link outcome="/drug/details.xhtml" value="#{drugHistory.drug.name} (PZN: #{drugHistory.drug.pzn})">
+          <f:param name="pzn" value="#{drugHistory.drug.pzn}" />
+        </h:link></h3>
+        <h:dataTable value="#{drugHistory.drug.events}" var="cur"
+          styleClass="data-table" headerClass="data-cell header-cell"
+          columnClasses="data-cell,data-cell,data-cell"
+          rendered="#{not empty drugHistory.drug.events}">
+          <h:column>
+              <f:facet name="header">Date</f:facet>
+            <h:outputText value="#{cur.dateOfAction}">
+              <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
+            </h:outputText>
+          </h:column>
+          <h:column>
+              <f:facet name="header">Type</f:facet>
+            #{cur.eventType}
+          </h:column>
+          <h:column>
+              <f:facet name="header">Quantity</f:facet>
+            #{cur.quantity}
+          </h:column>
+        </h:dataTable>
+        <h:panelGroup rendered="#{empty drugHistory.drug.events}">No inventory movements were made yet.</h:panelGroup>
+    </h:form>
+  </ui:define>
+</ui:composition>
+</html>

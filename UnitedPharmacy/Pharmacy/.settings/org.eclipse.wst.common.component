@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="PharmacyHO04">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="PharmacyHO04-EJB.jar" deploy-path="/" handle="module:/resource/PharmacyHO04-EJB/PharmacyHO04-EJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="PharmacyHO04-Persistence.jar" deploy-path="/lib" handle="module:/resource/PharmacyHO04-Persistence/PharmacyHO04-Persistence">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="PharmacyHO04-Web.war" deploy-path="/" handle="module:/resource/PharmacyHO04-Web/PharmacyHO04-Web">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

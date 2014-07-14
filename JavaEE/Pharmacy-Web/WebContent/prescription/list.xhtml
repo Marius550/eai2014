@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="metadata">
+    <f:metadata>
+      <f:viewParam name="filter"
+        value="#{prescriptionList.filterForState}"></f:viewParam>
+    </f:metadata>
+  </ui:define>
+  <ui:define name="title">Prescription List</ui:define>
+  <ui:define name="content">
+    Filter: 
+    <h:link outcome="list.xhtml?filter=" value="ALL" />&nbsp;
+    <h:link outcome="list.xhtml?filter=ENTRY" value="ENTRY" />&nbsp;
+    <h:link outcome="list.xhtml?filter=CHECKING" value="CHECKING" />&nbsp;
+    <h:link outcome="list.xhtml?filter=FULFILLING" value="FULFILLING" />&nbsp;
+    <h:link outcome="list.xhtml?filter=FULFILLED" value="FULFILLED" />&nbsp;
+    <h:dataTable value="#{prescriptionList.prescriptions}" var="cur"
+      styleClass="data-table" headerClass="data-cell header-cell"
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
+      rendered="#{not empty prescriptionList.prescriptions}">
+      <h:column>
+        <f:facet name="header">ID</f:facet>
+        #{cur.id}
+      </h:column>
+      <h:column>
+        <f:facet name="header">Customer</f:facet>
+        <h:link outcome="/customer/details.xhtml"
+          value="#{cur.customer.name}">
+          <f:param name="id" value="#{cur.customer.id}" />
+        </h:link>
+      </h:column>
+      <h:column>
+        <f:facet name="header">Issuer</f:facet>
+        #{cur.issuer}
+      </h:column>
+      <h:column>
+        <f:facet name="header">Diagnosis</f:facet>
+        #{cur.diagnosis}
+      </h:column>
+      <h:column>
+        <f:facet name="header">State</f:facet>
+        #{cur.state}
+      </h:column>
+      <h:column>
+        <h:link outcome="details.xhtml" value="Details">
+        <f:param name="id" value="#{cur.id}"></f:param>
+      </h:link>
+    </h:column>
+    </h:dataTable>
+  </ui:define>
+</ui:composition>
+</html>

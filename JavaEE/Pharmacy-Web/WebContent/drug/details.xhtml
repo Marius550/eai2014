@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="metadata">
+    <f:metadata>
+      <f:viewParam name="pzn" value="#{drugPage.pzn}"></f:viewParam>
+      <f:event listener="#{drugPage.ensureInitialized}" type="preRenderView"></f:event>
+    </f:metadata>
+  </ui:define>
+  <ui:define name="title">Drug Details - #{drugPage.drug.name}</ui:define>
+  <ui:define name="content">
+    <h:form>
+      <h3>#{drugPage.drug.name} (PZN: #{drugPage.drug.pzn})</h3>
+      <h:panelGrid columns="2" columnClasses="label, value form-input"
+        footerClass="form-footer" styleClass="details-table">
+        PZN
+        <h:outputText value="#{drugPage.drug.pzn}" />
+        Name
+        <h:outputText tabindex="1" id="name" value="#{drugPage.drug.name}" />
+        Price
+        <h:outputText tabindex="2" id="price" value="#{drugPage.drug.price}" />
+        Description
+        <h:outputText tabindex="3" id="description" value="#{drugPage.drug.description}" />
+        In Stock
+        <h:outputText value="#{drugPage.drug.stock}" />
+      </h:panelGrid>
+      <h:messages for="name" styleClass="error" />
+      <h3>Replenishment configuration</h3>
+      <h:panelGrid columns="2" columnClasses="label, value form-input"
+        footerClass="form-footer" styleClass="details-table">
+        Minimum inventory level
+        <h:inputText tabindex="4" id="minimumInventory" size="5" value="#{drugPage.drug.minimumInventoryLevel}" />
+        Optimal inventory level
+        <h:inputText tabindex="5" id="optimalInventory" size="5" value="#{drugPage.drug.optimalInventoryLevel}" />
+        <f:facet name="footer">
+          <h:commandButton tabindex="6" value="Submit changes" action="#{drugPage.submitReplenishmentConfigChanges}" />
+        </f:facet>
+      </h:panelGrid>
+      <h:messages for="minimumInventory" styleClass="error" />
+      <h:messages for="optimalInventory" styleClass="error" />
+      <h3>Inventory Management</h3>
+      <h:panelGroup rendered="#{drugPage.drug.isInNeedOfReplenishment(drugPage.quantityPending)}" styleClass="success">
+        Needs replenishment of #{drugPage.drug.getSuggestedReplenishmentQuantity(drugPage.quantityPending)} items!
+      </h:panelGroup>
+      <h:panelGrid columns="2" columnClasses="label, value form-input"
+        footerClass="form-footer" styleClass="details-table">
+        Quantity
+        <h:panelGroup >
+          <h:inputText tabindex="7" id="quantity" size="5" value="#{drugPage.quantity}">
+            <f:validateLongRange minimum="0" />
+          </h:inputText>
+          <h:inputText tabindex="8" id="dateOfAction" size="16" value="#{drugPage.dateOfAction}">
+            <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
+          </h:inputText>
+        </h:panelGroup>
+        &nbsp;
+        <h:panelGroup >
+          <h:commandButton tabindex="9" value="Withdraw" action="#{drugPage.withdraw}" />
+          <h:commandButton tabindex="10" value="Restock" action="#{drugPage.restock}" />
+          <h:commandButton tabindex="11" value="Initiate replenishment" action="#{drugPage.initiateReplenishment}" />
+        </h:panelGroup>
+      </h:panelGrid>
+      <h:link outcome="/drug/history.xhtml" value="Inventory History">
+        <f:param name="pzn" value="#{drugPage.drug.pzn}" />
+      </h:link>
+      <h:messages for="quantity" styleClass="error" />
+      <h:messages for="dateOfAction" styleClass="error" />
+      <h:panelGroup rendered="#{not empty drugPage.pendingReplenishmentOrderPositions}">
+        <h3>Pending Replenishment Orders</h3>
+        <h:dataTable value="#{drugPage.pendingReplenishmentOrderPositions}" var="cur"
+          styleClass="data-table" headerClass="data-cell header-cell"
+          columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"
+          footerClass="data-cell footer-cell">
+          <h:column>
+              <f:facet name="header">ID</f:facet>
+            #{cur.order.id}
+          </h:column>
+          <h:column>
+              <f:facet name="header">Status</f:facet>
+            #{cur.order.state}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Expected delivery</f:facet>
+            <h:outputText value="#{cur.order.expectedDelivery}">
+              <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
+            </h:outputText>
+            <f:facet name="footer">
+              Total
+            </f:facet>
+          </h:column>
+          <h:column>
+              <f:facet name="header">Quantity</f:facet>
+            #{cur.quantity}
+              <f:facet name="footer">
+                #{drugPage.quantityPending}
+              </f:facet>
+          </h:column>
+          <h:column>
+            <h:link outcome="/replenishmentOrder/details.xhtml" value="Details">
+              <f:param name="id" value="#{cur.order.id}"></f:param>
+            </h:link>
+          </h:column>
+        </h:dataTable>
+      </h:panelGroup>
+    </h:form>
+  </ui:define>
+</ui:composition>
+</html>

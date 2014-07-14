@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="metadata">
+    <f:metadata>
+      <f:viewParam name="filter"
+        value="#{replenishmentOrderList.filterForState}"></f:viewParam>
+    </f:metadata>
+  </ui:define>
+  <ui:define name="title">Replenishment Order List</ui:define>
+  <ui:define name="content">
+  Filter: 
+  <h:link outcome="list.xhtml?filter=" value="ALL" />&nbsp;
+  <h:link outcome="list.xhtml?filter=OPEN" value="OPEN" />&nbsp;
+  <h:link outcome="list.xhtml?filter=POSTING" value="POSTING" />&nbsp;
+  <h:link outcome="list.xhtml?filter=ORDERED" value="ORDERED" />&nbsp;
+  <h:link outcome="list.xhtml?filter=FINISHED" value="FINISHED" />&nbsp;
+  <h:link outcome="list.xhtml?filter=CANCELLED" value="CANCELLED" />
+    <h:dataTable value="#{replenishmentOrderList.orders}" var="cur"
+      styleClass="data-table" headerClass="data-cell header-cell"
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"
+      rendered="#{not empty replenishmentOrderList.orders}">
+      <h:column>
+        <f:facet name="header">ID</f:facet>
+      #{cur.id}
+    </h:column>
+      <h:column>
+        <f:facet name="header">Status</f:facet>
+      #{cur.state}
+    </h:column>
+    <h:column>
+      <f:facet name="header">Expected delivery</f:facet>
+      <h:outputText value="#{cur.expectedDelivery}">
+        <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
+      </h:outputText>
+    </h:column>
+    <h:column>
+      <f:facet name="header">Actual delivery</f:facet>
+      <h:outputText value="#{cur.actualDelivery}">
+        <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
+      </h:outputText>
+    </h:column>
+    <h:column>
+      <h:link outcome="/replenishmentOrder/details.xhtml" value="Details">
+        <f:param name="id" value="#{cur.id}"></f:param>
+      </h:link>
+    </h:column>
+    </h:dataTable>
+  </ui:define>
+</ui:composition>
+</html>

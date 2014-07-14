@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="metadata">
+    <f:metadata>
+      <f:viewParam name="id" value="#{prescriptionPage.id}"></f:viewParam>
+      <f:event listener="#{prescriptionPage.ensureInitialized}" type="preRenderView"></f:event>
+    </f:metadata>
+  </ui:define>
+  <ui:define name="title">Prescription Details</ui:define>
+  <ui:define name="content">
+    <div class="details">
+      <h2>
+        Prescription for
+        <h:link outcome="/customer/details.xhtml"
+          value="#{prescriptionPage.prescription.customer.name}">
+          <f:param name="id" value="#{prescriptionPage.prescription.customer.id}" />
+        </h:link>
+      </h2>
+      <h:form>
+        <h:panelGrid columns="3" columnClasses="label, value form-input"
+          footerClass="form-footer" styleClass="details-table">
+          State
+          <h:outputText value="#{prescriptionPage.prescription.state}" />
+          <h:outputText />
+          
+          Issuer
+          <h:inputTextarea value="#{prescriptionPage.prescription.issuer}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="issuer" tabindex="1" />
+          <h:outputText value="#{prescriptionPage.prescription.issuer}" rendered="#{prescriptionPage.prescription.state != 'ENTRY'}" />
+          <h:messages for="issuer" styleClass="error"/>
+          
+          Diagnosis
+          <h:inputTextarea value="#{prescriptionPage.prescription.diagnosis}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="diagnosis" tabindex="2" />
+          <h:outputText value="#{prescriptionPage.prescription.diagnosis}" rendered="#{prescriptionPage.prescription.state != 'ENTRY'}" />
+          <h:messages for="diagnosis" styleClass="error"/>
+          
+          Issued on
+          <h:inputText value="#{prescriptionPage.prescription.issueDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="issueDate" tabindex="3">
+            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
+          </h:inputText>
+          <h:outputText value="#{prescriptionPage.prescription.issueDate}" rendered="#{prescriptionPage.prescription.state != 'ENTRY'}">
+            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
+          </h:outputText>
+          <h:messages for="issueDate" styleClass="error"/>
+          
+          Entered on
+          <h:inputText value="#{prescriptionPage.prescription.entryDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="entryDate" tabindex="4">
+            <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
+          </h:inputText>
+          <h:outputText value="#{prescriptionPage.prescription.entryDate}" rendered="#{prescriptionPage.prescription.state != 'ENTRY'}">
+            <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
+          </h:outputText>
+          <h:messages for="entryDate" styleClass="error"/>
+          
+          <h:outputText value="Fulfilment date" rendered="#{prescriptionPage.prescription.state == 'FULFILLING' or prescriptionPage.prescription.state == 'FULFILLED'}" />
+          <h:inputText value="#{prescriptionPage.fulfilmentDate}" rendered="#{prescriptionPage.prescription.state == 'FULFILLING'}" id="fulfilmentDate" tabindex="5"
+            required="true" requiredMessage="Fulfilment date required"
+            disabled="#{not prescriptionPage.proceedable}">
+            <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
+          </h:inputText>
+          <h:outputText value="#{prescriptionPage.prescription.fulfilmentDate}" rendered="#{prescriptionPage.prescription.state != 'FULFILLING'}">
+            <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
+          </h:outputText>
+          <h:messages for="fulfilmentDate" styleClass="error" />
+          
+          <f:facet name="footer">
+            <h:commandButton value="Update prescription"
+              action="#{prescriptionPage.update()}"
+              rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"
+              tabindex="6" />
+            <h:commandButton value="Return to #{prescriptionPage.prescription.state.previous}"
+              action="#{prescriptionPage.returnToPrevious}"
+              rendered="#{prescriptionPage.prescription.state.reversible}"
+              tabindex="7" />
+            <h:commandButton value="Proceed to #{prescriptionPage.prescription.state.next}"
+              action="#{prescriptionPage.proceed}"
+              rendered="#{prescriptionPage.proceedable}"
+              tabindex="8" />
+            <h:commandButton value="Cancel"
+              action="#{prescriptionPage.cancel()}"
+              rendered="#{prescriptionPage.prescription.state.cancellable}"
+              tabindex="9" />
+          </f:facet>
+        </h:panelGrid>
+        
+        
+        <h3>Prescribed drugs</h3>
+        <h:dataTable value="#{prescriptionPage.prescription.items}" var="cur"
+          rendered="#{prescriptionPage.prescription.state == 'ENTRY' or prescriptionPage.prescription.state == 'FULFILLED'}"
+          styleClass="data-table" headerClass="data-cell header-cell" footerClass="data-cell footer-cell"
+          columnClasses="data-cell,data-cell,data-cell,data-cell">
+          <h:column>
+            <f:facet name="header">PZN</f:facet>
+            <h:link outcome="/drug/details.xhtml" value="#{cur.prescribedDrug.pzn}">
+              <f:param name="pzn" value="#{cur.prescribedDrug.pzn}"></f:param>
+            </h:link>
+            <f:facet name="footer">
+              <h:inputText value="#{prescriptionPage.newPzn}"
+                rendered="#{prescriptionPage.prescription.state == 'ENTRY'}">
+                <f:validator validatorId="de.java.PznValidator" />
+                <f:ajax render="drugName addItem"/>
+              </h:inputText>
+            </f:facet>
+          </h:column>
+          <h:column>
+            <f:facet name="header">Name</f:facet>
+            #{cur.prescribedDrug.name}
+            <f:facet name="footer">
+              <h:outputText value="#{prescriptionPage.newItemDrug.name}" id="drugName" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"/>
+            </f:facet>
+          </h:column>
+          <h:column>
+            <f:facet name="header">Price</f:facet>
+            #{cur.prescribedDrug.price}
+            <f:facet name="footer">
+              <h:outputText value="#{prescriptionPage.newItemDrug.price}" id="drugPrice" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"/>
+            </f:facet>
+          </h:column>
+          <h:column rendered="#{prescriptionPage.prescription.state == 'ENTRY'}">
+            <h:commandButton value="Remove" action="#{prescriptionPage.remove(cur)}" />
+            <f:facet name="footer">
+              <h:commandButton value="Add" id="addItem"
+                rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"
+                disabled="#{prescriptionPage.newItemDrug == null}"
+                actionListener="#{prescriptionPage.addNewItem}"/>
+            </f:facet>
+          </h:column>
+        </h:dataTable>
+        
+        <h:dataTable value="#{prescriptionPage.wrappedItems}" var="cur"
+          rendered="#{prescriptionPage.prescription.state == 'CHECKING' or prescriptionPage.prescription.state == 'FULFILLING'}"
+          styleClass="data-table" headerClass="data-cell header-cell"
+          columnClasses="data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'CHECKING' ? '' : ',data-cell'},data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'FULFILLING' ? ',data-cell' : ''}">
+          <h:column>
+            <f:facet name="header">PZN</f:facet>
+            <h:link outcome="/drug/details.xhtml" value="#{cur.prescribedDrug.pzn}">
+              <f:param name="pzn" value="#{cur.prescribedDrug.pzn}"></f:param>
+            </h:link>
+          </h:column>
+          <h:column>
+            <f:facet name="header">Name</f:facet>
+            #{cur.prescribedDrug.name}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Price</f:facet>
+            #{cur.prescribedDrug.price}
+          </h:column>
+          <h:column rendered="#{prescriptionPage.prescription.state != 'CHECKING'}">
+            <f:facet name="header">State</f:facet>
+            #{cur.state}
+          </h:column>
+          <h:column>
+            <f:facet name="header">In Stock</f:facet>
+            #{cur.prescribedDrug.stock}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Pending</f:facet>
+            #{cur.quantityPending}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Required</f:facet>
+            #{cur.quantityRequired}
+          </h:column>
+          <h:column rendered="#{prescriptionPage.prescription.state == 'FULFILLING'}">
+            <h:commandButton value="Fulfil"
+              action="#{prescriptionPage.fulfil(cur)}"
+              rendered="#{not cur.fulfilled}"
+              disabled="#{cur.prescribedDrug.stock == 0}" />
+            <h:commandButton value="Replenish"
+              action="#{prescriptionPage.replenish(cur)}"
+              rendered="#{cur.quantityRequired > 0}" />
+          </h:column>
+        </h:dataTable>
+      </h:form>
+    </div>
+  </ui:define>
+</ui:composition>
+</html>

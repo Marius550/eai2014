@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="title">Create Drug</ui:define>
+  <ui:define name="content">
+    <div class="inputForm">
+      <h:form>
+        <h:panelGrid columns="3"
+          columnClasses="form-label,form-input,form-message error"
+          footerClass="form-footer">
+          <h:outputLabel value="PZN" for="pzn" />
+          <h:inputText id="pzn" value="#{createDrug.drug.pzn}">
+            <f:validator validatorId="de.java.PznValidator" />
+          </h:inputText>
+          <h:message for="pzn" />
+          <h:outputLabel value="Name" for="name" />
+          <h:inputText id="name" value="#{createDrug.drug.name}" />
+          <h:message for="name" />
+          
+          <h:outputLabel value="Price" for="price" />
+          <h:inputText id="price" value="#{createDrug.drug.price}" />
+          <h:message for="price" />
+          
+          <h:outputLabel value="Description" for="description" />
+          <h:inputTextarea id="description" value="#{createDrug.drug.description}" />
+          <h:message for="description" />
+          
+          <h:outputLabel value="Batch input?" for="batch" title="Create another drug after this one?" />
+          <h:selectBooleanCheckbox id="batch" value="#{createDrug.batch}" />
+          <f:facet name="footer">
+            <h:commandButton value="Submit" action="#{createDrug.persist}" />
+          </f:facet>
+        </h:panelGrid>
+      </h:form>
+    </div>
+    <div class="result">
+      <h:outputText rendered="#{createDrug.success or createDrug.error}"
+        styleClass="#{createDrug.success ? 'success' : 'error'}"
+        value="#{createDrug.lastResult}" />
+    </div>
+  </ui:define>
+</ui:composition>
+</html>
