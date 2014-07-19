@@ -9,6 +9,8 @@ public class WrappedItem implements Fulfillable, Serializable {
   private static final long serialVersionUID = -4955900242712940679L;
 
   private final Item item;
+  
+  private double prescriptionDrugsPrice;//New
 
   private final long quantityPending;
 
@@ -18,6 +20,15 @@ public class WrappedItem implements Fulfillable, Serializable {
     this.item = item;
     this.quantityPending = quantityPending;
     this.quantityRequired = quantityRequired;
+  }
+  
+  public double getPrescriptionDrugsPrice() { //New
+	  
+	  int i = 150;
+	  int j = 100;
+	  prescriptionDrugsPrice = i + j;
+	  
+	  return prescriptionDrugsPrice;
   }
 
   public Item getItem() {

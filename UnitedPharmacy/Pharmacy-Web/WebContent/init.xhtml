@@ -34,7 +34,7 @@
     <h3>Drugs in C.Sharpe-Database</h3>
   	<h:dataTable value="#{initDrugs.cDrugs.values()}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell">
+      columnClasses="data-cell,data-cell,data-cell,data-cell">
        <h:column>
         <f:facet name="header">PZN</f:facet>
         #{cur.pzn}
@@ -43,7 +43,11 @@
         <f:facet name="header">Name</f:facet>
         #{cur.name}
       </h:column>
-            <h:column>
+      <h:column>
+        <f:facet name="header">Price</f:facet>
+        #{cur.price}
+      </h:column>
+      <h:column>
         <f:facet name="header">Description</f:facet>
         #{cur.description}
       </h:column>
@@ -52,7 +56,7 @@
     <h3>Merged Drug Database</h3>
   	<h:dataTable value="#{initDrugs.mergedDrugs}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell">
+      columnClasses="data-cell,data-cell,data-cell,data-cell">
        <h:column>
         <f:facet name="header">PZN</f:facet>
         #{cur.pzn}
@@ -61,7 +65,11 @@
         <f:facet name="header">Name</f:facet>
         #{cur.name}
       </h:column>
-            <h:column>
+      <h:column>
+        <f:facet name="header">Price</f:facet>
+        #{cur.price}
+      </h:column>
+      <h:column>
         <f:facet name="header">Description</f:facet>
         #{cur.description}
       </h:column>

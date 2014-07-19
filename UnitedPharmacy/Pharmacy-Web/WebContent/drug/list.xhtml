@@ -38,6 +38,7 @@
       <h:column>
         <f:facet name="header">Price</f:facet>
         #{cur.price}
+        <f:facet name="footer">#{drugList.sumUpPrices()}</f:facet>
       </h:column>
       <h:column>
 	      <f:facet name="header">Stock</f:facet>

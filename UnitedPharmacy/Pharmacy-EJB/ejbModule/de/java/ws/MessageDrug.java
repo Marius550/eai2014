@@ -73,7 +73,7 @@ public class MessageDrug implements java.io.Serializable {
 	}
 	public long getPendingQuantity() {
 		return pendingQuantity;
-	}
+	}	
 	public void setPendingQuantity(long pendingQuantity) {
 		this.pendingQuantity = pendingQuantity;
 	}

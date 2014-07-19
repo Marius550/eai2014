@@ -98,6 +98,25 @@ public class DrugList implements Serializable {
   }
   
   /**
+   * Sums up the prices for all currently displayed drugs (i.e. search is considered)
+   * @return sum prices of all displayed drugs at C.Sharpe and JaVa
+   */
+  public double sumUpPrices (){
+	  
+	  double prices = 0;
+	  
+	  for (Drug d : getDrugs()){
+		  // Iterate only through displayed drugs in order to display right sums
+		  //Only consider Java drugs since prices are for both the same since determined by master
+		  if (getjDrugs().get(d.getPzn()) != null) {
+			  prices += getjDrugs().get(d.getPzn()).getPrice();
+		  }
+	  }
+	  
+	  return prices;
+  }
+  
+  /**
    * Sums up the stock for all currently displayed drugs (i.e. search is considered)
    * @return sum of stock of all displayed drugs at C.Sharpe and JaVa
    */

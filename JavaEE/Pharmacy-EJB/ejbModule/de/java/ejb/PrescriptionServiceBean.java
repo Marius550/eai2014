@@ -58,6 +58,12 @@ public class PrescriptionServiceBean implements PrescriptionService {
     prescription.getItems().size();
     return prescription;
   }
+  
+  @Override
+  public double test() {//New
+	  double i = 10;
+	  return i;
+  }
 
   @Override
   public void updateEntryData(long id, String issuer, String diagnosis, Date issueDate, Date entryDate) {

@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import de.java.domain.customer.Customer;
@@ -40,9 +41,14 @@ public class Prescription implements Serializable {
   @Size(min=1, message="Issuing physician required")
   private String issuer;
   
+  //Java Regex to Validate Full Name allow only Spaces and Letters
   @NotNull(message="Diagnosis required")
   @Size(min=1, message="Diagnosis required")
+  @Pattern(regexp="^[\\p{L} .'-]+$",
+  message="Not a valid diagnosis, use string to define the diagnosis (e.g.: Low blood pressure)")
   private String diagnosis;
+  
+  private double PrescriptionDrugsPrice;
 
   @Temporal(TemporalType.DATE)
   @NotNull(message="Issue date required")

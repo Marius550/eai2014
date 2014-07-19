@@ -134,7 +134,7 @@
         <h:dataTable value="#{prescriptionPage.wrappedItems}" var="cur"
           rendered="#{prescriptionPage.prescription.state == 'CHECKING' or prescriptionPage.prescription.state == 'FULFILLING'}"
           styleClass="data-table" headerClass="data-cell header-cell"
-          columnClasses="data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'CHECKING' ? '' : ',data-cell'},data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'FULFILLING' ? ',data-cell' : ''}">
+          columnClasses="data-cell,data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'CHECKING' ? '' : ',data-cell'},data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'FULFILLING' ? ',data-cell' : ''}">
           <h:column>
             <f:facet name="header">PZN</f:facet>
             <h:link outcome="/drug/details.xhtml" value="#{cur.prescribedDrug.pzn}">
@@ -164,6 +164,10 @@
           <h:column>
             <f:facet name="header">Required</f:facet>
             #{cur.quantityRequired}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Overall price</f:facet>
+            #{cur.prescriptionDrugsPrice}
           </h:column>
           <h:column rendered="#{prescriptionPage.prescription.state == 'FULFILLING'}">
             <h:commandButton value="Fulfil"
