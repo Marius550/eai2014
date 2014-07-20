@@ -12,7 +12,6 @@ public class MessageDrug implements java.io.Serializable {
 	// Master data
 	private int pzn;
 	private String name;
-	private double price;
 	private String description;
 	// Replenishment Configuration
 	private long minimumInventoryLevel;
@@ -27,7 +26,7 @@ public class MessageDrug implements java.io.Serializable {
 	}
 	/**
 	 * Creates a simplified drug based on the master data of a drug. Uses all attributes in a drug, i.e.
-	 * pzn, name, price, description
+	 * pzn, name, description
 	 * @param drug
 	 */
 	public MessageDrug(Drug drug){
@@ -36,7 +35,6 @@ public class MessageDrug implements java.io.Serializable {
 		}
 		this.pzn = drug.getPzn();
 		this.name = drug.getName();
-		this.price = drug.getPrice();
 		this.description = drug.getDescription();
 	}
 	
@@ -53,12 +51,6 @@ public class MessageDrug implements java.io.Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
 	public String getDescription() {
 		return description;
 	}
@@ -73,7 +65,7 @@ public class MessageDrug implements java.io.Serializable {
 	}
 	public long getPendingQuantity() {
 		return pendingQuantity;
-	}	
+	}
 	public void setPendingQuantity(long pendingQuantity) {
 		this.pendingQuantity = pendingQuantity;
 	}
@@ -97,13 +89,12 @@ public class MessageDrug implements java.io.Serializable {
 	}
 	
 	/**
-	 * Converts a Message drug to a real drug object ONLY USING pzn, name, price and description
+	 * Converts a Message drug to a real drug object ONLY USING pzn, name and description
 	 * @return
 	 */
 	public Drug convertToDrug (){
 		Drug realDrug = new Drug();
 		realDrug.setName(name);
-		realDrug.setPrice(price);
 		realDrug.setDescription(description);
 		realDrug.setPzn(pzn);
 		return realDrug;

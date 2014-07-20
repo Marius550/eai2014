@@ -63,7 +63,6 @@
     <Property Name="Stock" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="MinimumInventoryLevel" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="OptimalInventoryLevel" Type="int" Nullable="false" DefaultValue="0" />
-    <Property Name="Price" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="InventoryEventSet">
     <Key>
@@ -103,7 +102,6 @@
     <Property Name="EntryDate" Type="datetime" Nullable="false" />
     <Property Name="FulfilmentDate" Type="datetime" Nullable="true" />
     <Property Name="CustomerId" Type="int" Nullable="false" />
-    <Property Name="Diagnosis" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
   <EntityType Name="ItemSet">
     <Key>
@@ -303,7 +301,6 @@
           <Property Type="Int32" Name="MinimumInventoryLevel" Nullable="false" DefaultValue="0" />
           <Property Type="Int32" Name="OptimalInventoryLevel" Nullable="false" DefaultValue="0" />
           <NavigationProperty Name="Events" Relationship="Pharmacy.BusinessLayer.Data.DrugInventoryEvent" FromRole="Drug" ToRole="InventoryEvent" />
-          <Property Name="Price" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="InventoryEvent" Abstract="true">
           <Key>
@@ -389,7 +386,6 @@
           <NavigationProperty Name="Items" Relationship="Pharmacy.BusinessLayer.Data.PrescriptionItem" FromRole="Prescription" ToRole="Item" />
           <NavigationProperty Name="Customer" Relationship="Pharmacy.BusinessLayer.Data.CustomerPrescription" FromRole="Prescription" ToRole="Customer" />
           <Property Type="Int32" Name="CustomerId" Nullable="false" />
-          <Property Name="Diagnosis" Type="String" Nullable="true" />
         </EntityType>
         <EnumType Name="PrescriptionState" cg:ExternalTypeName="Pharmacy.BusinessLayer.Data.PrescriptionState" />
         <EntityType Name="Item">
@@ -465,7 +461,6 @@
           <ScalarProperty Name="Stock" ColumnName="Stock" />
           <ScalarProperty Name="MinimumInventoryLevel" ColumnName="MinimumInventoryLevel" />
           <ScalarProperty Name="OptimalInventoryLevel" ColumnName="OptimalInventoryLevel" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -524,7 +519,6 @@
           <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
           <ScalarProperty Name="FulfilmentDate" ColumnName="FulfilmentDate" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-          <ScalarProperty Name="Diagnosis" ColumnName="Diagnosis" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

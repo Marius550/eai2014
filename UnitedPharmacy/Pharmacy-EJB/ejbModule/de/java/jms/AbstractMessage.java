@@ -13,22 +13,42 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 /**
- * AbstractMessage class provides sharable JMS actions for queue: "/queue/DrugQueue04"
+ * AbstractMessage class provides sharable JMS actions 
  */
 public abstract class AbstractMessage {
 	
+	/**
+	 * Returns the Name of the queue a emssage should be sent to.
+	 * Function is to be implemented in each message type.
+	 * 
+	 * @return Name of the message queue.
+	 */
 	protected abstract String getQueue();
 
+	/**
+	 * Builds up the message to be sent with all parameters.
+	 * @param session the session, in which the message should be sent.
+	 * @return the message to be sent.
+	 * @throws JMSException
+	 */
 	protected abstract Message buildMessage(Session session) throws JMSException;
 
+	/**
+	 * Sends the JMS-message build in buildMessage() to queue depicted in getQueue().
+	 * @throws NamingException
+	 * @throws JMSException
+	 */
 	public void sendMessage() throws NamingException, JMSException {
+		// Create session
 		InitialContext context = new InitialContext();
 		ConnectionFactory connectionFactory = (ConnectionFactory) context.lookup("ConnectionFactory");
 		Connection connection = connectionFactory.createConnection();
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		
+		// Build message
 		Message message = buildMessage(session);
 		
+		// Send message
 		connection.start();
 		Queue queue = (Queue) context.lookup(getQueue());
 		MessageProducer sender = session.createProducer(queue);
@@ -37,7 +57,12 @@ public abstract class AbstractMessage {
 		connection.close();
 	}
 	
-	// TODO: Remove all the comments
+	/**
+	 * Sends the JMS-message build in buildMessage() to queue depicted in getQueue().
+	 * Futhermore: create a temporary queue and wait for a reply.
+	 * @throws NamingException
+	 * @throws JMSException
+	 */
 	public Message sendMessageWithReply() throws NamingException, JMSException {
 		InitialContext context = new InitialContext();
 		ConnectionFactory connectionFactory = (ConnectionFactory) context.lookup("ConnectionFactory");
@@ -50,25 +75,16 @@ public abstract class AbstractMessage {
 		
 		Queue queue = (Queue) context.lookup(getQueue());
 		MessageProducer sender = session.createProducer(queue);
-		System.out.println("Nachricht senden.");
 		sender.send(message);
-		System.out.println("Nachricht gesendet.");
 		
 		if (message.getJMSReplyTo() == null){
+			// Built message does not include JMSReply-argument and therefore does not expect an answer
 			return null;
 		}
 		
 		MessageConsumer consumer = session.createConsumer(message.getJMSReplyTo());
+		// Wait 1 second for reply
 		MapMessage resultMsg = (MapMessage) consumer.receive(1000);
-		System.out.println("Antwort erhalten.");
-		
-		// TODO: remove following if block (only for testing
-		if (resultMsg != null){
-			int totalNumberOfPrescriptions = resultMsg.getIntProperty("totalNumberOfPrescriptions");
-			System.out.println("Ende. Ergebnis ist " + totalNumberOfPrescriptions);
-		} else {
-			System.out.println("Ende. Ergebnis ist null");
-		}		
 		
 		connection.close();
 		return resultMsg;

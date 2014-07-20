@@ -43,7 +43,7 @@ public class ApplicationInitialiser {
   }
 
   private void populateAppWithSampleDrugs() {
-    final Drug aspirin = new Drug(PZN_FOR_SAMPLE_DRUG, "ASPIRIN MINUS C ORANGE 10St", 100.00);
+    final Drug aspirin = new Drug(PZN_FOR_SAMPLE_DRUG, "ASPIRIN MINUS C ORANGE 10St");
     em.persist(aspirin);
     addMoreDrugs();
 
@@ -62,11 +62,11 @@ public class ApplicationInitialiser {
   }
 
   private void addMoreDrugs() {
-    em.persist(new Drug(1715965, "ASPIRIN PLUS C ORANGE 20St", 200.00));
-    em.persist(new Drug(451122, "ACC 200 TABS 20St", 50.00));
-    em.persist(new Drug(451151, "ACC 200 TABS 40St", 100.00));
-    em.persist(new Drug(451139, "ACC 200 TABS 50St", 75.00));
-    em.persist(new Drug(451145, "ACC 200 TABS 100St", 150.00));
+    em.persist(new Drug(1715965, "ASPIRIN PLUS C ORANGE 20St"));
+    em.persist(new Drug(451122, "ACC 200 TABS 20St"));
+    em.persist(new Drug(451151, "ACC 200 TABS 40St"));
+    em.persist(new Drug(451139, "ACC 200 TABS 50St"));
+    em.persist(new Drug(451145, "ACC 200 TABS 100St"));
   }
 
   private Position createPosition(Drug drug, int quantity, ReplenishmentOrder order) {
@@ -106,25 +106,20 @@ public class ApplicationInitialiser {
     fulfilledPrescription.setState(PrescriptionState.FULFILLED);
     fulfilledPrescription.setFulfilmentDate(new Date());
     fulfilledPrescription.setIssuer("Dr F. Ulfilled");
-    fulfilledPrescription.setDiagnosis("Cancer");
     em.persist(fulfilledPrescription);
     
     Prescription prescriptionInFulfilling = albertAmundsen.createPrescription();
     prescriptionInFulfilling.setState(PrescriptionState.FULFILLING);
     prescriptionInFulfilling.setIssuer("Doc Norris");
-    fulfilledPrescription.setDiagnosis("Cancer");
     em.persist(prescriptionInFulfilling);
     
     Prescription prescriptionInChecking = albertAmundsen.createPrescription();
     prescriptionInChecking.setState(PrescriptionState.CHECKING);
     prescriptionInChecking.setIssuer("Doc Checker");
-    fulfilledPrescription.setDiagnosis("Cancer");
     em.persist(prescriptionInChecking);
     
     Prescription prescriptionInEntry = albertAmundsen.createPrescription();
     prescriptionInEntry.setIssuer("Doctor Who");
-    fulfilledPrescription.setDiagnosis("Cancer");
-    
     Drug drug = em.find(Drug.class, PZN_FOR_SAMPLE_DRUG);
     new Item(drug, prescriptionInEntry);
     em.persist(prescriptionInEntry);

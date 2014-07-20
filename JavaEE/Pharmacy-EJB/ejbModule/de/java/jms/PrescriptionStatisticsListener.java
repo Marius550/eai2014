@@ -18,6 +18,11 @@ import javax.jms.MessageProducer;
 
 import de.java.ejb.PrescriptionService;
 
+/**
+ * Message driven Bean for prescription statistics
+ * Messages are coming in at queue PrescriptionStatisticsQueue04.
+ * Parameters are dateFrom ("yyyy-MM-dd"), dateTo ("yyyy-MM-dd"), and JMSReplyTo as temporary reply queue.
+ */
 @MessageDriven(activationConfig = {
 		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
 		@ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/PrescriptionStatisticsQueue04")})
@@ -32,10 +37,8 @@ public class PrescriptionStatisticsListener implements MessageListener {
 		Connection conn = null;
 
 		try {
-			System.out.println("Prescription-Server: Message received");
-		
 			// Date parsing
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date dateFrom = sdf.parse(m.getStringProperty("dateFrom"));
 			Date dateTo = sdf.parse(m.getStringProperty("dateTo"));
 			
@@ -47,18 +50,29 @@ public class PrescriptionStatisticsListener implements MessageListener {
 			MessageProducer producer = session.createProducer(replyTo);
 			MapMessage reply = session.createMapMessage();
 			
-			// TODO: Get required numbers in timespan from prescriptionService
-			// Dummy return value:
-			int totalNumberOfPrescriptions = 42;
+			// Let values calculate in EJB
+			int totalNumberOfPrescriptions = prescriptionService.getNumberPrescriptionsBetweenDates(dateFrom, dateTo);
+			double averageNumberOfItemsPerPrescription = prescriptionService.getAvItemNumberBetweenDates(dateFrom, dateTo);
+			long averageTimeSpanOfFulfilment = prescriptionService.getAvFulfillmentTimesBetweenDates(dateFrom, dateTo);
+			
+			// Prepare reply
 			reply.setIntProperty("totalNumberOfPrescriptions",totalNumberOfPrescriptions);
+			reply.setDoubleProperty("averageNumberOfItemsPerPrescription", averageNumberOfItemsPerPrescription);
+			reply.setLongProperty("averageTimeSpanOfFulfilment",averageTimeSpanOfFulfilment);
 
 			// Send reply
 			producer.send(reply);
-			System.out.println("Answer sent.");
 		} 
-		catch (Exception e) {e.printStackTrace();} 
-		finally {
+		catch (Exception e) {
+			e.printStackTrace();
+		} finally {
 			if (conn != null) {
-				try {conn.close();} 
-				catch (Exception e) {e.printStackTrace();}}}}
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }

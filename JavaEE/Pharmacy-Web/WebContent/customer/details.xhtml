@@ -27,7 +27,6 @@
           <h:commandButton tabindex="3" value="Submit changes" action="#{customerPage.submit}" />
         </f:facet>
       </h:panelGrid>
-      
       <h:panelGrid rendered="#{not empty customerPage.customer.prescriptions}">
         <h3>Prescriptions</h3>
         <h:dataTable value="#{customerPage.customer.prescriptions}" var="cur"
@@ -41,10 +40,6 @@
         <h:column>
           <f:facet name="header">Issuer</f:facet>
           #{cur.issuer}
-        </h:column>
-         <h:column>
-          <f:facet name="header">Diagnosis</f:facet>
-          #{cur.diagnosis}
         </h:column>
           <h:column>
             <f:facet name="header">State</f:facet>

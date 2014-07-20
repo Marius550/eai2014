@@ -73,7 +73,6 @@ public class PrescriptionPage implements Serializable {
   public String update() {
     prescriptionService.updateEntryData(prescription.getId(),
         prescription.getIssuer(),
-        prescription.getDiagnosis(),
         prescription.getIssueDate(),
         prescription.getEntryDate());
     return toPrescriptionPage();

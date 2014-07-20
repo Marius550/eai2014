@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/11/2014 10:16:02
--- Generated from EDMX file: C:\Users\Marius\Documents\GitHub\group-04\DotNET\BusinessLayer\Data\Pharmacy.edmx
+-- Date Created: 06/17/2014 20:23:18
+-- Generated from EDMX file: C:\Users\Tobi\Documents\GitHub\group-04\DotNET\BusinessLayer\Data\Pharmacy.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -91,8 +91,7 @@ CREATE TABLE [dbo].[DrugSet] (
     [Description] nvarchar(max)  NULL,
     [Stock] int  NOT NULL,
     [MinimumInventoryLevel] int  NOT NULL,
-    [OptimalInventoryLevel] int  NOT NULL,
-    [Price] float  NOT NULL
+    [OptimalInventoryLevel] int  NOT NULL
 );
 GO
 
@@ -131,8 +130,7 @@ CREATE TABLE [dbo].[PrescriptionSet] (
     [IssueDate] datetime  NOT NULL,
     [EntryDate] datetime  NOT NULL,
     [FulfilmentDate] datetime  NULL,
-    [CustomerId] int  NOT NULL,
-    [Diagnosis] nvarchar(max)  NULL
+    [CustomerId] int  NOT NULL
 );
 GO
 

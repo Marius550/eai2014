@@ -13,7 +13,6 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import de.java.jms.MessageSender;
 import de.java.jms.PrescriptionMessage;
-import de.java.ws.DrugResourceClientDotNet;
 import de.java.ws.PrescriptionStatisticsClientDotNet;
 import de.java.ws.PrescriptionStatisticsDO;
 
@@ -35,37 +34,33 @@ public class PrescriptionStatisticsServiceBean implements PrescriptionStatistics
 
 	@Override
 	public PrescriptionStatisticsDO getStatisticsFromJava(Date dateFrom, Date dateTo) {
-		Message JaVaReply = MessageSender.sendWithReply(new PrescriptionMessage(dateFrom, dateTo));
-		PrescriptionStatisticsDO result = new PrescriptionStatisticsDO();
 		try {
+			Message JaVaReply = MessageSender.sendWithReply(new PrescriptionMessage(dateFrom, dateTo));
+			PrescriptionStatisticsDO result = new PrescriptionStatisticsDO();
 			result.setTotalNumberOfPrescriptions(JaVaReply.getIntProperty(
 							"totalNumberOfPrescriptions"));
-//			TODO: Remove this
-//			result.setAverageItemsPerPrescription(JaVaReply.getDoubleProperty(
-//					"averageNumberOfItems"));
-//			result.setAverageTimespanToFulfilment(JaVaReply.getDoubleProperty(
-//					"averageTimespanToFulfilment"));
+			result.setAverageNumberOfItemsPerPrescription(JaVaReply.getDoubleProperty(
+					"averageNumberOfItemsPerPrescription"));
+			result.setAverageTimeSpanOfFulfilment(JaVaReply.getLongProperty(
+					"averageTimeSpanOfFulfilment"));
+			return result;	
 		} catch (Exception e) {
-			// TODO: Do something
+			// When anything during the connection fails, just return a null element. The view will handle anything else.
+			System.out.println(e);
+			return null;
 		}
-		return result;	
 	}
 
 	@Override
-	public PrescriptionStatisticsDO getStatisticsFromDotNet(final Date dateFromParam,
-			final Date dateToParam) {
-		//TODO: Remove this:
-		return null;
-		
-		
-//		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-//		Object dateObject = new Object(){
-//			@SuppressWarnings("unused")
-//			public String dateFrom = sdf.format(dateFromParam);
-//			@SuppressWarnings("unused")
-//			public String dateTo = sdf.format(dateToParam);
-//		};
-		//return prepareDrugResourceClientDotNet().getPrescriptionStatistics(dateObject);
+	public PrescriptionStatisticsDO getStatisticsFromDotNet(Date dateFrom,Date dateTo) {
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			return prepareDrugResourceClientDotNet().getPrescriptionStatistics(sdf.format(dateFrom), sdf.format(dateTo));
+		} catch (Exception e){
+			// When anything during the connection fails, just return a null element. The view will handle anything else.
+			System.out.println(e);
+			return null;
+		}
 	}
 
 }

@@ -19,15 +19,9 @@
           <h:outputLabel value="Name" for="name" />
           <h:inputText id="name" value="#{createDrug.drug.name}" />
           <h:message for="name" />
-          
-          <h:outputLabel value="Price" for="price" />
-          <h:inputText id="price" value="#{createDrug.drug.price}" />
-          <h:message for="price" />
-          
           <h:outputLabel value="Description" for="description" />
           <h:inputTextarea id="description" value="#{createDrug.drug.description}" />
           <h:message for="description" />
-          
           <h:outputLabel value="Batch input?" for="batch" title="Create another drug after this one?" />
           <h:selectBooleanCheckbox id="batch" value="#{createDrug.batch}" />
           <f:facet name="footer">

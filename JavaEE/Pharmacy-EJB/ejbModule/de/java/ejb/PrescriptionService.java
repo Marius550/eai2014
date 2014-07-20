@@ -22,7 +22,7 @@ public interface PrescriptionService {
   
   Prescription getPrescriptionWithItems(long id);
 
-  void updateEntryData(long id, String issuer, String diagnosis, Date issueDate, Date entryDate);
+  void updateEntryData(long id, String issuer, Date issueDate, Date entryDate);
 
   void cancel(long id);
 
@@ -44,5 +44,32 @@ public interface PrescriptionService {
 
   public long getQuantityUnfulfilledForDrug(int pzn);
   
-  public double test();//New
+  /**
+   * Looks up and returns the amount of prescriptions in the database that were entered between the dates dateFrom and dateTo.
+   * @param dateFrom
+   * @param dateTo
+   * @return The number of prescriptions between the dates.
+   */
+  int getNumberPrescriptionsBetweenDates(Date dateFrom, Date dateTo);
+  
+  /**
+   * Calculates the average number of items per prescription between dateFrom and dateTo.
+   * Only prescriptions with at least one item are considered.
+   * @param dateFrom
+   * @param dateTo
+   * @return The average number of items as a double.
+   */
+  double getAvItemNumberBetweenDates (Date dateFrom, Date dateTo);
+  
+  /**
+   * Calculates average timespan of fulfilment (from date of entry to date of fulfilment) per prescription.
+   * Only prescriptions in Fulfilled state considered.
+   * @param dateFrom
+   * @param dateTo
+   * @return The average timespan of fulfilment in seconds.
+   */
+  long getAvFulfillmentTimesBetweenDates (Date dateFrom, Date dateTo);
+  
+  
+  
 }

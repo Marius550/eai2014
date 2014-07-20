@@ -33,13 +33,8 @@
           <h:outputText value="#{prescriptionPage.prescription.issuer}" rendered="#{prescriptionPage.prescription.state != 'ENTRY'}" />
           <h:messages for="issuer" styleClass="error"/>
           
-          Diagnosis
-          <h:inputTextarea value="#{prescriptionPage.prescription.diagnosis}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="diagnosis" tabindex="2" />
-          <h:outputText value="#{prescriptionPage.prescription.diagnosis}" rendered="#{prescriptionPage.prescription.state != 'ENTRY'}" />
-          <h:messages for="diagnosis" styleClass="error"/>
-          
           Issued on
-          <h:inputText value="#{prescriptionPage.prescription.issueDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="issueDate" tabindex="3">
+          <h:inputText value="#{prescriptionPage.prescription.issueDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="issueDate" tabindex="2">
             <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
           </h:inputText>
           <h:outputText value="#{prescriptionPage.prescription.issueDate}" rendered="#{prescriptionPage.prescription.state != 'ENTRY'}">
@@ -48,7 +43,7 @@
           <h:messages for="issueDate" styleClass="error"/>
           
           Entered on
-          <h:inputText value="#{prescriptionPage.prescription.entryDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="entryDate" tabindex="4">
+          <h:inputText value="#{prescriptionPage.prescription.entryDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="entryDate" tabindex="3">
             <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
           </h:inputText>
           <h:outputText value="#{prescriptionPage.prescription.entryDate}" rendered="#{prescriptionPage.prescription.state != 'ENTRY'}">
@@ -57,7 +52,7 @@
           <h:messages for="entryDate" styleClass="error"/>
           
           <h:outputText value="Fulfilment date" rendered="#{prescriptionPage.prescription.state == 'FULFILLING' or prescriptionPage.prescription.state == 'FULFILLED'}" />
-          <h:inputText value="#{prescriptionPage.fulfilmentDate}" rendered="#{prescriptionPage.prescription.state == 'FULFILLING'}" id="fulfilmentDate" tabindex="5"
+          <h:inputText value="#{prescriptionPage.fulfilmentDate}" rendered="#{prescriptionPage.prescription.state == 'FULFILLING'}" id="fulfilmentDate" tabindex="4"
             required="true" requiredMessage="Fulfilment date required"
             disabled="#{not prescriptionPage.proceedable}">
             <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
@@ -71,19 +66,19 @@
             <h:commandButton value="Update prescription"
               action="#{prescriptionPage.update()}"
               rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"
-              tabindex="6" />
+              tabindex="5" />
             <h:commandButton value="Return to #{prescriptionPage.prescription.state.previous}"
               action="#{prescriptionPage.returnToPrevious}"
               rendered="#{prescriptionPage.prescription.state.reversible}"
-              tabindex="7" />
+              tabindex="6" />
             <h:commandButton value="Proceed to #{prescriptionPage.prescription.state.next}"
               action="#{prescriptionPage.proceed}"
               rendered="#{prescriptionPage.proceedable}"
-              tabindex="8" />
+              tabindex="7" />
             <h:commandButton value="Cancel"
               action="#{prescriptionPage.cancel()}"
               rendered="#{prescriptionPage.prescription.state.cancellable}"
-              tabindex="9" />
+              tabindex="8" />
           </f:facet>
         </h:panelGrid>
         
@@ -92,7 +87,7 @@
         <h:dataTable value="#{prescriptionPage.prescription.items}" var="cur"
           rendered="#{prescriptionPage.prescription.state == 'ENTRY' or prescriptionPage.prescription.state == 'FULFILLED'}"
           styleClass="data-table" headerClass="data-cell header-cell" footerClass="data-cell footer-cell"
-          columnClasses="data-cell,data-cell,data-cell,data-cell">
+          columnClasses="data-cell,data-cell,data-cell">
           <h:column>
             <f:facet name="header">PZN</f:facet>
             <h:link outcome="/drug/details.xhtml" value="#{cur.prescribedDrug.pzn}">
@@ -113,13 +108,6 @@
               <h:outputText value="#{prescriptionPage.newItemDrug.name}" id="drugName" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"/>
             </f:facet>
           </h:column>
-          <h:column>
-            <f:facet name="header">Price</f:facet>
-            #{cur.prescribedDrug.price}
-            <f:facet name="footer">
-              <h:outputText value="#{prescriptionPage.newItemDrug.price}" id="drugPrice" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"/>
-            </f:facet>
-          </h:column>
           <h:column rendered="#{prescriptionPage.prescription.state == 'ENTRY'}">
             <h:commandButton value="Remove" action="#{prescriptionPage.remove(cur)}" />
             <f:facet name="footer">
@@ -134,7 +122,7 @@
         <h:dataTable value="#{prescriptionPage.wrappedItems}" var="cur"
           rendered="#{prescriptionPage.prescription.state == 'CHECKING' or prescriptionPage.prescription.state == 'FULFILLING'}"
           styleClass="data-table" headerClass="data-cell header-cell"
-          columnClasses="data-cell,data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'CHECKING' ? '' : ',data-cell'},data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'FULFILLING' ? ',data-cell' : ''}">
+          columnClasses="data-cell,data-cell#{prescriptionPage.prescription.state == 'CHECKING' ? '' : ',data-cell'},data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'FULFILLING' ? ',data-cell' : ''}">
           <h:column>
             <f:facet name="header">PZN</f:facet>
             <h:link outcome="/drug/details.xhtml" value="#{cur.prescribedDrug.pzn}">
@@ -144,10 +132,6 @@
           <h:column>
             <f:facet name="header">Name</f:facet>
             #{cur.prescribedDrug.name}
-          </h:column>
-          <h:column>
-            <f:facet name="header">Price</f:facet>
-            #{cur.prescribedDrug.price}
           </h:column>
           <h:column rendered="#{prescriptionPage.prescription.state != 'CHECKING'}">
             <f:facet name="header">State</f:facet>
@@ -164,10 +148,6 @@
           <h:column>
             <f:facet name="header">Required</f:facet>
             #{cur.quantityRequired}
-          </h:column>
-          <h:column>
-            <f:facet name="header">Overall price</f:facet>
-            #{cur.prescriptionDrugsPrice}
           </h:column>
           <h:column rendered="#{prescriptionPage.prescription.state == 'FULFILLING'}">
             <h:commandButton value="Fulfil"

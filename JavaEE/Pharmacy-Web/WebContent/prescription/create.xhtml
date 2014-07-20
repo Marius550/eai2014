@@ -24,15 +24,9 @@
         <h:panelGrid columns="3"
           columnClasses="form-label,form-input,form-message error"
           footerClass="form-footer">
-          
           <h:outputLabel value="Issuer" for="issuer" />
           <h:inputTextarea id="issuer" value="#{createPrescription.prescription.issuer}" />
           <h:message for="issuer" />
-          
-          <h:outputLabel value="Diagnosis" for="diagnosis" />
-          <h:inputTextarea id="diagnosis" value="#{createPrescription.prescription.diagnosis}" />
-          <h:message for="diagnosis" />
-          
           <f:facet name="footer">
             <h:commandButton value="Create" action="#{createPrescription.create}" />
           </f:facet>

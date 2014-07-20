@@ -83,10 +83,9 @@ namespace WebLayer.Prescription
                 return;
 
             string issuer = ((TextBox)PrescriptionDetailsView.FindControl("IssuerBox")).Text;
-            string diagnosis = ((TextBox)PrescriptionDetailsView.FindControl("DiagnosisBox")).Text;
             string issueDate = ((TextBox)PrescriptionDetailsView.FindControl("IssuedOnBox")).Text;
             string entryDate = ((TextBox)PrescriptionDetailsView.FindControl("EnteredOnBox")).Text;
-            PrescriptionService.UpdatePrescription(GetPrescriptionId(), issuer, diagnosis, Util.ParseDate(issueDate), Util.ParseDateTime(entryDate));
+            PrescriptionService.UpdatePrescription(GetPrescriptionId(), issuer, Util.ParseDate(issueDate), Util.ParseDateTime(entryDate));
             PrescriptionDetailsView.DataBind();
         }
 

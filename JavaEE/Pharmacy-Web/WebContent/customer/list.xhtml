@@ -10,15 +10,11 @@
     <h:link outcome="/customer/create.xhtml">Create/add new customer</h:link>
     <h:dataTable value="#{customerList.customers}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell,data-cell"
+      columnClasses="data-cell,data-cell,data-cell"
       rendered="#{not empty customerList.customers}">
       <h:column>
         <f:facet name="header">Name</f:facet>
         #{cur.name}
-      </h:column>
-      <h:column>
-        <f:facet name="header">Address</f:facet>
-        #{cur.address}
       </h:column>
       <h:column>
         <f:facet name="header">Telephone number</f:facet>

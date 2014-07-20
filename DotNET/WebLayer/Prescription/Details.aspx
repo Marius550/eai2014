@@ -39,18 +39,6 @@
                         </asp:RequiredFieldValidator>
                     </ItemTemplate>
                 </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Diagnosis">
-                    <ItemTemplate>
-                        <asp:Label ID="DiagnosisLabel" runat="server"
-                            Text='<%# Eval("Diagnosis") %>' 
-                            Visible='<%# ((PrescriptionState)Eval("State")) != PrescriptionState.Entry %>' />
-                        <asp:TextBox ID="DiagnosisBox" TextMode="SingleLine" runat="server"
-                            Text='<%# Eval("Diagnosis") %>'
-                            Visible='<%# ((PrescriptionState)Eval("State")) == PrescriptionState.Entry %>' />
-                    </ItemTemplate>
-                </asp:TemplateField>
-
                 <asp:TemplateField HeaderText="Issued on">
                     <ItemTemplate>
                         <asp:Label ID="IssuedOnLabel" runat="server"

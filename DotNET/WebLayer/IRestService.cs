@@ -64,10 +64,20 @@ namespace WebLayer
         [WebInvoke(UriTemplate = "drug/create/batch", RequestFormat = WebMessageFormat.Json, Method = "POST")]
         void CreateDrugs(MessageDrug[] drugs);
 
+        /// <summary>
+        /// Returns the statistic for the pharmacy
+        /// </summary>
+        /// <returns>The statistic</returns>
         [OperationContract]
         [WebGet(UriTemplate = "statistic", ResponseFormat = WebMessageFormat.Json)]
         MessageStatistic GetStatistic();
 
+        /// <summary>
+        /// Returns the statistic for the pharmacy in a given time span
+        /// </summary>
+        /// <param name="start">The start date for the statistic</param>
+        /// <param name="end">The end date for the statistic</param>
+        /// <returns>The statistic in a given time span</returns>
         [OperationContract]
         [WebGet(UriTemplate = "statistic/{start}/{end}", ResponseFormat = WebMessageFormat.Json)]
         MessageStatistic GetStatisticInTimeSpan(string start, string end);

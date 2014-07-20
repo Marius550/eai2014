@@ -5,11 +5,17 @@ import javax.ws.rs.*;
 /**
  * Simplified client side interface of the dotnet web service
  */
-@Path("prescriptionStatistics")
+@Path("statistic")
 public interface PrescriptionStatisticsClientDotNet {
 	
+	/**
+	 * Requests prescription statistics from C.Sharpe
+	 * @param dateFrom
+	 * @param dateTo
+	 * @return
+	 */
 	@GET
 	@Produces({"application/json"})
-	@Consumes({"application/json"})
-	public PrescriptionStatisticsDO getPrescriptionStatistics(Object obj);
+	@Path("{dateFrom}/{dateTo}")
+	public PrescriptionStatisticsDO getPrescriptionStatistics(@PathParam("dateFrom") String dateFrom, @PathParam("dateTo") String dateTo);
 }

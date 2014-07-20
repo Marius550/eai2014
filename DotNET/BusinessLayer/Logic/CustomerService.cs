@@ -74,7 +74,7 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
-        public static Prescription CreatePrescription(int customerId, string issuer, string diagnosis)
+        public static Prescription CreatePrescription(int customerId, string issuer)
         {
             using (PharmacyContainer db = new PharmacyContainer())
             {
@@ -83,7 +83,6 @@ namespace Pharmacy.BusinessLayer.Logic
                 {
                     Customer = currentCustomer,
                     IssuingPhysician = issuer,
-                    Diagnosis = diagnosis,
                     IssueDate = DateTime.Now,
                     EntryDate = DateTime.Now
                 };

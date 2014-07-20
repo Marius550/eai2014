@@ -32,10 +32,6 @@
                 <span class="error">Issuer required</span>
             </asp:RequiredFieldValidator>
         </p>
-        <p class="label">Diagnosis</p>
-        <p class="value">
-            <asp:TextBox ID="DiagnosisBox" runat="server" />
-        </p>
         <p class="form-footer">
             <asp:Button ID="SubmitBtn" runat="server" Text="Create prescription"
                 onclick="SubmitBtn_Click" />

@@ -16,9 +16,6 @@ namespace WebLayer.Messages
         public string name { get; set; }
 
         [DataMember]
-        public double price { get; set; }
-
-        [DataMember]
         public string description { get; set; }
 
         [DataMember]
@@ -49,7 +46,6 @@ namespace WebLayer.Messages
         {
             pzn = drug.PZN;
             name = drug.Name;
-            price = drug.Price;
             description = drug.Description;
             minimumInventoryLevel = drug.MinimumInventoryLevel;
             optimalInventoryLevel = drug.OptimalInventoryLevel;

@@ -1,6 +1,7 @@
 package de.java.ejb;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -58,18 +59,11 @@ public class PrescriptionServiceBean implements PrescriptionService {
     prescription.getItems().size();
     return prescription;
   }
-  
-  @Override
-  public double test() {//New
-	  double i = 10;
-	  return i;
-  }
 
   @Override
-  public void updateEntryData(long id, String issuer, String diagnosis, Date issueDate, Date entryDate) {
+  public void updateEntryData(long id, String issuer, Date issueDate, Date entryDate) {
     Prescription p = getPrescription(id);
     p.setIssuer(issuer);
-    p.setDiagnosis(diagnosis);
     p.setIssueDate(issueDate);
     p.setEntryDate(entryDate);
   }
@@ -183,5 +177,85 @@ public class PrescriptionServiceBean implements PrescriptionService {
   public void updateFulfilmentDate(long id, Date fulfilmentDate) {
     getPrescription(id).setFulfilmentDate(fulfilmentDate);
   }
+  	
+  	
+	/**
+	 * Looks up all prescriptions from the database entered between dateFrom and dateTo.
+	 * @param dateFrom
+	 * @param dateTo
+	 * @return A Collection of all prescriptions with entryDate between dateFrom and dateTo.
+	 */
+	private Collection<Prescription> getPrescriptionsBetweenDates(Date dateFrom, Date dateTo) {
+		//incrementing dateTo by one, so prescriptions created on dateTo are included
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(dateTo); 
+		c.add(Calendar.DATE, 1);
+		Date newDateTo = c.getTime();
+	    final String query = "FROM Prescription p WHERE p.entryDate >= :dateFrom AND p.entryDate < :newDateTo";
+	    return em
+	        .createQuery(query, Prescription.class)
+	        .setParameter("dateFrom", dateFrom)
+	        .setParameter("newDateTo", newDateTo)
+	        .getResultList();
+	}
+	
+	/**
+	 * Looks up all fulfilled prescriptions from the database entered between dateFrom and dateTo.
+	 * @param dateFrom
+	 * @param dateTo
+	 * @return A Collection of all prescriptions with entryDate between dateFrom and dateTo and state "FULFILLED".
+	 */
+	private Collection<Prescription> getFulfilledPrescriptionsBetweenDates(Date dateFrom, Date dateTo) {
+		//incrementing dateTo by one, so prescriptions created on dateTo are included
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(dateTo); 
+		c.add(Calendar.DATE, 1);
+		Date newDateTo = c.getTime();
+	    final String query = "FROM Prescription p WHERE p.entryDate >= :dateFrom AND p.entryDate < :newDateTo AND p.state = de.java.domain.prescription.PrescriptionState.FULFILLED";
+	    return em
+	        .createQuery(query, Prescription.class)
+	        .setParameter("dateFrom", dateFrom)
+	        .setParameter("newDateTo", newDateTo)
+	        .getResultList();
+}
+
+	@Override
+	public int getNumberPrescriptionsBetweenDates(Date dateFrom, Date dateTo){
+		int number = getPrescriptionsBetweenDates(dateFrom, dateTo).size();
+		return number;
+	}
+	
+	@Override
+	public double getAvItemNumberBetweenDates (Date dateFrom, Date dateTo){
+		int itemCounter = 0;
+		int numberPrescNotEmpty = 0;
+		Collection<Prescription> prescriptions = getPrescriptionsBetweenDates(dateFrom, dateTo);
+		for(Prescription presc : prescriptions){
+			if (presc.getItems().size() > 0){
+			itemCounter += presc.getItems().size();
+			numberPrescNotEmpty++;
+			}
+		}
+		double average = -1;
+		if (numberPrescNotEmpty > 0){
+			average = (double) itemCounter / (double) numberPrescNotEmpty;
+		}
+		return average;
+	}
+	
+	@Override
+	public long getAvFulfillmentTimesBetweenDates (Date dateFrom, Date dateTo){
+		long time = 0;
+		Collection<Prescription> prescriptions = getFulfilledPrescriptionsBetweenDates(dateFrom, dateTo);
+		for(Prescription presc : prescriptions){
+			time += (presc.getFulfilmentDate().getTime()-presc.getEntryDate().getTime());
+		}
+		long average = -1;
+		if (prescriptions.size() > 0){
+			average = ((time / 1000) / prescriptions.size());
+		}
+		return average;
+	}
+
 
 }

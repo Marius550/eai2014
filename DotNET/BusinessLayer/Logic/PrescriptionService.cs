@@ -135,13 +135,12 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
-        public static void UpdatePrescription(Int32 id, string issuer, string diagnosis, DateTime issueDate, DateTime entryDate)
+        public static void UpdatePrescription(Int32 id, string issuer, DateTime issueDate, DateTime entryDate)
         {
             using (PharmacyContainer db = new PharmacyContainer())
             {
                 Prescription p = GetPrescription(id, db);
                 p.IssuingPhysician = issuer;
-                p.Diagnosis = diagnosis;
                 p.IssueDate = issueDate;
                 p.EntryDate = entryDate;
                 db.SaveChanges();
@@ -238,6 +237,10 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
+        /// <summary>
+        /// Returns the total number of prescriptions
+        /// </summary>
+        /// <returns>Total number of prescriptions</returns>
         public static int TotalNumberOfPrescriptions()
         {
             using (PharmacyContainer db = new PharmacyContainer())
@@ -246,6 +249,12 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
+        /// <summary>
+        /// Returns the total number of prescriptions in a given time span
+        /// </summary>
+        /// <param name="start">The start date for the time span</param>
+        /// <param name="end">The end date for the time span</param>
+        /// <returns>Number of prescriptions in a given time span</returns>
         public static int TotalNumberOfPrescriptions(DateTime start, DateTime end)
         {
             using (PharmacyContainer db = new PharmacyContainer())
@@ -254,6 +263,10 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
+        /// <summary>
+        /// Returns the average number of items per prescription
+        /// </summary>
+        /// <returns>The average number of items per prescription</returns>
         public static double? AverageNumberOfItemsPerPrescription()
         {
             using (PharmacyContainer db = new PharmacyContainer())
@@ -266,6 +279,12 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
+        /// <summary>
+        /// Returns the average number of items per prescription in a given time span
+        /// </summary>
+        /// <param name="start">The start date of the time span</param>
+        /// <param name="end">The end date of the time span</param>
+        /// <returns>The average number of items per prescription in the given time span</returns>
         public static double? AverageNumberOfItemsPerPrescription(DateTime start, DateTime end)
         {
             using (PharmacyContainer db = new PharmacyContainer())
@@ -280,6 +299,10 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
+        /// <summary>
+        /// Returns the average time span of filfilment
+        /// </summary>
+        /// <returns>The average time span of fulfilment in seconds</returns>
         public static TimeSpan? AverageTimeSpanOfFulfilment()
         {
             using (PharmacyContainer db = new PharmacyContainer())
@@ -297,6 +320,12 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
+        /// <summary>
+        /// Returns the average time span of filfilment in a given time span
+        /// </summary>
+        /// <param name="start">The start date of the time span</param>
+        /// <param name="end">The end date of the time span</param>
+        /// <returns>The average time span of fulfilment in seconds in the given time span</returns>
         public static TimeSpan? AverageTimeSpanOfFulfilment(DateTime start, DateTime end)
         {
             using (PharmacyContainer db = new PharmacyContainer())

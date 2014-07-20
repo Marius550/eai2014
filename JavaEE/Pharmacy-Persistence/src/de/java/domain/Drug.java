@@ -31,11 +31,7 @@ public class Drug implements Serializable {
   @NotNull(message="Name required")
   @Size(min=1, message="Name required")
   private String name;
-  
-  @NotNull(message="Price required")
-  @Min(value=0, message="Price can not be negative")
-  private double price;
-  
+
   private String description;
 
   @NotNull
@@ -55,10 +51,9 @@ public class Drug implements Serializable {
 
   public Drug() { }
 
-  public Drug(int pzn, String name, double price) {
+  public Drug(int pzn, String name) {
     this.pzn = pzn;
     this.name = name;
-    this.price = price;
   }
 
   public void withdraw(long quantity, Date dateOfAction) {
@@ -125,14 +120,6 @@ public class Drug implements Serializable {
   public void setName(String name) {
     this.name = name;
   }
-  
-  public double getPrice() {
-	    return price;
-  }
-
-  public void setPrice(double price) {
-	    this.price = price;
-  }
 
   public String getDescription() {
     return description;
@@ -173,4 +160,5 @@ public class Drug implements Serializable {
   void setEvents(Collection<InventoryEvent> events) {
     this.events = events;
   }
+
 }

@@ -13,23 +13,28 @@ public class PrescriptionMessage extends AbstractMessage{
 	private Date dateTo;
 
 	/**
-	 * Creates a Message for submitting a drug
-	 * @param drug the drug to create or update
-	 * @param action either 'create' or 'update', depending on the demanded action
+	 * Creates a message that requests prescriptions statistics
+	 * @param dateFrom Date to request statistics from
+	 * @param dateTo Date to request statistics to
 	 */
 	public PrescriptionMessage(Date dateFrom, Date dateTo) {
 		this.dateFrom = dateFrom;
 		this.dateTo = dateTo;
 	}
 	
+	/**
+	 * Builds up the prescription message
+	 */
+	@Override
 	protected Message buildMessage(Session session) throws JMSException {
 		TextMessage message = session.createTextMessage();
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-		
+		// Create strings in format yyyy-DD-dd from Dates
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		message.setStringProperty("dateFrom", sdf.format(dateFrom));
 		message.setStringProperty("dateTo", sdf.format(dateTo));
 		message.setStringProperty("action", "requestStatistics");
+		// Create temporary queue for reply
 		message.setJMSReplyTo(session.createTemporaryQueue());
 		
 		return message;

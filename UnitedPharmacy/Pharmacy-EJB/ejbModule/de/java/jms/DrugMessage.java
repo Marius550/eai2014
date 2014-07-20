@@ -7,6 +7,10 @@ import javax.jms.Session;
 
 import de.java.domain.Drug;
 
+/**
+ * Message for creating and updating a drug.
+ *
+ */
 public class DrugMessage extends AbstractMessage{
 	private Drug drug;
 	private String action;
@@ -21,6 +25,7 @@ public class DrugMessage extends AbstractMessage{
 		this.action = action;
 	}
 	
+	@Override
 	protected Message buildMessage(Session session) throws JMSException {
 		MapMessage message = session.createMapMessage();
 		
@@ -32,6 +37,7 @@ public class DrugMessage extends AbstractMessage{
 		return message;
 	}
 	
+	@Override
 	protected String getQueue(){
 		return "/queue/DrugQueue04";
 	}

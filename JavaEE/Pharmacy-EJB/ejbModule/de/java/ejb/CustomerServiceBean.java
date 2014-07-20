@@ -15,10 +15,6 @@ public class CustomerServiceBean implements CustomerService {
   @PersistenceContext
   private EntityManager em;
   
-  //Mit diesem Typ kann eine Methode gekennzeichnet werden, die die Methode ihrer Oberklasse 
-  //überschreibt. Der Compiler stellt dann sicher, dass die Oberklasse diese Methode enthält und 
-  //gibt einen Fehler aus, wenn dies nicht der Fall ist.
-  
   @Override
   public Customer getCustomer(long id) {
     return em.find(Customer.class, id);
@@ -61,10 +57,9 @@ public class CustomerServiceBean implements CustomerService {
   }
 
   @Override
-  public Prescription createPrescription(long customerId, String issuer, String diagnosis) {
+  public Prescription createPrescription(long customerId, String issuer) {
     Prescription newPrescription = getCustomer(customerId).createPrescription();
     newPrescription.setIssuer(issuer);
-    newPrescription.setDiagnosis(diagnosis);
     em.persist(newPrescription);
     return newPrescription;
   }

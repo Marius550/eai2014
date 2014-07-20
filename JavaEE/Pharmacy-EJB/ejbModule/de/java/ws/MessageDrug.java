@@ -4,7 +4,7 @@ import de.java.domain.Drug;
 
 /**
  * Message Drug is an object representing a drug and used for exchange via rest webservices
- * Depending on the usage, only pzn, name, price and description are filled (for create and update)
+ * Depending on the usage, only pzn, name and description are filled (for create and update)
  * or all attributes are filled (for get -> displaying a drug)
  */
 public class MessageDrug implements java.io.Serializable {
@@ -12,7 +12,6 @@ public class MessageDrug implements java.io.Serializable {
 	// Master data
 	private int pzn;
 	private String name;
-	private double price;
 	private String description;
 	// Replenishment Configuration
 	private long minimumInventoryLevel;
@@ -27,7 +26,7 @@ public class MessageDrug implements java.io.Serializable {
 	}
 	/**
 	 * Creates a simplified drug based on the master data of a drug. Uses all attributes in a drug, i.e.
-	 * pzn, name, price, description, stock, minimumInventoryLevel, optimalInventoryLevel
+	 * pzn, name, description, stock, minimumInventoryLevel, optimalInventoryLevel
 	 * @param drug
 	 */
 	public MessageDrug(Drug drug){
@@ -36,7 +35,6 @@ public class MessageDrug implements java.io.Serializable {
 		}
 		this.pzn = drug.getPzn();
 		this.name = drug.getName();
-		this.price = drug.getPrice();
 		this.description = drug.getDescription();
 		this.stock = drug.getStock();
 		this.minimumInventoryLevel = drug.getMinimumInventoryLevel();
@@ -55,12 +53,6 @@ public class MessageDrug implements java.io.Serializable {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
 	}
 	public String getDescription() {
 		return description;
@@ -100,13 +92,12 @@ public class MessageDrug implements java.io.Serializable {
 	}
 	
 	/**
-	 * Converts a Message drug to a real drug object ONLY USING pzn, name, price and description
-	 * @return new Drug, based on pzn, name, price and description of the message drug
+	 * Converts a Message drug to a real drug object ONLY USING pzn, name and description
+	 * @return new Drug, based on pzn, name and description of the message drug
 	 */
 	public Drug convertToDrug (){
 		Drug realDrug = new Drug();
 		realDrug.setName(name);
-		realDrug.setPrice(price);
 		realDrug.setDescription(description);
 		realDrug.setPzn(pzn);
 		return realDrug;

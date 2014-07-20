@@ -1,44 +1,60 @@
 package de.java.ws;
 
 /**
- * Message Drug is an object representing a drug and used for exchange via rest webservices
- * Depending on the usage, only pzn, name and description are filled (for create and update)
- * or all attributes are filled (for get -> displaying a drug)
+ * Data Object used for exchange of prescription statistics between the pharmacies in a determined span of dates.
+ * 
  */
 public class PrescriptionStatisticsDO implements java.io.Serializable {
 	private static final long serialVersionUID = -7390541876123905009L;
 
 	private int totalNumberOfPrescriptions;
-	private double averageItemsPerPrescription;
-	private double averageTimespanToFulfilment;
+	private double averageNumberOfItemsPerPrescription;
+	private long averageTimeSpanOfFulfilment; // in seconds
 	
+	/**
+	 * Initializes data object with default values. 
+	 * Uses -1 for averageNumberOfItemsPerPrescription and averageTimeSpanOfFulfilment 
+	 * to show they are not valid.
+	 */
 	public PrescriptionStatisticsDO(){
-		
+		totalNumberOfPrescriptions = 0;
+		averageNumberOfItemsPerPrescription = -1;
+		averageTimeSpanOfFulfilment = -1;
 	}
-	
-	// Lots of getters and setters
+
+	/**
+	 * Total number of prescriptions in a pharmacy
+	 * @return total number of prescriptions  
+	 */
 	public int getTotalNumberOfPrescriptions() {
 		return totalNumberOfPrescriptions;
 	}
-
 	public void setTotalNumberOfPrescriptions(int totalNumberOfPrescriptions) {
 		this.totalNumberOfPrescriptions = totalNumberOfPrescriptions;
 	}
-
-	public double getAverageItemsPerPrescription() {
-		return averageItemsPerPrescription;
+	
+	/**
+	 * Average number of items per prescription. 
+	 * Only looks at the prescription with at least 1 drug in the prescription.
+	 * @return average number of items per prescription
+	 */
+	public double getAverageNumberOfItemsPerPrescription() {
+		return averageNumberOfItemsPerPrescription;
 	}
-
-	public void setAverageItemsPerPrescription(double averageItemsPerPrescription) {
-		this.averageItemsPerPrescription = averageItemsPerPrescription;
+	public void setAverageNumberOfItemsPerPrescription(
+			double averageNumberOfItemsPerPrescription) {
+		this.averageNumberOfItemsPerPrescription = averageNumberOfItemsPerPrescription;
 	}
-
-	public double getAverageTimespanToFulfilment() {
-		return averageTimespanToFulfilment;
+	
+	/**
+	 * Average timespan between date of entry and date of fulfilment in seconds
+	 * Only looks at fulfilled prescriptions.
+	 * @return average timespan to fulfilment in seconds
+	 */
+	public long getAverageTimeSpanOfFulfilment() {
+		return averageTimeSpanOfFulfilment;
 	}
-
-	public void setAverageTimespanToFulfilment(double averageTimespanToFulfilment) {
-		this.averageTimespanToFulfilment = averageTimespanToFulfilment;
+	public void setAverageTimeSpanOfFulfilment(long averageTimeSpanOfFulfilment) {
+		this.averageTimeSpanOfFulfilment = averageTimeSpanOfFulfilment;
 	}
-
 }

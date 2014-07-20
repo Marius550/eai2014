@@ -24,7 +24,7 @@ import de.java.ws.MessageDrug;
 @Stateless
 public class DrugServiceBean implements DrugService {
 
-  // URLs of the webservices (Use them in POSTMAN)
+  // URLs of the webservices	
   private static final String BASE_URI_JAVA = "http://localhost:8080/Pharmacy04-Web/api";
   private static final String BASE_URI_DOTNET = "http://localhost:1054/RestService";
 	
@@ -168,10 +168,9 @@ public class DrugServiceBean implements DrugService {
   }
 
   @Override
-  public Drug updateMasterData(int pzn, String name, double price, String description) {
+  public Drug updateMasterData(int pzn, String name, String description) {
     Drug drug = getDrug(pzn);
     drug.setName(name);
-    drug.setPrice(price);
     drug.setDescription(description);
     
     persistUpdateMasterDataToDotNet(drug);
@@ -256,12 +255,11 @@ public class DrugServiceBean implements DrugService {
 	 * Compares the master data (pzn, name and description) of two message drugs
 	 * @param d1 MessageDrug 1 to compare
 	 * @param d2 MessageDrug 2 to compare
-	 * @return true, if the pzn, name, price and description are equal
+	 * @return true, if the pzn, name and description are equal
 	 */
 	private boolean drugMasterDataIsEqual(MessageDrug d1, MessageDrug d2){
 		return d1.getPzn() == d2.getPzn() && 
 				d1.getName() == d2.getName() && 
-				d1.getPrice() == d2.getPrice() && 
 				d1.getDescription() == d2.getDescription();
 	}
 }
