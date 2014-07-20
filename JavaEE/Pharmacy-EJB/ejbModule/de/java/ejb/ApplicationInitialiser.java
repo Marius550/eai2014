@@ -43,7 +43,7 @@ public class ApplicationInitialiser {
   }
 
   private void populateAppWithSampleDrugs() {
-    final Drug aspirin = new Drug(PZN_FOR_SAMPLE_DRUG, "ASPIRIN MINUS C ORANGE 10St");
+    final Drug aspirin = new Drug(PZN_FOR_SAMPLE_DRUG, "ASPIRIN MINUS C ORANGE 10St", 100.00);
     em.persist(aspirin);
     addMoreDrugs();
 
@@ -62,11 +62,11 @@ public class ApplicationInitialiser {
   }
 
   private void addMoreDrugs() {
-    em.persist(new Drug(1715965, "ASPIRIN PLUS C ORANGE 20St"));
-    em.persist(new Drug(451122, "ACC 200 TABS 20St"));
-    em.persist(new Drug(451151, "ACC 200 TABS 40St"));
-    em.persist(new Drug(451139, "ACC 200 TABS 50St"));
-    em.persist(new Drug(451145, "ACC 200 TABS 100St"));
+    em.persist(new Drug(1715965, "ASPIRIN PLUS C ORANGE 20St", 10.00));
+    em.persist(new Drug(451122, "ACC 200 TABS 20St", 20.00));
+    em.persist(new Drug(451151, "ACC 200 TABS 40St", 30.00));
+    em.persist(new Drug(451139, "ACC 200 TABS 50St", 40.00));
+    em.persist(new Drug(451145, "ACC 200 TABS 100St", 50.00));
   }
 
   private Position createPosition(Drug drug, int quantity, ReplenishmentOrder order) {
@@ -97,32 +97,22 @@ public class ApplicationInitialiser {
   }
 
   private void populateAppWithSampleCustomers() {
-    Customer albertAmundsen = new Customer();
-    albertAmundsen.setName("Albert Amundsen");
-    albertAmundsen.setTelephoneNumber("+49 123 456 78");
-    em.persist(albertAmundsen);
+    Customer maxMustermann = new Customer();
+    maxMustermann.setName("Max Mustermann");
+    maxMustermann.setTelephoneNumber("+49 123 456 78");
+    em.persist(maxMustermann);
     
-    Prescription fulfilledPrescription = albertAmundsen.createPrescription();
+    Prescription fulfilledPrescription = maxMustermann.createPrescription();
     fulfilledPrescription.setState(PrescriptionState.FULFILLED);
     fulfilledPrescription.setFulfilmentDate(new Date());
     fulfilledPrescription.setIssuer("Dr F. Ulfilled");
     em.persist(fulfilledPrescription);
     
-    Prescription prescriptionInFulfilling = albertAmundsen.createPrescription();
+    Prescription prescriptionInFulfilling = maxMustermann.createPrescription();
     prescriptionInFulfilling.setState(PrescriptionState.FULFILLING);
     prescriptionInFulfilling.setIssuer("Doc Norris");
     em.persist(prescriptionInFulfilling);
     
-    Prescription prescriptionInChecking = albertAmundsen.createPrescription();
-    prescriptionInChecking.setState(PrescriptionState.CHECKING);
-    prescriptionInChecking.setIssuer("Doc Checker");
-    em.persist(prescriptionInChecking);
-    
-    Prescription prescriptionInEntry = albertAmundsen.createPrescription();
-    prescriptionInEntry.setIssuer("Doctor Who");
-    Drug drug = em.find(Drug.class, PZN_FOR_SAMPLE_DRUG);
-    new Item(drug, prescriptionInEntry);
-    em.persist(prescriptionInEntry);
   }
 
 }

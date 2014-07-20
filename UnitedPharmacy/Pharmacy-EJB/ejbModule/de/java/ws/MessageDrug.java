@@ -12,6 +12,7 @@ public class MessageDrug implements java.io.Serializable {
 	// Master data
 	private int pzn;
 	private String name;
+	private double price;
 	private String description;
 	// Replenishment Configuration
 	private long minimumInventoryLevel;
@@ -35,6 +36,7 @@ public class MessageDrug implements java.io.Serializable {
 		}
 		this.pzn = drug.getPzn();
 		this.name = drug.getName();
+		this.price = drug.getPrice();
 		this.description = drug.getDescription();
 	}
 	
@@ -50,6 +52,12 @@ public class MessageDrug implements java.io.Serializable {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	public String getDescription() {
 		return description;
@@ -95,6 +103,7 @@ public class MessageDrug implements java.io.Serializable {
 	public Drug convertToDrug (){
 		Drug realDrug = new Drug();
 		realDrug.setName(name);
+		realDrug.setPrice(price);
 		realDrug.setDescription(description);
 		realDrug.setPzn(pzn);
 		return realDrug;

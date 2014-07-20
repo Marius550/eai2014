@@ -87,7 +87,7 @@
         <h:dataTable value="#{prescriptionPage.prescription.items}" var="cur"
           rendered="#{prescriptionPage.prescription.state == 'ENTRY' or prescriptionPage.prescription.state == 'FULFILLED'}"
           styleClass="data-table" headerClass="data-cell header-cell" footerClass="data-cell footer-cell"
-          columnClasses="data-cell,data-cell,data-cell">
+          columnClasses="data-cell,data-cell,data-cell,data-cell">
           <h:column>
             <f:facet name="header">PZN</f:facet>
             <h:link outcome="/drug/details.xhtml" value="#{cur.prescribedDrug.pzn}">
@@ -108,6 +108,13 @@
               <h:outputText value="#{prescriptionPage.newItemDrug.name}" id="drugName" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"/>
             </f:facet>
           </h:column>
+          <h:column>
+            <f:facet name="header">Price</f:facet>
+            #{cur.prescribedDrug.price}
+            <f:facet name="footer">
+              <h:outputText value="#{prescriptionPage.newItemDrug.price}" id="drugPrice" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"/>
+            </f:facet>
+          </h:column>
           <h:column rendered="#{prescriptionPage.prescription.state == 'ENTRY'}">
             <h:commandButton value="Remove" action="#{prescriptionPage.remove(cur)}" />
             <f:facet name="footer">
@@ -122,7 +129,7 @@
         <h:dataTable value="#{prescriptionPage.wrappedItems}" var="cur"
           rendered="#{prescriptionPage.prescription.state == 'CHECKING' or prescriptionPage.prescription.state == 'FULFILLING'}"
           styleClass="data-table" headerClass="data-cell header-cell"
-          columnClasses="data-cell,data-cell#{prescriptionPage.prescription.state == 'CHECKING' ? '' : ',data-cell'},data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'FULFILLING' ? ',data-cell' : ''}">
+          columnClasses="data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'CHECKING' ? '' : ',data-cell'},data-cell,data-cell,data-cell#{prescriptionPage.prescription.state == 'FULFILLING' ? ',data-cell' : ''}">
           <h:column>
             <f:facet name="header">PZN</f:facet>
             <h:link outcome="/drug/details.xhtml" value="#{cur.prescribedDrug.pzn}">
@@ -136,6 +143,10 @@
           <h:column rendered="#{prescriptionPage.prescription.state != 'CHECKING'}">
             <f:facet name="header">State</f:facet>
             #{cur.state}
+          </h:column>
+                    <h:column>
+            <f:facet name="header">Price</f:facet>
+            #{cur.prescribedDrug.price}
           </h:column>
           <h:column>
             <f:facet name="header">In Stock</f:facet>

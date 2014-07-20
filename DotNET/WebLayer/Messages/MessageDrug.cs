@@ -15,6 +15,8 @@ namespace WebLayer.Messages
         [DataMember]
         public string name { get; set; }
 
+        public double price { get; set; }
+
         [DataMember]
         public string description { get; set; }
 

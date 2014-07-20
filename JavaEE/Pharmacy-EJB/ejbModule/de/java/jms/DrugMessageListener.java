@@ -30,16 +30,18 @@ public class DrugMessageListener implements MessageListener {
 			
 			int pzn = message.getIntProperty("pzn");
 			String name = message.getStringProperty("name");
+			double price = message.getDoubleProperty("price");
 			String description = message.getStringProperty("description");
 
 			if(action.equals("create")) {
 				Drug newDrug = new Drug();
 				newDrug.setPzn(pzn);
+				newDrug.setPrice(price);
 				newDrug.setDescription(description);
 				newDrug.setName(name);
 				drugService.createDrug(newDrug);
 			} else if(action.equals("update")) {
-				drugService.updateMasterData(pzn, name, description);
+				drugService.updateMasterData(pzn, name, price, description);
 			}
 		} catch (JMSException e) {
 			e.printStackTrace();

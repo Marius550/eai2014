@@ -65,7 +65,7 @@ public class DrugPage implements Serializable {
   }
 
   public String submitMasterDataChanges() {
-    drug = drugService.updateMasterData(drug.getPzn(), drug.getName(), drug.getDescription());
+    drug = drugService.updateMasterData(drug.getPzn(), drug.getName(),drug.getPrice(), drug.getDescription());
     return toDrugPage();
   }
 

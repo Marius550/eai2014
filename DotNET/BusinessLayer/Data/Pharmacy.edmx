@@ -63,6 +63,7 @@
     <Property Name="Stock" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="MinimumInventoryLevel" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="OptimalInventoryLevel" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="Price" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="InventoryEventSet">
     <Key>
@@ -301,6 +302,7 @@
           <Property Type="Int32" Name="MinimumInventoryLevel" Nullable="false" DefaultValue="0" />
           <Property Type="Int32" Name="OptimalInventoryLevel" Nullable="false" DefaultValue="0" />
           <NavigationProperty Name="Events" Relationship="Pharmacy.BusinessLayer.Data.DrugInventoryEvent" FromRole="Drug" ToRole="InventoryEvent" />
+          <Property Name="Price" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="InventoryEvent" Abstract="true">
           <Key>
@@ -461,6 +463,7 @@
           <ScalarProperty Name="Stock" ColumnName="Stock" />
           <ScalarProperty Name="MinimumInventoryLevel" ColumnName="MinimumInventoryLevel" />
           <ScalarProperty Name="OptimalInventoryLevel" ColumnName="OptimalInventoryLevel" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

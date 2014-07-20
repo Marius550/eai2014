@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/20/2014 10:58:09
+-- Date Created: 07/20/2014 16:58:51
 -- Generated from EDMX file: C:\Users\Marius\Documents\GitHub\eai2014\DotNET\BusinessLayer\Data\Pharmacy.edmx
 -- --------------------------------------------------
 
@@ -91,7 +91,8 @@ CREATE TABLE [dbo].[DrugSet] (
     [Description] nvarchar(max)  NULL,
     [Stock] int  NOT NULL,
     [MinimumInventoryLevel] int  NOT NULL,
-    [OptimalInventoryLevel] int  NOT NULL
+    [OptimalInventoryLevel] int  NOT NULL,
+    [Price] float  NOT NULL
 );
 GO
 

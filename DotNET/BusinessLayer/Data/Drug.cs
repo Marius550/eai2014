@@ -44,6 +44,8 @@ public partial class Drug
 
     public int OptimalInventoryLevel { get; set; }
 
+    public double Price { get; set; }
+
 
 
     public virtual ICollection<InventoryEvent> Events { get; set; }

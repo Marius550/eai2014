@@ -20,7 +20,7 @@ public interface DrugService {
 
   Drug createDrug(Drug drug);
 
-  Drug updateMasterData(int pzn, String name, String description);
+  Drug updateMasterData(int pzn, String name, double price, String description);
 
   Drug updateReplenishmentConfig(int pzn, long minimumInventoryLevel,
       long optimalInventoryLevel);

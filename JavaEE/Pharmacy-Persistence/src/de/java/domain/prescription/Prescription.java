@@ -25,8 +25,6 @@ import de.java.domain.customer.Customer;
 public class Prescription implements Serializable {
 
   private static final long serialVersionUID = 4728846105423995587L;
-
-  //Diagnosis would be nice
   
   @Id
   @GeneratedValue

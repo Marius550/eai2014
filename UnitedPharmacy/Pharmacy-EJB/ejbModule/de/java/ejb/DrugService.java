@@ -58,10 +58,11 @@ Drug createDrug(Drug drug);
   /**
  * @param pzn of the drug to be updated
  * @param name new name of the drug
+ * @param price new name of the drug
  * @param description new description of the drug
  * @return the drug after it is updated in the HO database and also in both JaVa and C Sharpe databases via webservices
  */
-Drug updateMasterData(int pzn, String name, String description);
+Drug updateMasterData(int pzn, String name, double price, String description);
 
 
 /**

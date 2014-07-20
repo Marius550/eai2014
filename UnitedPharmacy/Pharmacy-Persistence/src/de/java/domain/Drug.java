@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -22,15 +23,20 @@ public class Drug implements Serializable {
   @NotNull(message="Name required")
   @Size(min=1, message="Name required")
   private String name;
-
+  
+  @NotNull(message="Price required")
+  @Min(value=0, message="Price can not be negative")
+  private double price;
+  
   private String description;
 
   public Drug() { }
 
-  public Drug(int pzn, String name) {
-    this.pzn = pzn;
-    this.name = name;
-  }
+  public Drug(int pzn, String name, double price) {
+	    this.pzn = pzn;
+	    this.name = name;
+	    this.price = price;
+	  }
 
   @Override
   public String toString() {
@@ -51,6 +57,14 @@ public class Drug implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+  
+  public double getPrice() {
+	    return price;
+  }
+
+  public void setPrice(double price) {
+	    this.price = price;
   }
 
   public String getDescription() {

@@ -25,7 +25,7 @@
     </h:form>
     <h:dataTable value="#{drugList.drugs}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
       rendered="#{not empty drugList.drugs}" footerClass="data-cell footer-cell">
       <h:column>
         <f:facet name="header">PZN</f:facet>
@@ -34,6 +34,11 @@
       <h:column>
         <f:facet name="header">Name</f:facet>
         #{cur.name}
+      </h:column>
+      <h:column>
+      <f:facet name="header">Price</f:facet>
+        #{cur.price}
+      <f:facet name="footer">#{drugList.sumUpPrices()}</f:facet>
       </h:column>
       <h:column>
 	      <f:facet name="header">Stock</f:facet>
