@@ -64,10 +64,10 @@ namespace Pharmacy.BusinessLayer.Logic
 
         public static Drug UpdateDrug(Drug drug)
         {
-            return UpdateDrug(drug, drug.Name, drug.Description, drug.Price, drug.MinimumInventoryLevel, drug.OptimalInventoryLevel);
+            return UpdateDrug(drug, drug.Name, drug.Price, drug.Description, drug.MinimumInventoryLevel, drug.OptimalInventoryLevel);
         }
 
-        public static Drug UpdateDrug(Drug drug, String name, String description, double price, int minimumInventoryLevel, int optimalInventoryLevel)
+        public static Drug UpdateDrug(Drug drug, String name, double price, String description, int minimumInventoryLevel, int optimalInventoryLevel)
         {
             Util.ConvertEmptyToNull(ref description);
 

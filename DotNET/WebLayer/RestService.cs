@@ -41,7 +41,7 @@ namespace WebLayer
         public MessageDrug UpdateDrug(MessageDrug drug, string pzn)
         {
             Pharmacy.BusinessLayer.Data.Drug d = DrugService.GetDrug(Int32.Parse(pzn));
-            DrugService.UpdateDrug(d, drug.name, drug.description, drug.price, d.MinimumInventoryLevel, d.OptimalInventoryLevel);
+            DrugService.UpdateDrug(d, drug.name, drug.price, drug.description, d.MinimumInventoryLevel, d.OptimalInventoryLevel);
             return Drug(pzn);
         }
 
