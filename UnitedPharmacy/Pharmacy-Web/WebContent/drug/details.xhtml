@@ -21,10 +21,12 @@
         <h:outputText value="#{drugPage.drug.pzn}" />
         Name
         <h:inputText tabindex="1" id="name" value="#{drugPage.drug.name}" />
+        Price
+        <h:inputText tabindex="2" id="price" value="#{drugPage.drug.price}" />
         Description
-        <h:inputTextarea tabindex="2" id="description" value="#{drugPage.drug.description}" />
+        <h:inputTextarea tabindex="3" id="description" value="#{drugPage.drug.description}" />
         <f:facet name="footer">
-          <h:commandButton tabindex="3" value="Submit changes" action="#{drugPage.submitMasterDataChanges}" />
+          <h:commandButton tabindex="4" value="Submit changes" action="#{drugPage.submitMasterDataChanges}" />
         </f:facet>
       </h:panelGrid>
       <h:messages for="name" styleClass="error" />

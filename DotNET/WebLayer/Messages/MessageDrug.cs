@@ -48,6 +48,7 @@ namespace WebLayer.Messages
         {
             pzn = drug.PZN;
             name = drug.Name;
+            price = drug.Price;
             description = drug.Description;
             minimumInventoryLevel = drug.MinimumInventoryLevel;
             optimalInventoryLevel = drug.OptimalInventoryLevel;

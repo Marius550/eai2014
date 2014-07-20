@@ -142,6 +142,10 @@ public class DrugList implements Serializable {
     return "/drug/list.xhtml?faces-redirect=true&search=" + searchTerm;
   }
   
+  public String refresh() {
+	    return "/drug/list.xhtml";
+	  }
+  
   public boolean isInitialized(){
 	  return !drugService.getAllDrugs().isEmpty();
   }

@@ -25,6 +25,16 @@
                     <asp:TextBox ID="Name" runat="server" Text='<%# Bind("Name") %>' TextMode="SingleLine" ReadOnly="true" Enabled="false" />
                 </EditItemTemplate>
             </asp:TemplateField>
+
+            <asp:TemplateField HeaderText="Price">
+                <ItemTemplate>
+                    <asp:Label ID="Price" runat="server" Text='<%# Eval("Price") %>' />
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:TextBox ID="Price" runat="server" Text='<%# Bind("Price") %>' TextMode="MultiLine" ReadOnly="true" Enabled="false" />
+                </EditItemTemplate>
+            </asp:TemplateField>
+
             <asp:TemplateField HeaderText="Description">
                 <ItemTemplate>
                     <asp:Label ID="Description" runat="server" Text='<%# Eval("Description") %>' />

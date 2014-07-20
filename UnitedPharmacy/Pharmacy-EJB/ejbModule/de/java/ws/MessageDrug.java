@@ -97,7 +97,7 @@ public class MessageDrug implements java.io.Serializable {
 	}
 	
 	/**
-	 * Converts a Message drug to a real drug object ONLY USING pzn, name and description
+	 * Converts a Message drug to a real drug object ONLY USING pzn, name, price and description
 	 * @return
 	 */
 	public Drug convertToDrug (){
