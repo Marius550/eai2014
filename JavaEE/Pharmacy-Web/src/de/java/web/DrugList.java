@@ -33,5 +33,9 @@ public class DrugList implements Serializable {
   public String search() {
     return "/drug/list.xhtml?faces-redirect=true&search=" + searchTerm;
   }
+  
+  public String refresh() {
+	return "/drug/list.xhtml";
+  }
 
 }

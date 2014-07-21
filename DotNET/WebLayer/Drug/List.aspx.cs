@@ -27,6 +27,15 @@ namespace WebLayer.Drug
             }
         }
 
+        protected void RefreshButton_Click(object sender, EventArgs e)
+        {
+            RedirectToSelf();
+        }
+        private void RedirectToSelf()
+        {
+            Response.Redirect("List.aspx");
+        }
+
         private string PznOrZero(string pzn)
         {
             int parseResult;
