@@ -16,6 +16,7 @@
       <h:inputText value="#{drugList.searchTerm}"></h:inputText>
       <h:commandButton action="#{drugList.search}" value="search" />
       <h:commandButton action="#{drugList.refresh}" value="refresh" />
+      <h:commandButton action="#{drugList.testButton}" value="testButton" />
     </h:form>
     <h:dataTable value="#{drugList.drugs}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
@@ -28,10 +29,12 @@
       <h:column>
         <f:facet name="header">Name</f:facet>
         #{cur.name}
+               <f:facet name="footer">Test</f:facet>
       </h:column>
       <h:column>
         <f:facet name="header">Price</f:facet>
         #{cur.price}
+        <f:facet name="footer">Test</f:facet>
       </h:column>
       <h:column>
         <f:facet name="header">Stock</f:facet>

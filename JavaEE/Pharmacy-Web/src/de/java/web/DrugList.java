@@ -37,5 +37,13 @@ public class DrugList implements Serializable {
   public String refresh() {
 	return "/drug/list.xhtml";
   }
+  
+  public void testButton() { 
+	  int i = 5;
+	  int j = 5;
+	  int x = 0;
+	  x = i + j;
+	System.out.println("Calculation x = :" + x);
+  }
 
 }

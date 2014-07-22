@@ -116,8 +116,8 @@ public class DrugList implements Serializable {
   }
   
   /**
-   * Sums up the stock for all currently displayed drugs (i.e. search is considered)
-   * @return sum of stock of all displayed drugs at C.Sharpe and JaVa
+   * Sums up the prices for all currently displayed drugs (i.e. search is considered)
+   * @return sum of prices of all displayed drugs at C.Sharpe and JaVa
    */
   public double sumUpPrices(){
 	  double summedUpPrice = 0;
