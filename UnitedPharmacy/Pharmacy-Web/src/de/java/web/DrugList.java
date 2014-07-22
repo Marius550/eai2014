@@ -126,6 +126,9 @@ public class DrugList implements Serializable {
 		  if (getjDrugs().get(d.getPzn()) != null) {
 			  summedUpPrice += getjDrugs().get(d.getPzn()).getPrice();
 		  }
+	  	  if (getcDrugs().get(d.getPzn()) != null) {
+	  		summedUpPrice += getcDrugs().get(d.getPzn()).getStock();
+	  	  }
 	  }
 	  return summedUpPrice;
   }
