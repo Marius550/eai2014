@@ -11,6 +11,8 @@ import javax.persistence.PersistenceContext;
 import de.java.domain.Drug;
 import de.java.ejb.DrugService;
 
+//public class DrugList<pzn> implements Serializable {
+
 @ManagedBean
 public class DrugList implements Serializable {
   private static final long serialVersionUID = 9000977856559982072L;
@@ -22,12 +24,14 @@ public class DrugList implements Serializable {
   
   @PersistenceContext
   private EntityManager em;
+  
+  //@Id
+  //private int pzn;
 
   public Collection<Drug> getDrugs() {
     return drugService.getAllDrugsLike(searchTerm);
   }
   
-
   public Collection<Drug> getAllDrugs() {
     return em.createQuery("FROM Drug", Drug.class).getResultList();
   }
@@ -43,8 +47,32 @@ public class DrugList implements Serializable {
 
   public void getParticularDrugInConsole() {
 	 System.out.println("getParticularDrugInConsole()");
-	 System.out.println(getDrug(2348234));
+	 System.out.println(getDrug(451151));//.getPrice(); is working
   }
+  
+  public int getAmountOfDrugsInCollection() {
+	  return getAllDrugs().size();
+	  //Alternative
+	  //Object[] list = getAllDrugs().toArray();
+	  //int i = list.length;
+	  }
+  
+  public void testCollection1() {
+	Object[] list = getAllDrugs().toArray();
+	
+	for (int j = 0; j < list.length; j++) {
+		System.out.println(list[j]);
+	}
+  }
+  
+  public void testCollection2() {
+	//	 Collection<Drug> list;
+	//	 Map<pzn,Drug> map = new HashMap<pzn,Drug>();
+	//	 for (Drug i : list) map.put(i.getPzn(), Drug); 
+	  
+	  System.out.println(getAllDrugs());
+	  }
+  
 
   
   public String getSearchTerm() {
