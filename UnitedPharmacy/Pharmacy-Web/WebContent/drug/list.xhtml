@@ -21,6 +21,7 @@
       <h:inputText value="#{drugList.searchTerm}"></h:inputText>
       <h:commandButton action="#{drugList.search}" value="search" />
       <h:commandButton action="#{drugList.refresh}" value="refresh" />
+      <h:commandButton action="#{drugList.sumUpPricesPrint}" value="sumUpPricesPrint" />
       &nbsp;
       <h:link outcome="/drug/create.xhtml">Create/add new drug</h:link>
     </h:form>

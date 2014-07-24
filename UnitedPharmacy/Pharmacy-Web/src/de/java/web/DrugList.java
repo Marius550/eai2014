@@ -101,7 +101,7 @@ public class DrugList implements Serializable {
    * Sums up the stock for all currently displayed drugs (i.e. search is considered)
    * @return sum of stock of all displayed drugs at C.Sharpe and JaVa
    */
-  public int sumUpStock (){
+  public int sumUpStock(){
 	  int stock = 0;
 	  for (Drug d : getDrugs()){
 		  // Iterate only through displayed drugs in order to display right sums
@@ -127,9 +127,10 @@ public class DrugList implements Serializable {
 			  summedUpPrice += getjDrugs().get(d.getPzn()).getPrice();
 		  }
 	  	  if (getcDrugs().get(d.getPzn()) != null) {
-	  		summedUpPrice += getcDrugs().get(d.getPzn()).getStock();
+	  		summedUpPrice += getcDrugs().get(d.getPzn()).getPrice();
 	  	  }
 	  }
+	  summedUpPrice = summedUpPrice * 1/2;
 	  return summedUpPrice;
   }
   

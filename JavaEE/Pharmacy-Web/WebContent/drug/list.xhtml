@@ -16,10 +16,7 @@
       <h:inputText value="#{drugList.searchTerm}"></h:inputText>
       <h:commandButton action="#{drugList.search}" value="search" />
       <h:commandButton action="#{drugList.refresh}" value="refresh" />
-      <h:commandButton action="#{drugList.getAllDrugsInConsole}" value="getAllDrugsInConsole" />
-      <h:commandButton action="#{drugList.getParticularDrugInConsole}" value="getParticularDrugInConsole" />
-      <h:commandButton action="#{drugList.testCollection1}" value="testCollection1" />
-      <h:commandButton action="#{drugList.testCollection2}" value="testCollection2" />
+      <h:commandButton action="#{drugList.getAllDrugsInConsole}" value="getAllDrugsInConsole" /> 
     </h:form>
     <h:dataTable value="#{drugList.drugs}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
@@ -37,11 +34,12 @@
       <h:column>
         <f:facet name="header">Price</f:facet>
         #{cur.price}
-        <f:facet name="footer">Test</f:facet>
+      <f:facet name="footer">#{drugList.sumUpPricesPharmacyDrugs()}</f:facet>
       </h:column>
       <h:column>
         <f:facet name="header">Stock</f:facet>
         #{cur.stock}
+      <f:facet name="footer">#{drugList.sumUpStockPharmacyDrugs()}</f:facet>
       </h:column>
       <h:column>
         <h:link outcome="/drug/details.xhtml" value="Details">
