@@ -21,7 +21,7 @@
       <h:inputText value="#{drugList.searchTerm}"></h:inputText>
       <h:commandButton action="#{drugList.search}" value="search" />
       <h:commandButton action="#{drugList.refresh}" value="refresh" />
-      <h:commandButton action="#{drugList.sumUpPricesPrint}" value="sumUpPricesPrint" />
+      <h:commandButton action="#{drugList.removeDrug2}" value="removeDrug2" />
       &nbsp;
       <h:link outcome="/drug/create.xhtml">Create/add new drug</h:link>
     </h:form>
@@ -36,7 +36,7 @@
       <h:column>
         <f:facet name="header">Name</f:facet>
         #{cur.name}
-       <f:facet name="footer">Test</f:facet>
+        <f:facet name="footer">Amount of drugs: #{drugList.getAmountOfPharmacyHODrugs()}</f:facet>
       </h:column>
       <h:column>
       <f:facet name="header">Price</f:facet>

@@ -28,6 +28,11 @@ public class DrugList implements Serializable {
     return drugService.getAllDrugsLike(searchTerm);
   }
   
+  //testing
+//  public void removeDrug1() {
+//	  drugService.getAllDrugs().remove(getjDrugs());
+//	  }
+  
   public Map<Integer, MessageDrug> getjDrugs(){
 	  if (jDrugs == null){
 		  jDrugs = drugService.getAllDrugsFromJava();
@@ -132,6 +137,25 @@ public class DrugList implements Serializable {
 	  }
 	  summedUpPrice = summedUpPrice * 1/2;
 	  return summedUpPrice;
+  }
+  
+  /**
+   * Gets the amount for all currently displayed drugs (i.e. search is considered)
+   * @return amount of all displayed drugs at C.Sharpe and JaVa
+   */
+  public int getAmountOfPharmacyHODrugs(){
+	  int amount = 0;
+	  for (Drug d : getDrugs()){
+		  // Iterate only through displayed drugs in order to display right sums
+		  if (getjDrugs().get(d.getPzn()) != null) {
+			  amount += getjDrugs().size();
+		  }
+	  	  if (getcDrugs().get(d.getPzn()) != null) {
+	  		amount += getcDrugs().size();
+	  	  }
+	  }
+	  amount = amount * 1/20;
+	  return amount;
   }
   
   public String getSearchTerm() {

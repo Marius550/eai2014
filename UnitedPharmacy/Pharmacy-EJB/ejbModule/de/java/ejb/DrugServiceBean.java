@@ -90,6 +90,10 @@ public class DrugServiceBean implements DrugService {
     return em.find(Drug.class, pzn);
   }
   
+//  public void removeDrug(int pzn) {
+//    em.remove(pzn);
+//  }
+  
   @Override
   public MessageDrug getDrugFromJava(int pzn){
 	  return prepareDrugResourceClientJava().getDrug(pzn);

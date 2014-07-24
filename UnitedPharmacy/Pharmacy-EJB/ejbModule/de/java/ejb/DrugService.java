@@ -36,7 +36,7 @@ Collection<Drug> getAllDrugsLike(String searchTerm);
  * @return drug with the pzn from the database of the HO
  */
 Drug getDrug(int pzn);
-  
+
   /**
  * @param pzn
  * @return drug with the pzn from the JaVa pharmacy database, accessed via webservices
