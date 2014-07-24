@@ -5,6 +5,8 @@ import static de.java.web.util.Util.errorMessage;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+//import java.util.HashMap;
+//import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -42,6 +44,8 @@ public class PrescriptionPage implements Serializable {
 
   private Collection<WrappedItem> wrappedItems;
 
+//  private Map<Integer, WrappedItem> prescriptionItems;
+  
   private Date fulfilmentDate = new Date();
 
   public long getId() {
@@ -69,6 +73,19 @@ public class PrescriptionPage implements Serializable {
     }
     Util.redirectToRoot();
   }
+  
+  /**
+   * Convert Collection <Drug> into HashMap and assign pzn to each map element
+ * @param collection
+ * @return Map<Integer, Drug> map
+ */
+//private Map<Integer, WrappedItem> convertPharmacyDrugCollectionIntoHashMap(Collection<WrappedItem> collection){
+//	  Map<Integer, WrappedItem> map = new HashMap<Integer, WrappedItem>();
+//	  for (WrappedItem mWrappedItem : collection){
+//		  map.put(mWrappedItem.getId(), mWrappedItem);
+//	  }
+//	  return map;
+//  }
 
   public String update() {
     prescriptionService.updateEntryData(prescription.getId(),
@@ -102,6 +119,21 @@ public class PrescriptionPage implements Serializable {
   public String cancel() {
     prescriptionService.cancel(prescription.getId());
     return toPrescriptionList();
+  }
+  
+  public int getAmountOfItemsInPrescription() {
+	  return prescriptionService.getPrescriptionWithItems(id).getItems().size();
+  }
+  
+  public void PrintToConsole() {
+	  System.out.println("Size: " + prescriptionService.getPrescriptionWithItems(10).getItems().size());
+	  
+		Object[] list = prescriptionService.getPrescriptionWithItems(10).getItems().toArray();
+		
+		for (int j = 0; j < list.length; j++) {
+			System.out.println(list[j]);
+		}
+		System.out.println(list);
   }
 
   private String toPrescriptionList() {

@@ -22,8 +22,7 @@
         </h:link>
       </h2>
       <h:form>
-        <h:panelGrid columns="3" columnClasses="label, value form-input"
-          footerClass="form-footer" styleClass="details-table">
+        <h:panelGrid columns="3" columnClasses="label, value form-input" footerClass="form-footer" styleClass="details-table">
           State
           <h:outputText value="#{prescriptionPage.prescription.state}" />
           <h:outputText />
@@ -41,6 +40,10 @@
             <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
           </h:outputText>
           <h:messages for="issueDate" styleClass="error"/>
+          
+          Amount of drugs 
+          <h:outputText value="#{prescriptionPage.getAmountOfItemsInPrescription()}" id="itemsAmount" tabindex="5" />
+          <h:messages for="itemsAmount" styleClass="error"/>
           
           Entered on
           <h:inputText value="#{prescriptionPage.prescription.entryDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="entryDate" tabindex="3">
@@ -62,23 +65,28 @@
           </h:outputText>
           <h:messages for="fulfilmentDate" styleClass="error" />
           
+          
           <f:facet name="footer">
             <h:commandButton value="Update prescription"
               action="#{prescriptionPage.update()}"
               rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"
-              tabindex="5" />
+              tabindex="6" />
             <h:commandButton value="Return to #{prescriptionPage.prescription.state.previous}"
               action="#{prescriptionPage.returnToPrevious}"
               rendered="#{prescriptionPage.prescription.state.reversible}"
-              tabindex="6" />
+              tabindex="7" />
             <h:commandButton value="Proceed to #{prescriptionPage.prescription.state.next}"
               action="#{prescriptionPage.proceed}"
               rendered="#{prescriptionPage.proceedable}"
-              tabindex="7" />
+              tabindex="8" />
             <h:commandButton value="Cancel"
               action="#{prescriptionPage.cancel()}"
               rendered="#{prescriptionPage.prescription.state.cancellable}"
-              tabindex="8" />
+              tabindex="9" />
+            <h:commandButton value="PrintToConsole"
+              action="#{prescriptionPage.PrintToConsole()}"
+              rendered="#{prescriptionPage.prescription.state.cancellable}"
+              tabindex="10" />
           </f:facet>
         </h:panelGrid>
         
@@ -144,7 +152,7 @@
             <f:facet name="header">State</f:facet>
             #{cur.state}
           </h:column>
-                    <h:column>
+          <h:column>
             <f:facet name="header">Price</f:facet>
             #{cur.prescribedDrug.price}
           </h:column>

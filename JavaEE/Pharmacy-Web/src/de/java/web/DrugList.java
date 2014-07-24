@@ -78,7 +78,7 @@ public void iterateOverAllDrugsArray() {
  * @param collection
  * @return Map<Integer, Drug> map
  */
-private Map<Integer, Drug> convertMessageDrugCollectionIntoHashMap(Collection<Drug> collection){
+private Map<Integer, Drug> convertPharmacyDrugCollectionIntoHashMap(Collection<Drug> collection){
 	  Map<Integer, Drug> map = new HashMap<Integer, Drug>();
 	  for (Drug mDrug : collection){
 		  map.put(mDrug.getPzn(), mDrug);
@@ -91,7 +91,7 @@ private Map<Integer, Drug> convertMessageDrugCollectionIntoHashMap(Collection<Dr
  */
 public Map<Integer, Drug> getAllDrugsToHashMap(){
 	  if (PharmacyDrugs == null){
-		  PharmacyDrugs = convertMessageDrugCollectionIntoHashMap(getAllDrugs());
+		  PharmacyDrugs = convertPharmacyDrugCollectionIntoHashMap(getAllDrugs());
 	  }
 	  return PharmacyDrugs;
   }
