@@ -44,12 +44,13 @@ public class DrugList implements Serializable {
   /**
  * Just some testing which is print out in the console
  */
-public void getAllDrugsInConsole() {
-	 System.out.println("getAllDrugsInConsole()");
-	 System.out.println(getAllDrugs());
-	 System.out.println("getParticularDrugInConsole()");
-	 System.out.println(getDrug(451151));//.getPrice(); is working
-  }
+//public void getAllDrugsInConsole() {
+//	 System.out.println("getAllDrugsInConsole()");
+//	 System.out.println(getAllDrugs());
+//	 System.out.println("getParticularDrugInConsole()");
+//	 System.out.println(getDrug(451151));//.getPrice(); is working
+//	 System.out.println("getAllDrugsToHashMap: " + getAllDrugsToHashMap());
+//  }
   
   /**
  * @return The amount of PharmacyDrugs (counts the Collection<Drug> elements)

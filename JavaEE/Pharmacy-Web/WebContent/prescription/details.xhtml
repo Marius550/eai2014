@@ -41,12 +41,20 @@
           </h:outputText>
           <h:messages for="issueDate" styleClass="error"/>
           
+          Id 
+          <h:outputText value="#{prescriptionPage.getPrescriptionId()}" id="getPrescriptionId" tabindex="3" />
+          <h:messages for="getPrescriptionId" styleClass="error"/>
+          
           Amount of drugs 
-          <h:outputText value="#{prescriptionPage.getAmountOfItemsInPrescription()}" id="itemsAmount" tabindex="5" />
+          <h:outputText value="#{prescriptionPage.getAmountOfItemsInPrescription()}" id="itemsAmount" tabindex="4" />
           <h:messages for="itemsAmount" styleClass="error"/>
           
+          Total price
+          <h:outputText value="#{prescriptionPage.getPriceOfPrescriptionItems()}" id="getPrescriptionTotalPrice" tabindex="5" />
+          <h:messages for="getPrescriptionTotalPrice" styleClass="error"/>
+          
           Entered on
-          <h:inputText value="#{prescriptionPage.prescription.entryDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="entryDate" tabindex="3">
+          <h:inputText value="#{prescriptionPage.prescription.entryDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="entryDate" tabindex="6">
             <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
           </h:inputText>
           <h:outputText value="#{prescriptionPage.prescription.entryDate}" rendered="#{prescriptionPage.prescription.state != 'ENTRY'}">
@@ -55,7 +63,7 @@
           <h:messages for="entryDate" styleClass="error"/>
           
           <h:outputText value="Fulfilment date" rendered="#{prescriptionPage.prescription.state == 'FULFILLING' or prescriptionPage.prescription.state == 'FULFILLED'}" />
-          <h:inputText value="#{prescriptionPage.fulfilmentDate}" rendered="#{prescriptionPage.prescription.state == 'FULFILLING'}" id="fulfilmentDate" tabindex="4"
+          <h:inputText value="#{prescriptionPage.fulfilmentDate}" rendered="#{prescriptionPage.prescription.state == 'FULFILLING'}" id="fulfilmentDate" tabindex="7"
             required="true" requiredMessage="Fulfilment date required"
             disabled="#{not prescriptionPage.proceedable}">
             <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
@@ -65,31 +73,25 @@
           </h:outputText>
           <h:messages for="fulfilmentDate" styleClass="error" />
           
-          
           <f:facet name="footer">
             <h:commandButton value="Update prescription"
               action="#{prescriptionPage.update()}"
               rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"
-              tabindex="6" />
+              tabindex="8" />
             <h:commandButton value="Return to #{prescriptionPage.prescription.state.previous}"
               action="#{prescriptionPage.returnToPrevious}"
               rendered="#{prescriptionPage.prescription.state.reversible}"
-              tabindex="7" />
+              tabindex="9" />
             <h:commandButton value="Proceed to #{prescriptionPage.prescription.state.next}"
               action="#{prescriptionPage.proceed}"
               rendered="#{prescriptionPage.proceedable}"
-              tabindex="8" />
+              tabindex="10" />
             <h:commandButton value="Cancel"
               action="#{prescriptionPage.cancel()}"
               rendered="#{prescriptionPage.prescription.state.cancellable}"
-              tabindex="9" />
-            <h:commandButton value="PrintToConsole"
-              action="#{prescriptionPage.PrintToConsole()}"
-              rendered="#{prescriptionPage.prescription.state.cancellable}"
-              tabindex="10" />
+              tabindex="11" />
           </f:facet>
         </h:panelGrid>
-        
         
         <h3>Prescribed drugs</h3>
         <h:dataTable value="#{prescriptionPage.prescription.items}" var="cur"

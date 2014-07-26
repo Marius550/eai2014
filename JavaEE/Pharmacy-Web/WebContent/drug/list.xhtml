@@ -16,7 +16,6 @@
       <h:inputText value="#{drugList.searchTerm}"></h:inputText>
       <h:commandButton action="#{drugList.search}" value="search" />
       <h:commandButton action="#{drugList.refresh}" value="refresh" />
-      <h:commandButton action="#{drugList.getAllDrugsInConsole}" value="getAllDrugsInConsole" /> 
     </h:form>
     <h:dataTable value="#{drugList.drugs}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
