@@ -5,7 +5,6 @@ import static de.java.web.util.Util.errorMessage;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +36,8 @@ public class PrescriptionPage implements Serializable {
   @EJB
   private DrugService drugService;
 
+  //private Map<Long, Prescription> Prescriptions;
+  
   private long id;
   private Prescription prescription;
 
@@ -117,6 +118,12 @@ public class PrescriptionPage implements Serializable {
 	  return prescriptionService.getPrescription(id).getId();
   }
   
+//  public long getPrescriptionId2(long id) {
+//		return id;
+//		//#{prescriptionPage.getPrescriptionId2(cur.id)}
+//		//Only applicable in column
+//	}
+  
   /**
    * Convert Collection <Item> into HashMap and assign id to each map element
  * @param collection
@@ -138,14 +145,14 @@ public Map<Long, Item> getAllPrescriptionItemsToHashMap(){
 }
 
 public double getPriceOfPrescriptionItems(){
-	  double itemPrice = 0;
+	  double totalPrice = 0;
 	  for (Item i : prescriptionService.getPrescriptionWithItems(id).getItems()){
-		  // Iterate only through displayed itmes in order to display right sums
+		  // Iterate only through displayed items in order to display right sums
 		  if (getAllPrescriptionItemsToHashMap().get(i.getId()) != null) {
-			  itemPrice += getAllPrescriptionItemsToHashMap().get(i.getId()).getPrescribedDrug().getPrice();
+			  totalPrice += getAllPrescriptionItemsToHashMap().get(i.getId()).getPrescribedDrug().getPrice();
 		  }
 	  }
-	  return itemPrice;
+	  return totalPrice;
 }
 
   private String toPrescriptionList() {
@@ -220,6 +227,8 @@ public double getPriceOfPrescriptionItems(){
   public void setFulfilmentDate(Date fulfilmentDate) {
     this.fulfilmentDate = fulfilmentDate;
   }
+  
+}
 
 //testing...
 //  public void PrintToConsole() {
@@ -233,4 +242,55 @@ public double getPriceOfPrescriptionItems(){
 //		System.out.println(list);
 //  }
   
-}
+//public void getPrescription(long id) {
+//em.persist(totalPrice);
+//}
+
+
+//public double getPriceOfPrescriptionItemWithId() {
+//	double itemPrice = 0;
+//
+//	for (Item i : prescriptionService.getPrescriptionWithItems(id).getItems()){
+//		itemPrice += getAllPrescriptionItemsToHashMap().get(i.getId()).getPrescribedDrug().getPrice();	
+//		//System.out.println("id: " + id);
+//	}
+//	return itemPrice;
+//}	
+  
+//private Map<Long, Prescription> convertPharmacyPrescriptionCollectionIntoHashMap(Collection<Prescription> collection){
+//  Map<Long, Prescription> map = new HashMap<Long, Prescription>();
+//  for (Prescription mPrescription : collection){
+//	  map.put(mPrescription.getId(), mPrescription);
+//  }
+//  return map;
+//}
+//
+//public Map<Long, Prescription> getAllPrescriptionsToHashMap(){
+//  if (Prescriptions == null){
+//	  Prescriptions = convertPharmacyPrescriptionCollectionIntoHashMap(prescriptionService.getAllPrescriptions());
+//  }
+//  return Prescriptions;
+//}
+//
+//public double getTotalPriceOfPrescription(long id){
+//double value = 0;
+//  for (Prescription p : prescriptionService.getAllPrescriptions()){
+//	  // Iterate only through displayed items in order to display right sums
+//	  if (getAllPrescriptionsToHashMap().get(p.getId()) != null) {
+//		  
+//		  getAllPrescriptionsToHashMap().get(p.getId()).setTotalPrice(id);
+//		  value += getAllPrescriptionsToHashMap().get(p.getId()).getTotalPrice();
+//		  System.out.println("for: " + value);
+//	  }  
+//  }
+//  System.out.println("return: " + value);
+//  return value;
+//}
+//
+//public void testPrint() {
+//
+//System.out.println("prescriptionService.getAllPrescriptions():" + prescriptionService.getAllPrescriptions());
+//System.out.println("Prescriptions:" + Prescriptions);
+//System.out.println("PrescriptionItems:" + PrescriptionItems);
+//}
+  

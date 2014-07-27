@@ -51,7 +51,20 @@ public class Prescription implements Serializable {
 
   @OneToMany(mappedBy="prescription", cascade={CascadeType.ALL})
   private Collection<Item> items = new ArrayList<>();
+  
+  //Inserted to persist total price
+  private double totalPrice;
 
+  public double getTotalPrice() {
+	 return totalPrice;
+  }
+
+  public void setTotalPrice(double totalPrice) {
+	 this.totalPrice = totalPrice;
+  }  
+  
+  
+  
   public long getId() {
     return id;
   }
