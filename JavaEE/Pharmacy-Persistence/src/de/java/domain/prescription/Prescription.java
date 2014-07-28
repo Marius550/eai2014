@@ -63,8 +63,6 @@ public class Prescription implements Serializable {
 	 this.totalPrice = totalPrice;
   }  
   
-  
-  
   public long getId() {
     return id;
   }

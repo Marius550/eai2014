@@ -104,6 +104,9 @@ public class PrescriptionPage implements Serializable {
       prescriptionService.updateFulfilmentDate(getPrescription().getId(), getFulfilmentDate());
     }
     prescriptionService.proceedToNextState(getPrescription().getId());
+    
+    prescriptionService.updateEntryData(prescription.getId(), prescription.getIssuer(), prescription.getIssueDate(), prescription.getEntryDate(), getPriceOfPrescriptionItems());
+    
     return toPrescriptionPage();
   }
 
