@@ -20,6 +20,6 @@ public interface CustomerService {
 
   Customer update(long id, String telephoneNumber, String address);
 
-  Prescription createPrescription(long customerId, String issuer);
+  Prescription createPrescription(long customerId, String issuer, double totalPrice);
 
 }

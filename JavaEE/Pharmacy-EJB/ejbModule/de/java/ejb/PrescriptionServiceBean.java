@@ -61,12 +61,19 @@ public class PrescriptionServiceBean implements PrescriptionService {
   }
 
   @Override
-  public void updateEntryData(long id, String issuer, Date issueDate, Date entryDate) {
+  public void updateEntryData(long id, String issuer, Date issueDate, Date entryDate, double totalPrice) {
     Prescription p = getPrescription(id);
     p.setIssuer(issuer);
     p.setIssueDate(issueDate);
     p.setEntryDate(entryDate);
+    p.setTotalPrice(totalPrice);
   }
+  
+//  @Override
+//  public void updateTotalPrice(long id, double evaluation) {
+//    Prescription p = getPrescription(id);
+//    p.setEvaluation(evaluation);
+//  }
 
   @Override
   public void cancel(long id) {

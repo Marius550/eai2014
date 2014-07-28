@@ -11,7 +11,6 @@ import javax.persistence.PersistenceContext;
 
 import de.java.domain.Drug;
 import de.java.domain.customer.Customer;
-import de.java.domain.prescription.Item;
 import de.java.domain.prescription.Prescription;
 import de.java.domain.prescription.PrescriptionState;
 import de.java.domain.replenishment.OrderState;
@@ -105,12 +104,13 @@ public class ApplicationInitialiser {
     Prescription fulfilledPrescription = maxMustermann.createPrescription();
     fulfilledPrescription.setState(PrescriptionState.FULFILLED);
     fulfilledPrescription.setFulfilmentDate(new Date());
-    fulfilledPrescription.setIssuer("Dr F. Ulfilled");
+    fulfilledPrescription.setIssuer("Dr. Moellenberg");
+    //fulfilledPrescription.setTotalPrice(15.00);
     em.persist(fulfilledPrescription);
     
     Prescription prescriptionInFulfilling = maxMustermann.createPrescription();
     prescriptionInFulfilling.setState(PrescriptionState.FULFILLING);
-    prescriptionInFulfilling.setIssuer("Doc Norris");
+    prescriptionInFulfilling.setIssuer("Dr. Borg");
     em.persist(prescriptionInFulfilling);
     
   }

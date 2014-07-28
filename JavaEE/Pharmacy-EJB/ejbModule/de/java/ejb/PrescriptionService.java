@@ -22,7 +22,9 @@ public interface PrescriptionService {
   
   Prescription getPrescriptionWithItems(long id);
 
-  void updateEntryData(long id, String issuer, Date issueDate, Date entryDate);
+  void updateEntryData(long id, String issuer, Date issueDate, Date entryDate, double totalPrice);
+  
+//  void updateTotalPrice(long id, double evaluation);
 
   void cancel(long id);
 

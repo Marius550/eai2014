@@ -11,7 +11,6 @@ import javax.faces.bean.ManagedBean;
 import de.java.domain.prescription.Prescription;
 import de.java.domain.prescription.PrescriptionState;
 import de.java.ejb.PrescriptionService;
-import de.java.web.PrescriptionPage;
 
 @ManagedBean
 public class PrescriptionList implements Serializable {
@@ -57,18 +56,16 @@ public class PrescriptionList implements Serializable {
   
   public double getTotalPriceOfPrescription(long id){
 	  
-	  
-	  
 	double totalPrice = 0;
 		for (Prescription p : prescriptionService.getAllPrescriptions()){
 			// Iterate only through displayed items in order to display right sums
 			if (getAllPrescriptionsToHashMap().get(p.getId()) != null) {
 				  
-				//getAllPrescriptionsToHashMap().get(p.getId()).setTotalPrice(id);
+				getAllPrescriptionsToHashMap().get(p.getId()).setTotalPrice(id);
 				totalPrice = getAllPrescriptionsToHashMap().get(p.getId()).getTotalPrice();
 			  }  
 		  }
 		  return totalPrice;
 	}
-
+  
 }

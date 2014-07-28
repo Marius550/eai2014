@@ -31,28 +31,28 @@
           <h:inputTextarea value="#{prescriptionPage.prescription.issuer}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="issuer" tabindex="1" />
           <h:outputText value="#{prescriptionPage.prescription.issuer}" rendered="#{prescriptionPage.prescription.state != 'ENTRY'}" />
           <h:messages for="issuer" styleClass="error"/>
+   
+          Id 
+          <h:outputText value="#{prescriptionPage.getPrescriptionId()}" id="getPrescriptionId" tabindex="2" />
+          <h:messages for="getPrescriptionId" styleClass="error"/>
+          
+          Amount of drugs 
+          <h:outputText value="#{prescriptionPage.getAmountOfItemsInPrescription()}" id="itemsAmount" tabindex="3" />
+          <h:messages for="itemsAmount" styleClass="error"/>
+          
+          Total price
+          <h:outputText value="#{prescriptionPage.prescription.totalPrice}" id="totalPrice" tabindex="4"/>
+          <h:messages for="totalPrice" styleClass="error"/>    
           
           Issued on
-          <h:inputText value="#{prescriptionPage.prescription.issueDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="issueDate" tabindex="2">
+          <h:inputText value="#{prescriptionPage.prescription.issueDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="issueDate" tabindex="5">
             <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
           </h:inputText>
           <h:outputText value="#{prescriptionPage.prescription.issueDate}" rendered="#{prescriptionPage.prescription.state != 'ENTRY'}">
             <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
           </h:outputText>
           <h:messages for="issueDate" styleClass="error"/>
-          
-          Id 
-          <h:outputText value="#{prescriptionPage.getPrescriptionId()}" id="getPrescriptionId" tabindex="3" />
-          <h:messages for="getPrescriptionId" styleClass="error"/>
-          
-          Amount of drugs 
-          <h:outputText value="#{prescriptionPage.getAmountOfItemsInPrescription()}" id="itemsAmount" tabindex="4" />
-          <h:messages for="itemsAmount" styleClass="error"/>
-          
-          Total price
-          <h:outputText value="#{prescriptionPage.getPriceOfPrescriptionItems()}" id="getPrescriptionTotalPrice" tabindex="5" />
-          <h:messages for="getPrescriptionTotalPrice" styleClass="error"/>
-          
+
           Entered on
           <h:inputText value="#{prescriptionPage.prescription.entryDate}" rendered="#{prescriptionPage.prescription.state == 'ENTRY'}" id="entryDate" tabindex="6">
             <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>

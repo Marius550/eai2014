@@ -77,12 +77,14 @@ public class PrescriptionPage implements Serializable {
   }
 
   public String update() {
-    prescriptionService.updateEntryData(prescription.getId(),
-        prescription.getIssuer(),
-        prescription.getIssueDate(),
-        prescription.getEntryDate());
+    prescriptionService.updateEntryData(prescription.getId(), prescription.getIssuer(), prescription.getIssueDate(), prescription.getEntryDate(), getPriceOfPrescriptionItems());
     return toPrescriptionPage();
   }
+  
+//  public String updateTotalPriceInDetails() {
+//	  prescriptionService.updateTotalPrice(prescription.getId(), getPriceOfPrescriptionItems());
+//	return toPrescriptionPage();
+//  }
   
   private String toPrescriptionPage() {
     return "details.xhtml?faces-redirect=true&id=" + id;
