@@ -76,7 +76,11 @@ public class PrescriptionPage implements Serializable {
     Util.redirectToRoot();
   }
 
-  public String update() {
+  
+  /**Updates prescription of a specific Id with the inputs: issuer, IssueDate, EntryDate and totalPrice
+ * @return URI of prescription details with id 
+ */
+public String update() {
     prescriptionService.updateEntryData(prescription.getId(), prescription.getIssuer(), prescription.getIssueDate(), prescription.getEntryDate(), getPriceOfPrescriptionItems());
     return toPrescriptionPage();
   }
@@ -104,7 +108,7 @@ public class PrescriptionPage implements Serializable {
       prescriptionService.updateFulfilmentDate(getPrescription().getId(), getFulfilmentDate());
     }
     prescriptionService.proceedToNextState(getPrescription().getId());
-    
+    // this updates the totalPrice
     prescriptionService.updateEntryData(prescription.getId(), prescription.getIssuer(), prescription.getIssueDate(), prescription.getEntryDate(), getPriceOfPrescriptionItems());
     
     return toPrescriptionPage();

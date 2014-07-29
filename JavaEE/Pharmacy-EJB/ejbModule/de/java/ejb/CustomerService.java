@@ -20,6 +20,13 @@ public interface CustomerService {
 
   Customer update(long id, String telephoneNumber, String address);
 
-  Prescription createPrescription(long customerId, String issuer, double totalPrice);
+  /**Important method! Called in web.createPrescription to set the parameter inputs issuer and totalPrice to the prescription of the of a certain Id belonging to a certain customer
+   * Persists the data set!
+ * @param customerId
+ * @param issuer
+ * @param totalPrice
+ * @return prescription
+ */
+Prescription createPrescription(long customerId, String issuer, double totalPrice);
 
 }

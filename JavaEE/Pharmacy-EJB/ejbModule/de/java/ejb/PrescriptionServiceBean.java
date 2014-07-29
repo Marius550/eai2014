@@ -60,6 +60,8 @@ public class PrescriptionServiceBean implements PrescriptionService {
     return prescription;
   }
 
+  //Getting the input parameters from prescriptionPage.update()
+  //updateEntryData() takes these parameters and sets them for the prescription of a certain Id
   @Override
   public void updateEntryData(long id, String issuer, Date issueDate, Date entryDate, double totalPrice) {
     Prescription p = getPrescription(id);

@@ -34,7 +34,10 @@ public class CreatePrescription implements Serializable {
     return prescription;
   }
 
-  public String create() {
+  /**Call for createPrescription method to get prescription input parameters 
+ * @return Lead to prescription details with prescription's Id
+ */
+public String create() {
     prescription = customerService.createPrescription(getCustomerId(), prescription.getIssuer(), prescription.getTotalPrice()); 
     return "details.xhtml?faces-redirect=true&id=" + prescription.getId();
   }
