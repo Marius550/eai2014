@@ -39,40 +39,25 @@ public class DrugList implements Serializable {
   public Drug getDrug(int pzn) {
     return em.find(Drug.class, pzn);
   }
-  
-  //alt+shift+J
-  /**
- * Just some testing which is print out in the console
- */
-//public void getAllDrugsInConsole() {
-//	 System.out.println("getAllDrugsInConsole()");
-//	 System.out.println(getAllDrugs());
-//	 System.out.println("getParticularDrugInConsole()");
-//	 System.out.println(getDrug(451151));//.getPrice(); is working
-//	 System.out.println("getAllDrugsToHashMap: " + getAllDrugsToHashMap());
-//  }
-  
-  /**
- * @return The amount of PharmacyDrugs (counts the Collection<Drug> elements)
+
+/**Determine the amount of displayed drugs
+ * @return Number of displayed drugs (i.e. search is considered)
  */
 public int getAmountOfDrugsInCollection() {
-	  return getAllDrugs().size();
-	  //Alternative
-	  //Object[] list = getAllDrugs().toArray();
-	  //int i = list.length;
-	  }
+  return drugService.getAllDrugsLike(searchTerm).size();
+}
   
-  /**
- * Transform Collection<Drug> to an Array over which one can iterate and print out each drug
- */
-public void iterateOverAllDrugsArray() {
-	Object[] list = getAllDrugs().toArray();
-	
-	for (int j = 0; j < list.length; j++) {
-		System.out.println(list[j]);
-	}
-	System.out.println(list);
-  }
+//  /**
+// * Transform Collection<Drug> to an Array over which one can iterate and print out each drug
+// */
+//public void iterateOverAllDrugsArray() {
+//	Object[] list = getAllDrugs().toArray();
+//	
+//	for (int j = 0; j < list.length; j++) {
+//		System.out.println(list[j]);
+//	}
+//	System.out.println(list);
+//  }
   
   /**
    * Convert Collection <Drug> into HashMap and assign pzn to each map element
@@ -103,7 +88,7 @@ public Map<Integer, Drug> getAllDrugsToHashMap(){
    */
   public double sumUpPricesPharmacyDrugs(){
 	  double summedUpPrice = 0;
-	  for (Drug d : getAllDrugs()){
+	  for (Drug d : drugService.getAllDrugsLike(searchTerm)){
 		  // Iterate only through displayed drugs in order to display right sums
 		  if (getAllDrugsToHashMap().get(d.getPzn()) != null) {
 			  summedUpPrice += getAllDrugsToHashMap().get(d.getPzn()).getPrice();
@@ -118,7 +103,7 @@ public Map<Integer, Drug> getAllDrugsToHashMap(){
    */
   public double sumUpStockPharmacyDrugs(){
 	  int stock = 0;
-	  for (Drug d : getAllDrugs()){
+	  for (Drug d : drugService.getAllDrugsLike(searchTerm)){
 		  // Iterate only through displayed drugs in order to display right sums
 		  if (getAllDrugsToHashMap().get(d.getPzn()) != null) {
 			  stock += getAllDrugsToHashMap().get(d.getPzn()).getStock();
