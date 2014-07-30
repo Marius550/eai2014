@@ -65,7 +65,7 @@ public class CreateCustomer implements Serializable {
   
   public String getLastResult(){
     if(lastCustomer != null)
-      return "Customer created: " + lastCustomer.toString();
+      return "Customer created: " + lastCustomer.getName() + ", with ID: " + lastCustomer.getId();
     return errorMessage!=null?errorMessage:"";
   }
 }
