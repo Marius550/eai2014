@@ -268,4 +268,11 @@ public class DrugServiceBean implements DrugService {
 				d1.getPrice() == d2.getPrice() && 
 				d1.getDescription() == d2.getDescription();
 	}
+	
+	  @Override
+	  public void removeDrug(int DrugPZN) {
+	    Drug drug = getDrug(DrugPZN);
+
+	    em.remove(drug);
+	  }
 }

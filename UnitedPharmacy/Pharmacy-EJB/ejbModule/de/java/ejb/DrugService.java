@@ -79,4 +79,5 @@ Drug updateMasterData(int pzn, String name, double price, String description);
  */
 Collection<MessageDrug> initDatabase(Map<Integer, MessageDrug> jDrugs, Map<Integer, MessageDrug> cDrugs);
 
+void removeDrug(int DrugPZN);
 }

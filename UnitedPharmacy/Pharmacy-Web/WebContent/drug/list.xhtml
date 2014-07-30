@@ -26,7 +26,7 @@
     </h:form>
     <h:dataTable value="#{drugList.drugs}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
       rendered="#{not empty drugList.drugs}" footerClass="data-cell footer-cell">
       <h:column>
         <f:facet name="header">PZN</f:facet>
@@ -62,6 +62,13 @@
           <f:param name="pzn" value="#{cur.pzn}"></f:param>
         </h:link>
       </h:column>
+      
+      <h:column>
+      	<h:form>
+        	<h:commandButton value="Remove" action="#{drugList.remove(cur)}" />
+        </h:form>
+      </h:column>
+      
     </h:dataTable>
     </h:panelGroup>
   </ui:define>

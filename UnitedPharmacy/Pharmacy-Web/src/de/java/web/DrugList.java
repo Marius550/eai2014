@@ -144,18 +144,22 @@ public class DrugList implements Serializable {
    * @return amount of all displayed drugs at C.Sharpe and JaVa
    */
   public int getAmountOfPharmacyHODrugs(){
-	  int amount = 0;
+
+	  int javaDrugs = 0;
+	  int cDrugs = 0;
+	  
 	  for (Drug d : getDrugs()){
-		  // Iterate only through displayed drugs in order to display right sums
-		  if (getjDrugs().get(d.getPzn()) != null) {
-			  amount += getjDrugs().size();
-		  }
-	  	  if (getcDrugs().get(d.getPzn()) != null) {
-	  		amount += getcDrugs().size();
-	  	  }
+	  // Iterate only through displayed drugs in order to display right amount
+
+		 getjDrugs().get(d.getPzn());
+		 javaDrugs = javaDrugs + 1;
+			  
+		 getjDrugs().get(d.getPzn());
+		 cDrugs = cDrugs + 1;		  
 	  }
-	  amount = amount * 1/20;
-	  return amount;
+	  //System.out.println("javaDrugs: " + javaDrugs + ", cDrugs: " + cDrugs);
+	  int totalAmount = (javaDrugs + cDrugs)/2;
+	  return totalAmount;
   }
   
   public String getSearchTerm() {
@@ -176,6 +180,11 @@ public class DrugList implements Serializable {
   
   public boolean isInitialized(){
 	  return !drugService.getAllDrugs().isEmpty();
+  }
+  
+  public String remove(Drug drug) {
+	    drugService.removeDrug(drug.getPzn());
+	    return "/drug/list.xhtml";
   }
 
 }
