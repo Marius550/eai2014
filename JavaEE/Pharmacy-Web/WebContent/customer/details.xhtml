@@ -41,6 +41,11 @@
           <f:facet name="header">Issuer</f:facet>
           #{cur.issuer}
         </h:column>
+        <h:column>
+          <f:facet name="header">Total price</f:facet>
+          #{cur.totalPrice}
+          <f:facet name="footer">#{customerPage.getCustomerPrescriptionSum(customerPage.id)}</f:facet>
+        </h:column>
           <h:column>
             <f:facet name="header">State</f:facet>
             #{cur.state}
