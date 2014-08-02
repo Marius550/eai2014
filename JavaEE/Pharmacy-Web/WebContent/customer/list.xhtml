@@ -7,16 +7,15 @@
 <ui:composition template="/resources/master.xhtml">
   <ui:define name="title">Customer List</ui:define>
   <ui:define name="content">
-    <h:link outcome="/customer/create.xhtml">Create/add new customer</h:link>
-    
-    <h:form>
-      <h:commandButton action="#{customerList.test1()}" value="Test" />
-    </h:form>
-    
+    <h:link outcome="/customer/create.xhtml">Create/add new customer</h:link>   
     <h:dataTable value="#{customerList.customers}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
       rendered="#{not empty customerList.customers}">
+      <h:column>
+        <f:facet name="header">ID</f:facet>
+        #{cur.id}
+      </h:column>
       <h:column>
         <f:facet name="header">Name</f:facet>
         #{cur.name}
@@ -29,13 +28,14 @@
         <f:facet name="header">Address</f:facet>
         #{cur.address}
       </h:column>
-      <h:column>
-        <f:facet name="header"># prescriptions</f:facet>
-        #{customerList.getCustomerPrescriptionsSize(cur)}
+     <h:column>
+	  <h:form>
+		<h:commandButton value="Calculate Bill" action="#{customerList.submitUpdatePrescriptionBill(cur.id)}" />
+	  </h:form>
       </h:column>
       <h:column>
         <f:facet name="header">Prescription Bill</f:facet>
-        #{customerList.getCustomerPrescriptionBill2(cur)}	
+        #{cur.prescriptionBill}
       </h:column>
       <h:column>
         <h:link outcome="/customer/details.xhtml" value="Details">

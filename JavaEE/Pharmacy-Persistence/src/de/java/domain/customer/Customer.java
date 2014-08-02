@@ -35,6 +35,8 @@ public class Customer implements Serializable {
   private String telephoneNumber;
   
   private String address;
+  
+  private double prescriptionBill;
 
   @OneToMany(mappedBy="customer")
   private Collection<Prescription> prescriptions = new ArrayList<>();
@@ -76,6 +78,14 @@ public class Customer implements Serializable {
 
   public void setAddress(String address) {
     this.address = address;
+  }
+  
+  public double getPrescriptionBill() {
+	return prescriptionBill;
+  }
+
+  public void setPrescriptionBill(double prescriptionBill) {
+	this.prescriptionBill = prescriptionBill;
   }
 
   public Collection<Prescription> getPrescriptions() {

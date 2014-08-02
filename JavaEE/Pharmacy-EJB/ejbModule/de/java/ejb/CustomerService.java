@@ -19,6 +19,13 @@ public interface CustomerService {
   Customer createCustomer(Customer newCustomer);
 
   Customer update(long id, String telephoneNumber, String address);
+  
+  /**Import customer Id to clearly identify the customer and pass over the customer's prescription bill (double)
+ * @param id
+ * @param prescriptionBill
+ * @return Customer object in which the prescriptionBill is set (setPrescriptionBill() is located with corresponding getter in customer persistence)
+ */
+Customer updatePrescriptionBill(long id, double prescriptionBill);
 
   /**Important method! Called in web.createPrescription to set the parameter inputs issuer and totalPrice to the prescription of the of a certain Id belonging to a certain customer
    * Persists the data set!

@@ -55,6 +55,13 @@ public class CustomerServiceBean implements CustomerService {
     customer.setAddress(address);
     return customer;
   }
+  
+  @Override
+  public Customer updatePrescriptionBill(long id, double prescriptionBill) {
+	  Customer customer = getCustomer(id);
+	  customer.setPrescriptionBill(prescriptionBill);
+	  return customer;
+	}
 
   @Override
   public Prescription createPrescription(long customerId, String issuer, double totalPrice) {
