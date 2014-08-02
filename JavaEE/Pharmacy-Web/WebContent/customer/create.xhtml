@@ -20,6 +20,9 @@
           <h:outputLabel value="Address" for="address" />
           <h:inputTextarea id="address" value="#{createCustomer.customer.address}" />
           <h:message for="address" />
+          <h:outputLabel value="Email" for="email" />
+          <h:inputTextarea id="email" value="#{createCustomer.customer.email}" />
+          <h:message for="email" />
           <h:outputLabel value="Batch input?" for="batch" title="Create another customer after this one?" />
           <h:selectBooleanCheckbox id="batch" value="#{createCustomer.batch}" />
           <f:facet name="footer">

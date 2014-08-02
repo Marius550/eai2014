@@ -49,10 +49,11 @@ public class CustomerServiceBean implements CustomerService {
   }
 
   @Override
-  public Customer update(long id, String telephoneNumber, String address) {
+  public Customer update(long id, String telephoneNumber, String address, String email) {
     Customer customer = getCustomer(id);
     customer.setTelephoneNumber(telephoneNumber);
     customer.setAddress(address);
+    customer.setEmail(email);
     return customer;
   }
   
@@ -61,7 +62,7 @@ public class CustomerServiceBean implements CustomerService {
 	  Customer customer = getCustomer(id);
 	  customer.setPrescriptionBill(prescriptionBill);
 	  return customer;
-	}
+  }
 
   @Override
   public Prescription createPrescription(long customerId, String issuer, double totalPrice) {

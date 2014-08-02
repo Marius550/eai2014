@@ -18,7 +18,7 @@ public interface CustomerService {
 
   Customer createCustomer(Customer newCustomer);
 
-  Customer update(long id, String telephoneNumber, String address);
+  Customer update(long id, String telephoneNumber, String address, String email);
   
   /**Import customer Id to clearly identify the customer and pass over the customer's prescription bill (double)
  * @param id

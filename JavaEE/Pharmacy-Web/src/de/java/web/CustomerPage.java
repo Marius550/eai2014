@@ -5,6 +5,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
@@ -23,8 +33,6 @@ public class CustomerPage implements Serializable {
 
   @EJB
   private CustomerService customerService;
-  
-  private CustomerList customerList;
 
   private long id;
   private Customer customer;
@@ -56,7 +64,7 @@ public class CustomerPage implements Serializable {
   }
 
   public String submit() {
-    customer = customerService.update(customer.getId(), customer.getTelephoneNumber(), customer.getAddress());
+    customer = customerService.update(customer.getId(), customer.getTelephoneNumber(), customer.getAddress(), customer.getEmail());
     return "details.xhtml?faces-redirect=true&id=" + id;
   }
 
@@ -113,5 +121,60 @@ public double getCustomerPrescriptionSum(long id) {
 	  Customer customer = customerService.getCustomer(id);
 	  return getCustomerPrescriptionBill(customer);
 	}
+
+public void sendEmailTLS(long id) {
+
+
+	
+		message.setRecipients(Message.RecipientType.TO,
+			InternetAddress.parse(receiver));
+		message.setSubject("Java Pharmacy04 - Prescription Bill");
+		message.setText("Dear Customer,"
+			+ "\n\n Attached you check out your current prescription bill.");
+
+		Transport.send(message);
+
+		System.out.println("Email sent");
+
+	} catch (MessagingException e) {
+		throw new RuntimeException(e);
+		}
+	}
+
+//public void sendEmailSSL() {
+//	Properties props = new Properties();
+//	props.put("mail.smtp.host", "");
+//	props.put("mail.smtp.socketFactory.port", "587");
+//	props.put("mail.smtp.socketFactory.class",
+//			"javax.net.ssl.SSLSocketFactory");
+//	props.put("mail.smtp.auth", "true");
+//	props.put("mail.smtp.port", "587");
+//
+//	Session session = Session.getInstance(props,
+//		new javax.mail.Authenticator() {
+//			protected PasswordAuthentication getPasswordAuthentication() {
+//				return new PasswordAuthentication("username","pw#");
+//			}
+//		});
+//
+//	try {
+//
+//		Message message = new MimeMessage(session);
+//		message.setFrom(new InternetAddress(""));
+//		message.setRecipients(Message.RecipientType.TO,
+//				InternetAddress.parse(""));
+//		message.setSubject("Testing Subject");
+//		message.setText("Dear Mail Crawler," +
+//				"\n\n No spam to my email, please!");
+//
+//		Transport.send(message);
+//
+//		System.out.println("Done");
+//
+//	} catch (MessagingException e) {
+//		throw new RuntimeException(e);
+//	}
+//}
+
 
 }

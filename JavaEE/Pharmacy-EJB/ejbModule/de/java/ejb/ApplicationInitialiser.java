@@ -99,6 +99,7 @@ public class ApplicationInitialiser {
     Customer maxMustermann = new Customer();
     maxMustermann.setName("Max Mustermann");
     maxMustermann.setTelephoneNumber("+49 123 456 78");
+    maxMustermann.setEmail("max.mustermann@gmail.com");
     em.persist(maxMustermann);
     
     Prescription fulfilledPrescription = maxMustermann.createPrescription();

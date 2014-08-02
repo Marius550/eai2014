@@ -23,8 +23,12 @@
         Address
         <h:inputTextarea tabindex="2" id="address" value="#{customerPage.customer.address}" />
         <h:outputText />
+        Email
+        <h:inputText tabindex="3" id="email" value="#{customerPage.customer.email}" />
+        <h:messages for="email" styleClass="error"/>
         <f:facet name="footer">
-          <h:commandButton tabindex="3" value="Submit changes" action="#{customerPage.submit}" />
+          <h:commandButton tabindex="4" value="Submit changes" action="#{customerPage.submit()}" />
+          <h:commandButton tabindex="5" value="Send TLS mail" action="#{customerPage.sendEmailTLS(customerPage.id)}" />
         </f:facet>
       </h:panelGrid>
       <h:panelGrid rendered="#{not empty customerPage.customer.prescriptions}">

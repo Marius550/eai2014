@@ -29,6 +29,12 @@ public class Customer implements Serializable {
   @NotNull(message="Name required")
   private String name;
   
+  @Size(min=5, message="Not a valid email address (E.g.: name@example.com))")
+  @NotNull(message="E-mail address required")
+  @Pattern(regexp="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$",
+  message="Not a valid email address, please use the common form (E.g.: name@example.com))")
+  private String email;
+  
   @NotNull(message="Telephone number required")
   @Pattern(regexp="\\+[1-9][0-9]{0,2}{0,2}[0-9 ]{3,13}[0-9]$",
     message="Not a valid phone number (use E.123 international, e.g.: +49 251 83 38250))")
@@ -86,6 +92,14 @@ public class Customer implements Serializable {
 
   public void setPrescriptionBill(double prescriptionBill) {
 	this.prescriptionBill = prescriptionBill;
+  }
+  
+  public String getEmail() {
+	return email;
+  }
+
+  public void setEmail(String email) {
+	this.email = email;
   }
 
   public Collection<Prescription> getPrescriptions() {
