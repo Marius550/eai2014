@@ -35,8 +35,6 @@ public class PrescriptionPage implements Serializable {
 
   @EJB
   private DrugService drugService;
-
-  //private Map<Long, Prescription> Prescriptions;
   
   private long id;
   private Prescription prescription;
