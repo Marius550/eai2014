@@ -1,6 +1,7 @@
 package de.java.web;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -130,26 +131,35 @@ public Map<Long, Prescription> getAllCustomerPrescriptionsToHashMapViaInput(Coll
 	  return customerPrescriptionsViaInput;
 }
 
-public String[] getCustomerPrescriptionArray(Collection<Prescription> collection){
+public String getCustomerPrescriptionArray(Collection<Prescription> collection){
 	int collectionSize = collection.size();
 	int arrayLength = 3 * collectionSize;
 	String [] arrayEmailInformation = new String[arrayLength];
 	int i = 0;
-	int j = 2;
-	int k = 4;
+	int j = 1;
+	int k = 2;
 	for (Prescription p : collection){
 		  if (getAllCustomerPrescriptionsToHashMapViaInput(collection).get(p.getId()) != null) {
-
 			  arrayEmailInformation[i] = convertLongToString(getAllCustomerPrescriptionsToHashMapViaInput(collection).get(p.getId()).getId());
-			  arrayEmailInformation[j] = getAllCustomerPrescriptionsToHashMapViaInput(collection).get(p.getId()).getIssuer();
-			  arrayEmailInformation[k] = convertDoubleToString(getAllCustomerPrescriptionsToHashMapViaInput(collection).get(p.getId()).getTotalPrice());
+			  i = i +3;
 
-			  i++;
-			  j++; 
-			  k++;
 		  }
 	  }
-	return arrayEmailInformation;
+	for (Prescription p : collection){
+		  if (getAllCustomerPrescriptionsToHashMapViaInput(collection).get(p.getId()) != null) {
+			  arrayEmailInformation[j] = convertDoubleToString(getAllCustomerPrescriptionsToHashMapViaInput(collection).get(p.getId()).getTotalPrice());
+			  j = j + 3;
+		  }
+	  }
+	for (Prescription p : collection){
+		  if (getAllCustomerPrescriptionsToHashMapViaInput(collection).get(p.getId()) != null) {
+			  arrayEmailInformation[k] = getAllCustomerPrescriptionsToHashMapViaInput(collection).get(p.getId()).getIssuer() + "\n";
+			  k = k + 3;
+		  }
+	  }
+	return Arrays.toString(arrayEmailInformation).replace(",", "")  //remove the commas
+            									 .replace("[", "")   //remove the right bracket
+            									 .replace("]", "");
 	}
 
 public String convertLongToString(long longNumber) {
@@ -163,8 +173,6 @@ public String convertDoubleToString(double doubleNumber) {
 }
 
 public void sendEmailTLS(long id, String recipientName, double prescriptionBill, Collection<Prescription> collection) {
-
-	String [] arrayEmailInformation = getCustomerPrescriptionArray(collection);
 	
 	final String username = "pharmacy04@web.de";//pharmacy04@web.de
 	final String password = "";
@@ -194,12 +202,13 @@ public void sendEmailTLS(long id, String recipientName, double prescriptionBill,
 		message.setSubject("Java Pharmacy04 - Prescription Bill");
 		message.setText("Dear " + recipientName + ", \n\n Your overall prescription bill is: " + prescriptionBill + "€." + 
 				"\n\n Below you can check your prescription details: "
-				+ "\n\n Id: " + arrayEmailInformation[0] + "  Issuer: " + arrayEmailInformation[2] + "  Price : " + arrayEmailInformation[4]
-				+ " \n\n\n\n Best regards, \n\n Pharmacy04");
+				+ "\n\n<Id> <Total Price> <Issuer>"
+				+ "\n\n" + getCustomerPrescriptionArray(collection)
+				+ " \n\n\n Best regards, \n\n Pharmacy04"); 
 
 		Transport.send(message);
 
-		System.out.println("Email sent");
+		System.out.println("Email sent to " + receiver);
 
 	} catch (MessagingException e) {
 		throw new RuntimeException(e);

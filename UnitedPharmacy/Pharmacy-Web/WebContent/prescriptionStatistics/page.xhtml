@@ -27,11 +27,12 @@
           </h:panelGrid>
 			<h:commandButton value="Request statistics" action="#{prescriptionStatisticsPage.requestStatistics}" />
 			<br /><br />
-		<h:panelGrid columns="4" border="1">
+		<h:panelGrid columns="5" border="1">
 			<h:panelGroup></h:panelGroup>
 			<h:panelGroup><strong>Total Number of Prescriptions</strong></h:panelGroup>
 			<h:panelGroup><strong>Average number of items per prescription</strong></h:panelGroup>
 			<h:panelGroup><strong>Average timespan of fulfilment per prescription</strong></h:panelGroup>
+			<h:panelGroup><strong>Average total price per prescription</strong></h:panelGroup>
 
 			<h:panelGroup>JaVa</h:panelGroup>
 			<h:panelGroup><h:outputText id="totalNumberOfPrescriptionsInJava" value="#{prescriptionStatisticsPage.totalNumberOfPrescriptionsInJava}" /></h:panelGroup>
