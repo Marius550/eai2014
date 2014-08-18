@@ -253,6 +253,26 @@ public class PrescriptionServiceBean implements PrescriptionService {
 	}
 	
 	@Override
+	public double getAvTotalPriceBetweenDates (Date dateFrom, Date dateTo){
+		//int itemCounter = 0;
+		double totalPriceSum = 0;
+		int numberPrescNotEmpty = 0;
+		Collection<Prescription> prescriptions = getPrescriptionsBetweenDates(dateFrom, dateTo);
+		for(Prescription presc : prescriptions){
+			if (presc.getItems().size() > 0){
+				totalPriceSum = totalPriceSum + presc.getTotalPrice();
+			//itemCounter += presc.getItems().size();
+			numberPrescNotEmpty++;
+			}
+		}
+		double average = -1;
+		if (numberPrescNotEmpty > 0){
+			average = ((double) totalPriceSum / (double) numberPrescNotEmpty);
+		}
+		return average;
+	}
+	
+	@Override
 	public long getAvFulfillmentTimesBetweenDates (Date dateFrom, Date dateTo){
 		long time = 0;
 		Collection<Prescription> prescriptions = getFulfilledPrescriptionsBetweenDates(dateFrom, dateTo);

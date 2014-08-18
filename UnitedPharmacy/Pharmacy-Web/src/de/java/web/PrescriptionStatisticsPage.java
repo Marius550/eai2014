@@ -47,9 +47,13 @@ public class PrescriptionStatisticsPage implements Serializable {
 	public String getAverageNumberOfItemsInJava() {
 		return formatDouble(javaDO.getAverageNumberOfItemsPerPrescription());
 	}
+	public String getAverageTotalpricePerPrescription() {
+		return formatDouble(javaDO.getAverageTotalpricePerPrescription());
+	}
 	public String getAverageTimespanOfFulfilmentInJava() {
 		return formatTimeStamp(javaDO.getAverageTimeSpanOfFulfilment());
 	}
+	
 	public String getTotalNumberOfPrescriptionsInDotNet() {
 		return formatInt(dotNetDO.getTotalNumberOfPrescriptions());
 	}
@@ -156,6 +160,6 @@ public class PrescriptionStatisticsPage implements Serializable {
 	public String getErrorMessage (){
 		if (errorAt == null) return null;
 		if (errorAt == "dateInsertion") return "'Date to' needs to be after 'Date from'";
-		return "Fetching data from " + errorAt + " failed.";
+		return "Fetching data from " + errorAt + " failed!";
 	}
 }

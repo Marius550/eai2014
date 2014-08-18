@@ -62,6 +62,15 @@ public interface PrescriptionService {
   double getAvItemNumberBetweenDates (Date dateFrom, Date dateTo);
   
   /**
+   * Calculates the average total price per prescription between dateFrom and dateTo.
+   * Only prescriptions with at least one item are considered.
+   * @param dateFrom
+   * @param dateTo
+   * @return The average number of total price as a double.
+   */
+  double getAvTotalPriceBetweenDates (Date dateFrom, Date dateTo);
+  
+  /**
    * Calculates average timespan of fulfilment (from date of entry to date of fulfilment) per prescription.
    * Only prescriptions in Fulfilled state considered.
    * @param dateFrom

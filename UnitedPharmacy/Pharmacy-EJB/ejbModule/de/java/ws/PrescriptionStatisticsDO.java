@@ -9,6 +9,7 @@ public class PrescriptionStatisticsDO implements java.io.Serializable {
 
 	private int totalNumberOfPrescriptions;
 	private double averageNumberOfItemsPerPrescription;
+	private double averageTotalpricePerPrescription;
 	private long averageTimeSpanOfFulfilment; // in seconds
 	
 	/**
@@ -19,6 +20,7 @@ public class PrescriptionStatisticsDO implements java.io.Serializable {
 	public PrescriptionStatisticsDO(){
 		totalNumberOfPrescriptions = 0;
 		averageNumberOfItemsPerPrescription = -1;
+		averageTotalpricePerPrescription = -1;
 		averageTimeSpanOfFulfilment = -1;
 	}
 
@@ -44,6 +46,18 @@ public class PrescriptionStatisticsDO implements java.io.Serializable {
 	public void setAverageNumberOfItemsPerPrescription(
 			double averageNumberOfItemsPerPrescription) {
 		this.averageNumberOfItemsPerPrescription = averageNumberOfItemsPerPrescription;
+	}
+	
+	/**
+	 * Average total price per prescription. 
+	 * Only looks at the prescription with at least 1 drug in the prescription.
+	 * @return average number of total price per prescription
+	 */
+	public double getAverageTotalpricePerPrescription() {
+		return averageTotalpricePerPrescription;
+	}
+	public void setAverageTotalpricePerPrescription(double averageTotalpricePerPrescription) {
+		this.averageTotalpricePerPrescription = averageTotalpricePerPrescription;
 	}
 	
 	/**

@@ -37,12 +37,11 @@ public class PrescriptionStatisticsServiceBean implements PrescriptionStatistics
 		try {
 			Message JaVaReply = MessageSender.sendWithReply(new PrescriptionMessage(dateFrom, dateTo));
 			PrescriptionStatisticsDO result = new PrescriptionStatisticsDO();
-			result.setTotalNumberOfPrescriptions(JaVaReply.getIntProperty(
-							"totalNumberOfPrescriptions"));
-			result.setAverageNumberOfItemsPerPrescription(JaVaReply.getDoubleProperty(
-					"averageNumberOfItemsPerPrescription"));
-			result.setAverageTimeSpanOfFulfilment(JaVaReply.getLongProperty(
-					"averageTimeSpanOfFulfilment"));
+			
+			result.setTotalNumberOfPrescriptions(JaVaReply.getIntProperty("totalNumberOfPrescriptions"));
+			result.setAverageNumberOfItemsPerPrescription(JaVaReply.getDoubleProperty("averageNumberOfItemsPerPrescription"));
+			result.setAverageTotalpricePerPrescription(JaVaReply.getDoubleProperty("averageTotalpricePerPrescription"));
+			result.setAverageTimeSpanOfFulfilment(JaVaReply.getLongProperty("averageTimeSpanOfFulfilment"));
 			return result;	
 		} catch (Exception e) {
 			// When anything during the connection fails, just return a null element. The view will handle anything else.

@@ -53,11 +53,13 @@ public class PrescriptionStatisticsListener implements MessageListener {
 			// Let values calculate in EJB
 			int totalNumberOfPrescriptions = prescriptionService.getNumberPrescriptionsBetweenDates(dateFrom, dateTo);
 			double averageNumberOfItemsPerPrescription = prescriptionService.getAvItemNumberBetweenDates(dateFrom, dateTo);
+			double averageTotalpricePerPrescription = prescriptionService.getAvTotalPriceBetweenDates(dateFrom, dateTo);
 			long averageTimeSpanOfFulfilment = prescriptionService.getAvFulfillmentTimesBetweenDates(dateFrom, dateTo);
 			
 			// Prepare reply
 			reply.setIntProperty("totalNumberOfPrescriptions",totalNumberOfPrescriptions);
 			reply.setDoubleProperty("averageNumberOfItemsPerPrescription", averageNumberOfItemsPerPrescription);
+			reply.setDoubleProperty("averageTotalpricePerPrescription", averageTotalpricePerPrescription);
 			reply.setLongProperty("averageTimeSpanOfFulfilment",averageTimeSpanOfFulfilment);
 
 			// Send reply
