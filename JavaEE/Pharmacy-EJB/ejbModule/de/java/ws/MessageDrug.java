@@ -13,6 +13,7 @@ public class MessageDrug implements java.io.Serializable {
 	private int pzn;
 	private String name;
 	private double price;
+	private long drugMinimumAgeYears;
 	private String description;
 	// Replenishment Configuration
 	private long minimumInventoryLevel;
@@ -27,7 +28,7 @@ public class MessageDrug implements java.io.Serializable {
 	}
 	/**
 	 * Creates a simplified drug based on the master data of a drug. Uses all attributes in a drug, i.e.
-	 * pzn, name, price description, stock, minimumInventoryLevel, optimalInventoryLevel
+	 * pzn, name, price, drugMinimumAgeYears, description, stock, minimumInventoryLevel, optimalInventoryLevel
 	 * @param drug
 	 */
 	public MessageDrug(Drug drug){
@@ -37,6 +38,7 @@ public class MessageDrug implements java.io.Serializable {
 		this.pzn = drug.getPzn();
 		this.name = drug.getName();
 		this.price = drug.getPrice();
+		this.drugMinimumAgeYears = drug.getDrugMinimumAgeYears();
 		this.description = drug.getDescription();
 		this.stock = drug.getStock();
 		this.minimumInventoryLevel = drug.getMinimumInventoryLevel();
@@ -61,6 +63,12 @@ public class MessageDrug implements java.io.Serializable {
 	}
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	public long getDrugMinimumAgeYears() {
+		return drugMinimumAgeYears;
+	}
+	public void setDrugMinimumAgeYears(long drugMinimumAgeYears) {
+		this.drugMinimumAgeYears = drugMinimumAgeYears;
 	}
 	public String getDescription() {
 		return description;
@@ -107,6 +115,7 @@ public class MessageDrug implements java.io.Serializable {
 		Drug realDrug = new Drug();
 		realDrug.setName(name);
 		realDrug.setPrice(price);
+		realDrug.setDrugMinimumAgeYears(drugMinimumAgeYears);
 		realDrug.setDescription(description);
 		realDrug.setPzn(pzn);
 		return realDrug;

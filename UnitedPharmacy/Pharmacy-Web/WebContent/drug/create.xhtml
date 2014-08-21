@@ -23,6 +23,11 @@
           <h:outputLabel value="Price" for="price" />
           <h:inputText id="price" value="#{createDrug.drug.price}" />
           <h:message for="price" />
+          
+          <h:outputLabel value="Drug minimum age in years" for="drugMinimumAgeYears" />
+          <h:inputText id="drugMinimumAgeYears" value="#{createDrug.drug.drugMinimumAgeYears}" />
+          <h:message for="drugMinimumAgeYears" />
+          
           <h:outputLabel value="Description" for="description" />
           <h:inputTextarea id="description" value="#{createDrug.drug.description}" />
           <h:message for="description" />

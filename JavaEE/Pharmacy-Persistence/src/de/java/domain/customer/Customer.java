@@ -42,6 +42,11 @@ public class Customer implements Serializable {
   
   private String address;
   
+  @Size(min=8, message="Not a valid birth date (E.g.: yyyy-MM-dd))")
+  @NotNull(message="Birth date required")
+  @Pattern(regexp="^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$", message="Not a birth day (use e.g.: yyyy-MM-dd))")
+  private String birthDate;
+  
   private double prescriptionBill;
 
   @OneToMany(mappedBy="customer")
@@ -100,6 +105,14 @@ public class Customer implements Serializable {
 
   public void setEmail(String email) {
 	this.email = email;
+  }
+  
+  public String getBirthDate() {
+	return birthDate;
+  }
+
+  public void setBirthDate(String birthDate) {
+	this.birthDate = birthDate;
   }
 
   public Collection<Prescription> getPrescriptions() {

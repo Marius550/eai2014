@@ -23,6 +23,9 @@
           <h:outputLabel value="Email" for="email" />
           <h:inputTextarea id="email" value="#{createCustomer.customer.email}" />
           <h:message for="email" />
+          <h:outputLabel value="Birth date" for="birthDate" />
+          <h:inputText id="birthDate" value="#{createCustomer.customer.birthDate}" />
+          <h:message for="birthDate" />
           <h:outputLabel value="Batch input?" for="batch" title="Create another customer after this one?" />
           <h:selectBooleanCheckbox id="batch" value="#{createCustomer.batch}" />
           <f:facet name="footer">

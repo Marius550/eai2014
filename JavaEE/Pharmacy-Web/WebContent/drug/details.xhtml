@@ -23,8 +23,10 @@
         <h:outputText tabindex="1" id="name" value="#{drugPage.drug.name}" />
         Price
         <h:outputText tabindex="2" id="price" value="#{drugPage.drug.price}" />
+        Drug minimum age years
+        <h:outputText tabindex="3" id="drugMinimumAgeYears" value="#{drugPage.drug.drugMinimumAgeYears}" />
         Description
-        <h:outputText tabindex="3" id="description" value="#{drugPage.drug.description}" />
+        <h:outputText tabindex="4" id="description" value="#{drugPage.drug.description}" />
         In Stock
         <h:outputText value="#{drugPage.drug.stock}" />
       </h:panelGrid>
@@ -33,11 +35,11 @@
       <h:panelGrid columns="2" columnClasses="label, value form-input"
         footerClass="form-footer" styleClass="details-table">
         Minimum inventory level
-        <h:inputText tabindex="4" id="minimumInventory" size="5" value="#{drugPage.drug.minimumInventoryLevel}" />
+        <h:inputText tabindex="5" id="minimumInventory" size="5" value="#{drugPage.drug.minimumInventoryLevel}" />
         Optimal inventory level
-        <h:inputText tabindex="5" id="optimalInventory" size="5" value="#{drugPage.drug.optimalInventoryLevel}" />
+        <h:inputText tabindex="6" id="optimalInventory" size="5" value="#{drugPage.drug.optimalInventoryLevel}" />
         <f:facet name="footer">
-          <h:commandButton tabindex="6" value="Submit changes" action="#{drugPage.submitReplenishmentConfigChanges}" />
+          <h:commandButton tabindex="7" value="Submit changes" action="#{drugPage.submitReplenishmentConfigChanges}" />
         </f:facet>
       </h:panelGrid>
       <h:messages for="minimumInventory" styleClass="error" />
@@ -50,18 +52,18 @@
         footerClass="form-footer" styleClass="details-table">
         Quantity
         <h:panelGroup >
-          <h:inputText tabindex="7" id="quantity" size="5" value="#{drugPage.quantity}">
+          <h:inputText tabindex="8" id="quantity" size="5" value="#{drugPage.quantity}">
             <f:validateLongRange minimum="0" />
           </h:inputText>
-          <h:inputText tabindex="8" id="dateOfAction" size="16" value="#{drugPage.dateOfAction}">
+          <h:inputText tabindex="9" id="dateOfAction" size="16" value="#{drugPage.dateOfAction}">
             <f:convertDateTime pattern="yyyy-MM-dd HH:mm" timeZone="Europe/Berlin"/>
           </h:inputText>
         </h:panelGroup>
         &nbsp;
         <h:panelGroup >
-          <h:commandButton tabindex="9" value="Withdraw" action="#{drugPage.withdraw}" />
-          <h:commandButton tabindex="10" value="Restock" action="#{drugPage.restock}" />
-          <h:commandButton tabindex="11" value="Initiate replenishment" action="#{drugPage.initiateReplenishment}" />
+          <h:commandButton tabindex="10" value="Withdraw" action="#{drugPage.withdraw}" />
+          <h:commandButton tabindex="11" value="Restock" action="#{drugPage.restock}" />
+          <h:commandButton tabindex="12" value="Initiate replenishment" action="#{drugPage.initiateReplenishment}" />
         </h:panelGroup>
       </h:panelGrid>
       <h:link outcome="/drug/history.xhtml" value="Inventory History">

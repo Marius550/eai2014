@@ -28,14 +28,19 @@ public class Drug implements Serializable {
   @Min(value=0, message="Price can not be negative")
   private double price;
   
+  //Add regex pattern
+  @NotNull(message="For this drug, a minimum age in years is required!")
+  private long drugMinimumAgeYears;
+  
   private String description;
 
   public Drug() { }
 
-  public Drug(int pzn, String name, double price) {
+  public Drug(int pzn, String name, double price, long drugMinimumAgeYears) {
 	    this.pzn = pzn;
 	    this.name = name;
 	    this.price = price;
+	    this.drugMinimumAgeYears = drugMinimumAgeYears;
 	  }
 
   @Override
@@ -74,5 +79,13 @@ public class Drug implements Serializable {
   public void setDescription(String description) {
     this.description = description;
   }
+  
+  public long getDrugMinimumAgeYears() {
+	    return drugMinimumAgeYears;
+}
+
+public void setDrugMinimumAgeYears(long drugMinimumAgeYears) {
+	    this.drugMinimumAgeYears = drugMinimumAgeYears;
+}
 
 }

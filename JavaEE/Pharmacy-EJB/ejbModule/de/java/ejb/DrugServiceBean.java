@@ -78,11 +78,12 @@ public class DrugServiceBean implements DrugService {
   }
 
   @Override
-  public Drug updateMasterData(int pzn, String name, double price, String description) {
+  public Drug updateMasterData(int pzn, String name, double price, String description, long drugMinimumAgeYears) {
     Drug drug = getDrug(pzn);
     drug.setName(name);
     drug.setPrice(price);
     drug.setDescription(description);
+    drug.setDrugMinimumAgeYears(drugMinimumAgeYears);
     return drug;
   }
 

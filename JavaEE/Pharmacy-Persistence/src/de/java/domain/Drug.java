@@ -35,6 +35,9 @@ public class Drug implements Serializable {
   @NotNull(message="Price required")
   @Min(value=0, message="Price can not be negative")
   private double price;
+  
+  @NotNull(message="For this drug, a minimum age in years is required!")
+  private long drugMinimumAgeYears;
 
   private String description;
 
@@ -55,10 +58,11 @@ public class Drug implements Serializable {
 
   public Drug() { }
 
-  public Drug(int pzn, String name, double price) {
+  public Drug(int pzn, String name, double price, long drugMinimumAgeYears) {
 	    this.pzn = pzn;
 	    this.name = name;
 	    this.price = price;
+	    this.drugMinimumAgeYears = drugMinimumAgeYears;
 	  }
 
   public void withdraw(long quantity, Date dateOfAction) {
@@ -132,6 +136,14 @@ public class Drug implements Serializable {
 
   public void setPrice(double price) {
 	    this.price = price;
+  }
+  
+  public long getDrugMinimumAgeYears() {
+	    return drugMinimumAgeYears;
+  }
+
+  public void setDrugMinimumAgeYears(long drugMinimumAgeYears) {
+	    this.drugMinimumAgeYears = drugMinimumAgeYears;
   }
 
   public String getDescription() {

@@ -131,7 +131,7 @@
               <h:commandButton value="Add" id="addItem"
                 rendered="#{prescriptionPage.prescription.state == 'ENTRY'}"
                 disabled="#{prescriptionPage.newItemDrug == null}"
-                actionListener="#{prescriptionPage.addNewItem}"/>
+                actionListener="#{prescriptionPage.addNewItem(prescriptionPage.prescription.customer.birthDate)}"/>
             </f:facet>
           </h:column>
         </h:dataTable>

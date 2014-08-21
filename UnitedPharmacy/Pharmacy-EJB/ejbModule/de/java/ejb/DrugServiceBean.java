@@ -172,11 +172,12 @@ public class DrugServiceBean implements DrugService {
   }
 
   @Override
-  public Drug updateMasterData(int pzn, String name, double price, String description) {
+  public Drug updateMasterData(int pzn, String name, double price, String description, long drugMinimumAgeYears) {
     Drug drug = getDrug(pzn);
     drug.setName(name);
     drug.setPrice(price);
     drug.setDescription(description);
+    drug.setDrugMinimumAgeYears(drugMinimumAgeYears);
     
     persistUpdateMasterDataToDotNet(drug);
     persistUpdateMasterDataToJava(drug);
@@ -266,7 +267,8 @@ public class DrugServiceBean implements DrugService {
 		return d1.getPzn() == d2.getPzn() && 
 				d1.getName() == d2.getName() && 
 				d1.getPrice() == d2.getPrice() && 
-				d1.getDescription() == d2.getDescription();
+				d1.getDescription() == d2.getDescription() &&
+				d1.getDrugMinimumAgeYears() == d2.getDrugMinimumAgeYears();
 	}
 	
 	  @Override

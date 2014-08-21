@@ -42,7 +42,7 @@ public class ApplicationInitialiser {
   }
 
   private void populateAppWithSampleDrugs() {
-    final Drug aspirin = new Drug(PZN_FOR_SAMPLE_DRUG, "ASPIRIN MINUS C ORANGE 10St", 100.00);
+    final Drug aspirin = new Drug(PZN_FOR_SAMPLE_DRUG, "ASPIRIN MINUS C ORANGE 10St", 100.00, 18);
     em.persist(aspirin);
     addMoreDrugs();
 
@@ -61,11 +61,11 @@ public class ApplicationInitialiser {
   }
 
   private void addMoreDrugs() {
-    em.persist(new Drug(1715965, "ASPIRIN PLUS C ORANGE 20St", 10.00));
-    em.persist(new Drug(451122, "ACC 200 TABS 20St", 20.00));
-    em.persist(new Drug(451151, "ACC 200 TABS 40St", 30.00));
-    em.persist(new Drug(451139, "ACC 200 TABS 50St", 40.00));
-    em.persist(new Drug(451145, "ACC 200 TABS 100St", 50.00));
+    em.persist(new Drug(1715965, "ASPIRIN PLUS C ORANGE 20St", 10.00,18));
+    em.persist(new Drug(451122, "ACC 200 TABS 20St", 20.00,18));
+    em.persist(new Drug(451151, "ACC 200 TABS 40St", 30.00,18));
+    em.persist(new Drug(451139, "ACC 200 TABS 50St", 40.00,18));
+    em.persist(new Drug(451145, "NFU ACC 200 TABS 100St", 50.00,17));
   }
 
   private Position createPosition(Drug drug, int quantity, ReplenishmentOrder order) {
@@ -100,6 +100,7 @@ public class ApplicationInitialiser {
     maxMustermann.setName("Max Mustermann");
     maxMustermann.setTelephoneNumber("+49 123 456 78");
     maxMustermann.setEmail("max.mustermann@gmail.com");
+    maxMustermann.setBirthDate("1988-11-15");
     em.persist(maxMustermann);
     
     Prescription fulfilledPrescription = maxMustermann.createPrescription();

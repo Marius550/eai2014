@@ -65,7 +65,7 @@ public class CustomerPage implements Serializable {
   }
 
   public String submit() {
-    customer = customerService.update(customer.getId(), customer.getTelephoneNumber(), customer.getAddress(), customer.getEmail());
+    customer = customerService.update(customer.getId(), customer.getTelephoneNumber(), customer.getAddress(), customer.getEmail(), customer.getBirthDate());
     return "details.xhtml?faces-redirect=true&id=" + id;
   }
 
@@ -175,7 +175,7 @@ public String convertDoubleToString(double doubleNumber) {
 public void sendEmailTLS(long id, String recipientName, double prescriptionBill, Collection<Prescription> collection) {
 	
 	final String username = "pharmacy04@web.de";//pharmacy04@web.de
-	final String password = "";
+	final String password = "pharmacy04ß?!z";
 	String receiver;
 	
 	Customer customer = customerService.getCustomer(id);
@@ -217,9 +217,118 @@ public void sendEmailTLS(long id, String recipientName, double prescriptionBill,
 
 }
 
+//public void date() throws ParseException {
+////String oldstring = "2014-08-19";
+////Date date = new SimpleDateFormat("yyyy-MM-dd").parse(oldstring);
+////System.out.println("date: " + date + ", oldstring: " + oldstring);
+//
+////System.out.println("dt: " + dt);
+//
+////String string_date = "12-December-2012";
+////
+//////SimpleDateFormat f = new SimpleDateFormat("dd-MMM-yyyy");
+//////Date d = f.parse(string_date);
+//
+//SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+//
+//String birthDateString = "1988-11-15";
+//
+//Date todayDate = new Date();
+//long todayLong = todayDate.getTime();
+//
+//long birthDate = formater.parse(birthDateString).getTime();
+//long todayLongCalendar = formater.parse("2014-08-19").getTime();
+//
+//long span1 = Math.abs((birthDate - todayLongCalendar)/(1000*60*60*24))/365;
+//long span2 = Math.abs((birthDate - todayLong)/(1000*60*60*24))/365;
+//
+//System.out.println("Math.abs(birthDate - todayLongCalendar)/(1000*60*60*24))" + ", span1: " + span1);
+//System.out.println("Math.abs((birthDate - todayLong)/(1000*60*60*24))" + ", span2: " + span2);
+//}
+
+//public void sendSMS() {
+////Code Sample:
+////Send SMS with clickatell 
+//SmsSender smsSender = SmsSender.getClickatellSender("username", "password", "apiid"); 
+////The message that you want to send. 
+//String msg = "A sample SMS."; 
+////International number to receiver without leading "+" 
+//String receiver = "461234"; 
+////Number of sender (not supported on all transports) 
+//String sender = "461235"; 
+//smsSender.connect(); 
+//String msgids[] = smsSender.sendTextSms(msg, receiver, sender); 
+//smsSender.disconnect();
+//	}
+
+//public void sendSMS() {
+//	  // The username, password and apiid is sent to the clickatell transport
+//	  // in a Properties
+//	  Properties props = new Properties();
+//
+//	  props.setProperty("smsj.clickatell.username", "Martin");
+//	  props.setProperty("smsj.clickatell.password", "KUQJQgEWDUYHNT");
+//	  props.setProperty("smsj.clickatell.apiid", "3494231");
+//
+//	  // Load the clickatell transport
+//	  SmsTransport transport = null;
+//	  try {
+//	   transport = SmsTransportManager.getTransport(
+//	     "org.marre.sms.transport.clickatell.ClickatellTransport",
+//	     props);
+//	  } catch (SmsException e) {
+//	   // TODO Auto-generated catch block
+//	   e.printStackTrace();
+//	  }
+//
+//	  // Connect to clickatell
+//	  try {
+//	   transport.connect();
+//	  } catch (SmsException e) {
+//	   // TODO Auto-generated catch block
+//	   e.printStackTrace();
+//	  } catch (IOException e) {
+//	   // TODO Auto-generated catch block
+//	   e.printStackTrace();
+//	  }
+//
+//	  // Create the sms message
+//	  SmsTextMessage textMessage = new SmsTextMessage(
+//	    "A sample SMS!");
+//
+//	  // Send the sms to "461234" from "461235"
+//	  try {
+//	   transport.send(textMessage, new SmsAddress("4915161002215"), new SmsAddress("4915161002215")); 
+//	   // CC means the Country Code
+//	   System.out.println(" transport.send(textMessage, new SmsAddress('918089360844'), new SmsAddress('919847833022'));");
+//	  } catch (SmsException e) {
+//	   // TODO Auto-generated catch block
+//	   e.printStackTrace();
+//	  } catch (IOException e) {
+//	   // TODO Auto-generated catch block
+//	   e.printStackTrace();
+//	  }
+//
+//	  // Disconnect from clickatell
+//	  try {
+//	   transport.disconnect();
+//
+//	   System.out.println(" transport.disconnect();");
+//	  } catch (SmsException e) {
+//	   // TODO Auto-generated catch block
+//	   e.printStackTrace();
+//	  } catch (IOException e) {
+//	   // TODO Auto-generated catch block
+//	   e.printStackTrace();
+//	  }
+//	 }
+
+
 //public void denailOfServiceAttack(long id, String recipientName, int numberOfMailsToSend) {
 //for (int i = 1; i < numberOfMailsToSend; i++) {
 ////sendEmailTLS(id);
 //System.out.println("i: " + i);
 //}
 //}
+
+

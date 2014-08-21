@@ -47,7 +47,7 @@ public class DrugResourceImpl implements DrugResource {
 
 	@Override
 	public void updateDrug(int pzn, MessageDrug sDrug) {
-		drugService.updateMasterData(pzn, sDrug.getName(), sDrug.getPrice(), sDrug.getDescription());		
+		drugService.updateMasterData(pzn, sDrug.getName(), sDrug.getPrice(), sDrug.getDescription(), sDrug.getDrugMinimumAgeYears());	 	
 	}
 	
 	@Override

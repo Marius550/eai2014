@@ -33,6 +33,7 @@ public class DrugMessage extends AbstractMessage{
 		message.setStringProperty("name", drug.getName());
 		message.setDoubleProperty("price", drug.getPrice());
 		message.setStringProperty("description", drug.getDescription());
+		message.setLongProperty("drugMinimumAgeYears", drug.getDrugMinimumAgeYears());
 		message.setStringProperty("action", this.action);
 		
 		return message;

@@ -32,6 +32,7 @@ public class DrugMessageListener implements MessageListener {
 			String name = message.getStringProperty("name");
 			double price = message.getDoubleProperty("price");
 			String description = message.getStringProperty("description");
+			long drugMinimumAgeYears = message.getLongProperty("drugMinimumAgeYears");
 
 			if(action.equals("create")) {
 				Drug newDrug = new Drug();
@@ -39,9 +40,10 @@ public class DrugMessageListener implements MessageListener {
 				newDrug.setPrice(price);
 				newDrug.setDescription(description);
 				newDrug.setName(name);
+				newDrug.setDrugMinimumAgeYears(drugMinimumAgeYears);
 				drugService.createDrug(newDrug);
 			} else if(action.equals("update")) {
-				drugService.updateMasterData(pzn, name, price, description);
+				drugService.updateMasterData(pzn, name, price, description, drugMinimumAgeYears);
 			}
 		} catch (JMSException e) {
 			e.printStackTrace();

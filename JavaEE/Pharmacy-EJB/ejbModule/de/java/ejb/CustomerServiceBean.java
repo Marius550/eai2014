@@ -49,11 +49,12 @@ public class CustomerServiceBean implements CustomerService {
   }
 
   @Override
-  public Customer update(long id, String telephoneNumber, String address, String email) {
+  public Customer update(long id, String telephoneNumber, String address, String email, String birthDate) {
     Customer customer = getCustomer(id);
     customer.setTelephoneNumber(telephoneNumber);
     customer.setAddress(address);
     customer.setEmail(email);
+    customer.setBirthDate(birthDate);
     return customer;
   }
   

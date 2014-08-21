@@ -3,6 +3,8 @@ package de.java.web;
 import static de.java.web.util.Util.errorMessage;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -171,15 +173,32 @@ public double getPriceOfPrescriptionItems(){
     return toPrescriptionPage();
   }
 
-  public void addNewItem() {
+  public void addNewItem(String birthDate) throws ParseException{
+	 
+	  SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+	  long birthDateLong = formater.parse(birthDate).getTime();
+	  
+	  Date todayDate = new Date();
+	  long todayLong = todayDate.getTime();
+	  
+	  long timeSpan = Math.abs((todayLong - birthDateLong)/(1000*60*60*24))/365;
+	  
+	  if(timeSpan >= drugService.getDrug(getNewPzn()).getDrugMinimumAgeYears()) {
     try {
-      prescriptionService.addNewItem(getPrescription().getId(), getNewPzn());
-    } catch (EJBException e) {
+      prescriptionService.addNewItem(getPrescription().getId(), getNewPzn());  
+      System.out.println("getNewPzn(): " + getNewPzn() +  ", timeSpan: " + timeSpan + ", Drug Age: " + drugService.getDrug(getNewPzn()).getDrugMinimumAgeYears());
+    	}
+	  
+    catch (EJBException e) {
       String msg = Util.getCausingMessage(e);
       FacesContext.getCurrentInstance().addMessage(null, errorMessage(msg));
-    }
+    	}
+	  } else {
+		  FacesContext.getCurrentInstance().addMessage(null, errorMessage("This drug cannot be added - Customer is too young for this drug!"));
+	  }
+
     init();
-  }
+}
 
   public Prescription getPrescription() {
     if (prescription == null) {
@@ -236,6 +255,19 @@ public double getPriceOfPrescriptionItems(){
   }
   
 }
+
+//public void getTimeSpan(String birthDate) throws ParseException {
+//
+//SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+//long birthDateLong = formater.parse(birthDate).getTime();
+//
+//Date todayDate = new Date();
+//long todayLong = todayDate.getTime();
+//
+//long timeSpan = Math.abs((todayLong - birthDateLong)/(1000*60*60*24))/365;
+//
+//System.out.println("timeSpan: " + timeSpan);
+//}
 
 //testing...
 //  public void PrintToConsole() {

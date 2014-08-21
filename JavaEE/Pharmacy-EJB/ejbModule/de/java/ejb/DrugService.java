@@ -20,10 +20,9 @@ public interface DrugService {
 
   Drug createDrug(Drug drug);
 
-  Drug updateMasterData(int pzn, String name, double price, String description);
+  Drug updateMasterData(int pzn, String name, double price, String description, long drugMinimumAgeYears);
 
-  Drug updateReplenishmentConfig(int pzn, long minimumInventoryLevel,
-      long optimalInventoryLevel);
+  Drug updateReplenishmentConfig(int pzn, long minimumInventoryLevel, long optimalInventoryLevel);
 
   Drug withdraw(int pzn, long quantity, Date dateOfAction);
 
