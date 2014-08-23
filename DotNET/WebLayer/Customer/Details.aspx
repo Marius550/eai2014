@@ -39,7 +39,16 @@
                         <asp:TextBox ID="Address" runat="server" Text='<%# Bind("Address") %>' TextMode="MultiLine" ReadOnly="false" />
                     </EditItemTemplate>
                 </asp:TemplateField>
+                <asp:TemplateField HeaderText="Email">
+                    <ItemTemplate>
+                        <asp:Label ID="Email" runat="server" Text='<%# Eval("Email") %>' />
+                    </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:TextBox ID="Email" runat="server" Text='<%# Bind("Email") %>' TextMode="MultiLine" ReadOnly="false" />
+                    </EditItemTemplate>
+                </asp:TemplateField>
                 <asp:CommandField ButtonType="Button" ShowEditButton="true" CancelText="Cancel" EditText="Edit" UpdateText="Update" />
+
                 <asp:HyperLinkField DataNavigateUrlFields="Id"
                     DataNavigateUrlFormatString="~/Prescription/Create.aspx?id={0}"
                     Text="Enter new prescription" />
@@ -48,6 +57,11 @@
             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
             <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
         </asp:DetailsView>
+
+        <p class="form-footer">
+            <asp:Button ID="SendMailBtn" runat="server" Text="Send mail" onclick="SendMailBtn_Click" />
+        </p>
+
         <h3>Prescriptions</h3>
         <asp:ObjectDataSource ID="PrescriptionDataSource" runat="server"
             SelectMethod="GetAllPrescriptionsForCustomer" TypeName="Pharmacy.BusinessLayer.Logic.PrescriptionService"

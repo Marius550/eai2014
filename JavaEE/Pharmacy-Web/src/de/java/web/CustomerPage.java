@@ -204,7 +204,7 @@ public void sendEmailTLS(long id, String recipientName, double prescriptionBill,
 				"\n\n Below you can check your prescription details: "
 				+ "\n\n<Id> <Total Price> <Issuer>"
 				+ "\n\n" + getCustomerPrescriptionArray(collection)
-				+ " \n\n\n Best regards, \n\n Pharmacy04"); 
+				+ " \n\n\n Best regards, \n\n Java Pharmacy04"); 
 
 		Transport.send(message);
 

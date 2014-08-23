@@ -9,7 +9,7 @@ namespace Pharmacy.BusinessLayer.Logic
 {
     public static class CustomerService
     {
-        public static Customer CreateCustomer(string name, string telephoneNumber, string address)
+        public static Customer CreateCustomer(string name, string telephoneNumber, string address, string email)
         {
             Util.ConvertEmptyToNull(ref address);
 
@@ -17,7 +17,8 @@ namespace Pharmacy.BusinessLayer.Logic
             {
                 Name = name,
                 TelephoneNumber = telephoneNumber,
-                Address = address
+                Address = address,
+                Email = email
             };
             return CreateCustomer(customer);
         }
@@ -57,10 +58,10 @@ namespace Pharmacy.BusinessLayer.Logic
 
         public static Customer UpdateCustomer(Customer customer)
         {
-            return UpdateCustomer(customer, customer.TelephoneNumber, customer.Address);
+            return UpdateCustomer(customer, customer.TelephoneNumber, customer.Address, customer.Email);
         }
 
-        public static Customer UpdateCustomer(Customer customer, string telephoneNumber, string address)
+        public static Customer UpdateCustomer(Customer customer, string telephoneNumber, string address, string email)
         {
             Util.ConvertEmptyToNull(ref address);
 
@@ -69,6 +70,7 @@ namespace Pharmacy.BusinessLayer.Logic
                 Customer attachedCustomer = GetCustomer(customer.Id, db);
                 attachedCustomer.TelephoneNumber = telephoneNumber;
                 attachedCustomer.Address = address;
+                attachedCustomer.Email = email;
                 db.SaveChanges();
                 return attachedCustomer;
             }

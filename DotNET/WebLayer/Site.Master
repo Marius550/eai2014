@@ -25,7 +25,7 @@
         </asp:ContentPlaceHolder>
     </div>
     <div id="footer">
-      &copy; Practical Computer Science
+      &copy; Pharmacy Web Interface extended by Marius Pilgrim
     </div>
 </body>
 </html>

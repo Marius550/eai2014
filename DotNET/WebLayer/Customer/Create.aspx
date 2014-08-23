@@ -24,6 +24,10 @@
         <p class="value">
             <asp:TextBox ID="AddressBox" runat="server" TextMode="MultiLine"></asp:TextBox>
         </p>
+        <p class="label">Email</p>
+        <p class="value">
+            <asp:TextBox ID="EmailBox" runat="server" TextMode="MultiLine"></asp:TextBox>
+        </p>
         <p class="form-footer">
             <asp:Button ID="SubmitBtn" runat="server" Text="Submit"
                 onclick="SubmitBtn_Click" />

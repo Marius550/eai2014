@@ -34,6 +34,8 @@ public partial class Customer
 
     public string Address { get; set; }
 
+    public string Email { get; set; }
+
 
 
     public virtual ICollection<Prescription> Prescriptions { get; set; }

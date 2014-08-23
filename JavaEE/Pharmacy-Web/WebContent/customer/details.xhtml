@@ -31,7 +31,7 @@
         <h:messages for="email" styleClass="error"/>
         <f:facet name="footer">
           <h:commandButton tabindex="5" value="Submit changes" action="#{customerPage.submit()}" />
-          <h:commandButton tabindex="6" value="Send TLS mail" action="#{customerPage.sendEmailTLS(customerPage.id, customerPage.customer.name, customerPage.customer.prescriptionBill, customerPage.customer.prescriptions)}" />
+          <h:commandButton tabindex="6" value="Send mail" action="#{customerPage.sendEmailTLS(customerPage.id, customerPage.customer.name, customerPage.customer.prescriptionBill, customerPage.customer.prescriptions)}" />
         </f:facet>
       </h:panelGrid>
       <h:panelGrid rendered="#{not empty customerPage.customer.prescriptions}">

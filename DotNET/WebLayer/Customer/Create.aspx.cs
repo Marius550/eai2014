@@ -21,12 +21,13 @@ namespace WebLayer.Customer
             try
             {
                 Pharmacy.BusinessLayer.Data.Customer result =
-                    Pharmacy.BusinessLayer.Logic.CustomerService.CreateCustomer(NameBox.Text, TelephoneNumberBox.Text, AddressBox.Text);
+                    Pharmacy.BusinessLayer.Logic.CustomerService.CreateCustomer(NameBox.Text, TelephoneNumberBox.Text, AddressBox.Text, EmailBox.Text);
                 ResultLabel.Text = String.Format("Customer '{0}' created.", result.Name);
                 ResultLabel.CssClass = "success";
                 NameBox.Text = "";
                 TelephoneNumberBox.Text = "";
                 AddressBox.Text = "";
+                EmailBox.Text = "";
             }
             catch (ArgumentException ex)
             {
