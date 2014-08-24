@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -126,5 +127,32 @@ namespace WebLayer.Prescription
             PrescriptionService.Replenish(itemId);
             ItemsGridView.DataBind();
         }
+
+        protected Int32 GetAmountOfItemsInPrescription()
+        {
+            Int32 prescriptionId = Int32.Parse(Request.Params["id"]);
+            Int32 amountOfItemsInPrescription = Pharmacy.BusinessLayer.Logic.PrescriptionService.GetPrescription(prescriptionId).Items.Count;
+            return amountOfItemsInPrescription;
+                
+           //Int32.Parse(Request.Params["id"]);//Returns prescription Id
+            //System.Diagnostics.Debug.WriteLine("GetAmountOfDrugs()");
+        }
+
+        protected double GetTotalPrescriptionCost()
+        {
+            ICollection<Item> prescriptionItems = new List<Item>(); 
+            Int32 prescriptionId = Int32.Parse(Request.Params["id"]);
+            prescriptionItems = Pharmacy.BusinessLayer.Logic.PrescriptionService.GetPrescription(prescriptionId).Items;
+
+            double totalPrescriptionPrice = 0;
+
+            foreach (Item i in prescriptionItems)
+            {
+                totalPrescriptionPrice = totalPrescriptionPrice + Pharmacy.BusinessLayer.Logic.DrugService.GetDrug(i.DrugPZN).Price;
+                //System.Diagnostics.Debug.WriteLine("DrugPZN: " + i.DrugPZN + ", Sum Price: " + totalPrescriptionPrice);   
+            }
+            return totalPrescriptionPrice;
+        }
+
     }
 }

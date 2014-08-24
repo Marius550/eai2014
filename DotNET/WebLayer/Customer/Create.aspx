@@ -17,9 +17,10 @@
             <asp:RequiredFieldValidator ID="TelephoneNumberBoxValidator" runat="server" 
                 ControlToValidate="TelephoneNumberBox" ErrorMessage="RequiredFieldValidator"
                 EnableClientScript="false">
-                <span class="error">Telephone number required</span>
+                <span class="error">Telephone number required!</span>
             </asp:RequiredFieldValidator>
         </p>
+        <span><%= TelephoneValidator() %></span>
         <p class="label">Address</p>
         <p class="value">
             <asp:TextBox ID="AddressBox" runat="server" TextMode="MultiLine"></asp:TextBox>
@@ -27,13 +28,20 @@
         <p class="label">Email</p>
         <p class="value">
             <asp:TextBox ID="EmailBox" runat="server" TextMode="MultiLine"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="EmailBoxValidator" runat="server" 
+                ControlToValidate="EmailBox" ErrorMessage="RequiredFieldValidator"
+                EnableClientScript="false">
+                <span class="error">Email required!</span>
+            </asp:RequiredFieldValidator>
         </p>
+        <span><%= EmailValidator() %></span>
         <p class="form-footer">
-            <asp:Button ID="SubmitBtn" runat="server" Text="Submit"
-                onclick="SubmitBtn_Click" />
+            <asp:Button ID="SubmitBtn" runat="server" Text="Submit" onclick="SubmitBtn_Click" />
         </p>
     </form>
+
     <div class="result">
         <asp:Label ID="ResultLabel" runat="server"></asp:Label>
     </div>
 </asp:Content>
+

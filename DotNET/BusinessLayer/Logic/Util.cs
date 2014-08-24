@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pharmacy.BusinessLayer.Logic
+namespace Pharmacy.BusinessLayer.Logic 
 {
     internal static class Util
     {

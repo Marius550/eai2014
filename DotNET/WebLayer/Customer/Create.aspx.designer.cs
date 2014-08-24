@@ -76,6 +76,15 @@ namespace WebLayer.Customer {
         protected global::System.Web.UI.WebControls.TextBox EmailBox;
         
         /// <summary>
+        /// EmailBoxValidator-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailBoxValidator;
+        
+        /// <summary>
         /// SubmitBtn-Steuerelement
         /// </summary>
         /// <remarks>

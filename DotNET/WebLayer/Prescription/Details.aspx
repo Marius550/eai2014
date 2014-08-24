@@ -39,6 +39,22 @@
                         </asp:RequiredFieldValidator>
                     </ItemTemplate>
                 </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Amount of drugs">
+                    <ItemTemplate>
+                        <asp:Label ID="AmountOfDrugsBox" runat="server"
+                            Text='<%# GetAmountOfItemsInPrescription() %>'
+                            Visible='<%# ((PrescriptionState)Eval("State")) != PrescriptionState.Entry %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Total Price">
+                    <ItemTemplate>
+                        <asp:Label ID="GetTotalPrescriptionCostBox" runat="server" Text='<%# GetTotalPrescriptionCost() %>' 
+                        Visible='<%# ((PrescriptionState)Eval("State")) != PrescriptionState.Entry %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
+
                 <asp:TemplateField HeaderText="Issued on">
                     <ItemTemplate>
                         <asp:Label ID="IssuedOnLabel" runat="server"
@@ -117,6 +133,7 @@
                         <asp:Button ID="CancelButton" runat="server" OnCommand="Cancel_Command" Text="Cancel"
                             Enabled='<%# ((PrescriptionState)Eval("State")).Cancellable() %>'
                             Visible='<%# ((PrescriptionState)Eval("State")).Cancellable() %>' />
+
                     </ItemTemplate>
                 </asp:TemplateField>
             </Fields>
@@ -140,6 +157,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="PrescribedDrug.Name" HeaderText="Name" />
+                <asp:BoundField DataField="PrescribedDrug.Price" HeaderText="Price" />
                 <asp:BoundField DataField="State" HeaderText="State" />
                 <asp:BoundField DataField="PrescribedDrug.Stock" HeaderText="In Stock" />
                 <asp:TemplateField HeaderText="Pending">
