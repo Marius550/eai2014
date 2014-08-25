@@ -10,6 +10,10 @@ namespace WebLayer.Customer
 {
     public partial class Create : System.Web.UI.Page
     {
+
+        Boolean evaluationPhone;
+        Boolean evaluationEmail;
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -21,17 +25,46 @@ namespace WebLayer.Customer
                 return;
             try
             {
-                Pharmacy.BusinessLayer.Data.Customer result =
-                    Pharmacy.BusinessLayer.Logic.CustomerService.CreateCustomer(NameBox.Text, TelephoneNumberBox.Text, AddressBox.Text, EmailBox.Text);
-                ResultLabel.Text = String.Format("Customer '{0}' created.", result.Name);
-                ResultLabel.CssClass = "success";
-                NameBox.Text = "";
-                TelephoneNumberBox.Text = "";
-                AddressBox.Text = "";
-                EmailBox.Text = "";
+                ResultLabelEmailValidation.Text = null;
+                ResultLabelPhoneValidation.Text = null;
 
                 RegexPhone();
                 RegexEmail();
+                if (evaluationPhone == true && evaluationEmail == true)
+                {
+                    Pharmacy.BusinessLayer.Data.Customer result =
+                        Pharmacy.BusinessLayer.Logic.CustomerService.CreateCustomer(NameBox.Text, TelephoneNumberBox.Text, AddressBox.Text, EmailBox.Text);
+                    ResultLabel.Text = String.Format("Customer '{0}' created.", result.Name);
+                    ResultLabel.CssClass = "success";
+                    NameBox.Text = "";
+                    TelephoneNumberBox.Text = "";
+                    AddressBox.Text = "";
+                    EmailBox.Text = "";
+                }
+                else
+                {
+                    //Make use of the "Result.Label"!
+                    ResultLabel.Text = String.Format("Customer not created");
+                    ResultLabel.CssClass = "error";
+
+                    if (evaluationEmail == false && evaluationPhone == false)
+                    {
+                    ResultLabelEmailValidation.Text = String.Format("Email format is not correct");
+                    ResultLabelEmailValidation.CssClass = "error";
+                    ResultLabelPhoneValidation.Text = String.Format("Telephone number format is not correct");
+                    ResultLabelPhoneValidation.CssClass = "error";
+                    }
+                    else if (evaluationEmail == false && evaluationPhone == true)
+                    {
+                    ResultLabelEmailValidation.Text = String.Format("Email format is not correct");
+                    ResultLabelEmailValidation.CssClass = "error";
+                    }
+                    else if (evaluationEmail == true && evaluationPhone == false)
+                    {
+                    ResultLabelPhoneValidation.Text = String.Format("Telephone number format is not correct");
+                    ResultLabelPhoneValidation.CssClass = "error";
+                    }
+                }
             }
             catch (ArgumentException ex)
             {
@@ -40,52 +73,46 @@ namespace WebLayer.Customer
             }
         }
 
-        protected String RegexEmail ()
+        protected void RegexEmail ()
         {
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-            Boolean eval;
-            String evaluationString = "";
+
             if (!regex.IsMatch(EmailBox.Text))
             {
-                eval = false;
-                evaluationString = "Please fill in correctly";
+                evaluationEmail = false;
             }
             else
             {
-                eval = true;
-                evaluationString = "Email format is correct";
+                evaluationEmail = true;
             }
-            return String.Concat(evaluationString, eval);
         }
 
-        protected String RegexPhone()
+        protected void RegexPhone()
         {
             Regex regex = new Regex("^[0-9]+(-[0-9]+)*$");
-            Boolean eval;
-            String evaluationString = "";
             if (!regex.IsMatch(TelephoneNumberBox.Text))
             {
-                eval = false;
-                evaluationString = "Please fill in correctly";
+                evaluationPhone = false;
             }
             else
             {
-                eval = true;
-                evaluationString = "Telephone number format is correct";
+                evaluationPhone = true;
             }
-            return String.Concat(evaluationString, eval);
         }
 
+        /*
         protected string EmailValidator()
         {
             return "Please use the common form (E.g.: name@example.com). " + RegexEmail();
+         * <span><%= EmailValidator() %></span>
         }
 
         protected string TelephoneValidator()
         {
             return "Please use the common form (International, e.g.: 492518338250). " + RegexPhone();
-            //<asp:Label runat="server" Text='<%# ManipulateLabel("Information") %>'></asp:Label>
+            <span><%= TelephoneValidator() %></span>
         }
+         */
     }
 }
 

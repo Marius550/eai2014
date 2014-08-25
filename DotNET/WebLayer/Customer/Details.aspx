@@ -59,8 +59,13 @@
         </asp:DetailsView>
 
         <p class="form-footer">
-            <asp:Button ID="SendMailBtn" runat="server" Text="Send mail" onclick="SendMailBtn_Click" />
+
+            <asp:Button ID="SendMailBtnException" runat="server" Text="Send mail" onclick="SendMailBtnException_Click" />
         </p>
+
+        <div class="result">
+            <asp:Label ID="ResultLabel" runat="server"></asp:Label>
+        </div>
 
         <h3>Prescriptions</h3>
         <asp:ObjectDataSource ID="PrescriptionDataSource" runat="server"

@@ -18,31 +18,66 @@ namespace WebLayer.Customer
 
         }
 
-        protected void SendMailBtn_Click(object sender, EventArgs e)
-        {
-
+    protected void SendMailBtnException_Click(object sender, EventArgs e) {
+                
             String receiver = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Email;
             String recipientName = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Name;
-            System.Diagnostics.Debug.WriteLine((Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Email));
+            String recipientEmail = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Email;
 
-            MailMessage mailMessage = new MailMessage("pharmacy04@web.de", receiver);
-            mailMessage.Subject = "C# Pharmacy04 - Prescription Bill";
-            mailMessage.Body = "Dear " + recipientName + ", \n\n Your overall prescription bill is: XXX" + "€." + 
-				"\n\n Below you can check your prescription details: "
-				+ "\n\n<Id> <Total Price> <Issuer>"
-				+ "\n\n" + "XXX"
-				+ " \n\n\n Best regards, \n\n C# Pharmacy04";
+                MailMessage mailMessage = new MailMessage("pharmacy04@web.de", receiver);
+                mailMessage.Subject = "C# Pharmacy04 - Prescription Bill";
+                mailMessage.Body = "Dear " + recipientName + ", \n\n Your overall prescription bill is: XXX" + "€." +
+                    "\n\n Below you can check your prescription details: "
+                    + "\n\n<Id> <Total Price> <Issuer>"
+                    + "\n\n" + "XXX"
+                    + " \n\n\n Best regards, \n\n C# Pharmacy04";
 
-            SmtpClient smtpClient = new SmtpClient("smtp.web.de", 587); //"smtp.gmail.com"
-            smtpClient.Credentials = new System.Net.NetworkCredential()
+                SmtpClient smtpClient = new SmtpClient("smtp.web.de", 587); //"smtp.gmail.com"
+                smtpClient.Credentials = new System.Net.NetworkCredential()
+                {
+                    UserName = "pharmacy04@web.de",
+                    Password = "pharmacy04ß?!z"
+                };
+                smtpClient.EnableSsl = true;
+        try
+			{
+                ResultLabel.Text = null;
+                smtpClient.Send(mailMessage);
+                ResultLabel.Text = String.Format("Sending email to " + recipientEmail + " succeeded");
+                ResultLabel.CssClass = "success";
+			}
+			catch (SmtpFailedRecipientsException ex)
+			{
+				for (int i = 0; i < ex.InnerExceptions.Length; i++)
+				{
+					SmtpStatusCode status = ex.InnerExceptions[i].StatusCode;
+					if (status == SmtpStatusCode.MailboxBusy ||
+						status == SmtpStatusCode.MailboxUnavailable)
+					{
+                        ResultLabel.Text = String.Format("Delivery failed - retrying in 5 seconds.");
+                        ResultLabel.CssClass = "error";
+
+					    //System.Diagnostics.Debug.Write("Delivery failed - retrying in 5 seconds.");
+						System.Threading.Thread.Sleep(5000);
+                        smtpClient.Send(mailMessage);
+					}
+					else
+					{
+                        ResultLabel.Text = String.Format("Failed to deliver message to " + recipientEmail);
+                        ResultLabel.CssClass = "error";
+                       // System.Diagnostics.Debug.Write("Failed to deliver message to " + recipientEmail, ex.InnerExceptions[i].FailedRecipient);
+					}
+				}
+			}
+            catch (Exception ex)
             {
-                UserName = "pharmacy04@web.de",
-                Password = "pharmacy04ß?!z"
-            };
-            smtpClient.EnableSsl = true;
-            smtpClient.Send(mailMessage);
-
+                ResultLabel.Text = String.Format("Exception caught in RetryIfBusy(): " + ex);
+                ResultLabel.CssClass = "error";
+                //System.Diagnostics.Debug.Write("Exception caught in RetryIfBusy(): " + ex, ex.ToString() );
+            }
         }
+
+
 
         private void Page_Error(object sender, EventArgs e)
         {
@@ -52,3 +87,46 @@ namespace WebLayer.Customer
         }
     }
 }
+
+/*
+        protected void SendMailBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                String receiver = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Email;
+                String recipientName = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Name;
+                String recipientEmail = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Email;
+
+                MailMessage mailMessage = new MailMessage("pharmacy04@web.de", receiver);
+                mailMessage.Subject = "C# Pharmacy04 - Prescription Bill";
+                mailMessage.Body = "Dear " + recipientName + ", \n\n Your overall prescription bill is: XXX" + "€." +
+                    "\n\n Below you can check your prescription details: "
+                    + "\n\n<Id> <Total Price> <Issuer>"
+                    + "\n\n" + "XXX"
+                    + " \n\n\n Best regards, \n\n C# Pharmacy04";
+
+                SmtpClient smtpClient = new SmtpClient("smtp.web.de", 587); //"smtp.gmail.com"
+                smtpClient.Credentials = new System.Net.NetworkCredential()
+                {
+                    UserName = "pharmacy04@web.de",
+                    Password = "pharmacy04ß?!z"
+                };
+
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(mailMessage);
+
+                System.Threading.Thread.Sleep(5000);
+
+                ResultLabel.Text = String.Format("Sending email to " + recipientEmail + " succeeded");
+                ResultLabel.CssClass = "success";
+            }
+            catch
+            {
+                String recipientEmail = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Email;
+                ResultLabel.Text = String.Format("Sending email to " + recipientEmail + " failed");
+                ResultLabel.CssClass = "error";
+                //System.Diagnostics.Debug.Write("Sending email failed");
+            }
+        }
+*/

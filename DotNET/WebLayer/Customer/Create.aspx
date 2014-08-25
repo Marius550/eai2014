@@ -17,10 +17,10 @@
             <asp:RequiredFieldValidator ID="TelephoneNumberBoxValidator" runat="server" 
                 ControlToValidate="TelephoneNumberBox" ErrorMessage="RequiredFieldValidator"
                 EnableClientScript="false">
-                <span class="error">Telephone number required!</span>
+                <span class="error">Telephone number required! Please use the common form (E.g.: 492518338250).</span>
             </asp:RequiredFieldValidator>
         </p>
-        <span><%= TelephoneValidator() %></span>
+        
         <p class="label">Address</p>
         <p class="value">
             <asp:TextBox ID="AddressBox" runat="server" TextMode="MultiLine"></asp:TextBox>
@@ -31,10 +31,10 @@
             <asp:RequiredFieldValidator ID="EmailBoxValidator" runat="server" 
                 ControlToValidate="EmailBox" ErrorMessage="RequiredFieldValidator"
                 EnableClientScript="false">
-                <span class="error">Email required!</span>
+                <span class="error">Email required! Please use the common form (E.g.: name@example.com).</span>
             </asp:RequiredFieldValidator>
         </p>
-        <span><%= EmailValidator() %></span>
+        
         <p class="form-footer">
             <asp:Button ID="SubmitBtn" runat="server" Text="Submit" onclick="SubmitBtn_Click" />
         </p>
@@ -42,6 +42,13 @@
 
     <div class="result">
         <asp:Label ID="ResultLabel" runat="server"></asp:Label>
+    </div>
+    
+    <div class="result">
+        <asp:Label ID="ResultLabelPhoneValidation" runat="server"></asp:Label>
+    </div>
+    <div class="result">
+        <asp:Label ID="ResultLabelEmailValidation" runat="server"></asp:Label>
     </div>
 </asp:Content>
 

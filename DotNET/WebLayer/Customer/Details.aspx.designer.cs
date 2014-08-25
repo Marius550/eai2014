@@ -40,13 +40,22 @@ namespace WebLayer.Customer {
         protected global::System.Web.UI.WebControls.DetailsView CustomerDetailsView;
         
         /// <summary>
-        /// SendMailBtn-Steuerelement
+        /// SendMailBtnException-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SendMailBtn;
+        protected global::System.Web.UI.WebControls.Button SendMailBtnException;
+        
+        /// <summary>
+        /// ResultLabel-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ResultLabel;
         
         /// <summary>
         /// PrescriptionDataSource-Steuerelement
