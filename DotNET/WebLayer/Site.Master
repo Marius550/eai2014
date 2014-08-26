@@ -15,7 +15,7 @@
     </div>
     <div id="navigation">
         <asp:HyperLink NavigateUrl="~/Drug/List.aspx" Text="Drugs" runat="server" /> |
-        <asp:HyperLink NavigateUrl="~/ReplenishmentOrder/List.aspx" Text="Orders" runat="server" /> |
+        <asp:HyperLink NavigateUrl="~/ReplenishmentOrder/List.aspx" Text=" Replenishment orders" runat="server" /> |
         <asp:HyperLink NavigateUrl="~/Customer/List.aspx" Text="Customers" runat="server" /> |
         <asp:HyperLink NavigateUrl="~/Prescription/List.aspx" Text="Prescriptions" runat="server" />
     </div>

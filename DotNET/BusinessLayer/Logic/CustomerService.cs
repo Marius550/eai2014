@@ -87,6 +87,7 @@ namespace Pharmacy.BusinessLayer.Logic
                     IssuingPhysician = issuer,
                     IssueDate = DateTime.Now,
                     EntryDate = DateTime.Now
+                    
                 };
                 currentCustomer.Prescriptions.Add(newPrescription);
                 db.SaveChanges();

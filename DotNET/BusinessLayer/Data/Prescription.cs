@@ -40,6 +40,8 @@ public partial class Prescription
 
     public int CustomerId { get; set; }
 
+    public double TotalPrice { get; set; }
+
 
 
     public virtual ICollection<Item> Items { get; set; }

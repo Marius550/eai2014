@@ -135,7 +135,7 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
-        public static void UpdatePrescription(Int32 id, string issuer, DateTime issueDate, DateTime entryDate)
+        public static void UpdatePrescription(Int32 id, string issuer, DateTime issueDate, DateTime entryDate, double totalPrice)
         {
             using (PharmacyContainer db = new PharmacyContainer())
             {
@@ -143,6 +143,7 @@ namespace Pharmacy.BusinessLayer.Logic
                 p.IssuingPhysician = issuer;
                 p.IssueDate = issueDate;
                 p.EntryDate = entryDate;
+                p.TotalPrice = totalPrice;
                 db.SaveChanges();
             }
         }
@@ -233,6 +234,16 @@ namespace Pharmacy.BusinessLayer.Logic
             {
                 Prescription p = GetPrescription(id, db);
                 p.FulfilmentDate = fulfilmentDate;
+                db.SaveChanges();
+            }
+        }
+
+        public static void UpdateTotalCost(int id, double totalPrice)
+        {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                Prescription p = GetPrescription(id, db);
+                p.TotalPrice = totalPrice;
                 db.SaveChanges();
             }
         }

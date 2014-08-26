@@ -39,6 +39,7 @@ namespace WebLayer.Prescription
             {
                 DateTime fulfilmentDate = Util.ParseDateTime(((TextBox)PrescriptionDetailsView.FindControl("FulfilledOnBox")).Text);
                 PrescriptionService.UpdateFulfilmentDate(id, fulfilmentDate);
+                PrescriptionService.UpdateTotalCost(id, GetTotalPrescriptionCost());
             }
             PrescriptionService.ProceedToNextStage(GetPrescriptionId());
             RedirectToSelf();
@@ -86,7 +87,8 @@ namespace WebLayer.Prescription
             string issuer = ((TextBox)PrescriptionDetailsView.FindControl("IssuerBox")).Text;
             string issueDate = ((TextBox)PrescriptionDetailsView.FindControl("IssuedOnBox")).Text;
             string entryDate = ((TextBox)PrescriptionDetailsView.FindControl("EnteredOnBox")).Text;
-            PrescriptionService.UpdatePrescription(GetPrescriptionId(), issuer, Util.ParseDate(issueDate), Util.ParseDateTime(entryDate));
+            double totalPrice = GetTotalPrescriptionCost();
+            PrescriptionService.UpdatePrescription(GetPrescriptionId(), issuer, Util.ParseDate(issueDate), Util.ParseDateTime(entryDate), totalPrice);
             PrescriptionDetailsView.DataBind();
         }
 

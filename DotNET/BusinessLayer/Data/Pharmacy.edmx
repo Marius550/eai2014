@@ -103,6 +103,7 @@
     <Property Name="EntryDate" Type="datetime" Nullable="false" />
     <Property Name="FulfilmentDate" Type="datetime" Nullable="true" />
     <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="TotalPrice" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="ItemSet">
     <Key>
@@ -389,6 +390,7 @@
           <NavigationProperty Name="Items" Relationship="Pharmacy.BusinessLayer.Data.PrescriptionItem" FromRole="Prescription" ToRole="Item" />
           <NavigationProperty Name="Customer" Relationship="Pharmacy.BusinessLayer.Data.CustomerPrescription" FromRole="Prescription" ToRole="Customer" />
           <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Name="TotalPrice" Type="Double" Nullable="false" />
         </EntityType>
         <EnumType Name="PrescriptionState" cg:ExternalTypeName="Pharmacy.BusinessLayer.Data.PrescriptionState" />
         <EntityType Name="Item">
@@ -524,6 +526,7 @@
           <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
           <ScalarProperty Name="FulfilmentDate" ColumnName="FulfilmentDate" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

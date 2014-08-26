@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/22/2014 19:23:21
+-- Date Created: 08/26/2014 10:00:50
 -- Generated from EDMX file: C:\Users\Marius\Documents\GitHub\eai2014\DotNET\BusinessLayer\Data\Pharmacy.edmx
 -- --------------------------------------------------
 
@@ -131,7 +131,8 @@ CREATE TABLE [dbo].[PrescriptionSet] (
     [IssueDate] datetime  NOT NULL,
     [EntryDate] datetime  NOT NULL,
     [FulfilmentDate] datetime  NULL,
-    [CustomerId] int  NOT NULL
+    [CustomerId] int  NOT NULL,
+    [TotalPrice] float  NOT NULL
 );
 GO
 
