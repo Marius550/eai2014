@@ -149,7 +149,6 @@ namespace WebLayer.Prescription
             foreach (Item i in prescriptionItems)
             {
                 totalPrescriptionPrice = totalPrescriptionPrice + Pharmacy.BusinessLayer.Logic.DrugService.GetDrug(i.DrugPZN).Price;
-                //System.Diagnostics.Debug.WriteLine("DrugPZN: " + i.DrugPZN + ", Sum Price: " + totalPrescriptionPrice);   
             }
             return totalPrescriptionPrice;
         }

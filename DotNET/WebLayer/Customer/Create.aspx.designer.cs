@@ -58,6 +58,15 @@ namespace WebLayer.Customer {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator TelephoneNumberBoxValidator;
         
         /// <summary>
+        /// RegularTelephoneNumber-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularTelephoneNumber;
+        
+        /// <summary>
         /// AddressBox-Steuerelement
         /// </summary>
         /// <remarks>
@@ -83,6 +92,15 @@ namespace WebLayer.Customer {
         /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailBoxValidator;
+        
+        /// <summary>
+        /// RequiredEmail-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RequiredEmail;
         
         /// <summary>
         /// BirthDateBox-Steuerelement
@@ -128,23 +146,5 @@ namespace WebLayer.Customer {
         /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ResultLabel;
-        
-        /// <summary>
-        /// ResultLabelPhoneValidation-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ResultLabelPhoneValidation;
-        
-        /// <summary>
-        /// ResultLabelEmailValidation-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ResultLabelEmailValidation;
     }
 }

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
+//using System.Text.RegularExpressions;
 
 namespace WebLayer.Customer
 {
     public partial class Create : System.Web.UI.Page
     {
-        Boolean evaluationPhone;
-        Boolean evaluationEmail;
+        //Boolean evaluationPhone;
+        //Boolean evaluationEmail;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,40 +24,36 @@ namespace WebLayer.Customer
                 return;
             try
             {
-                ResultLabelEmailValidation.Text = null;
-                ResultLabelPhoneValidation.Text = null;
+                //ResultLabelEmailValidation.Text = null;
+                //ResultLabelPhoneValidation.Text = null;
 
-                RegexPhone();
-                RegexEmail();
-                if (evaluationPhone == true && evaluationEmail == true)
-                {
+                //RegexPhone();
+                //RegexEmail();
+                //if (evaluationPhone == true && evaluationEmail == true)
+                //{
                     string birthDateString = ((TextBox)CustomerCreateForm.FindControl("BirthDateBox")).Text;
                     DateTime birthDate = Util.ParseDate(birthDateString);
 
                     Pharmacy.BusinessLayer.Data.Customer result =
                         Pharmacy.BusinessLayer.Logic.CustomerService.CreateCustomer(NameBox.Text, TelephoneNumberBox.Text, AddressBox.Text, EmailBox.Text, birthDate);
+                    
                     ResultLabel.Text = String.Format("Customer '{0}' created.", result.Name);
                     ResultLabel.CssClass = "success";
+
                     NameBox.Text = "";
                     TelephoneNumberBox.Text = "";
                     AddressBox.Text = "";
                     EmailBox.Text = "";
                     BirthDateBox.Text = "";
-
-                    //DateTime dt = DateTime.ParseExact("24/01/2013", "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    System.Diagnostics.Debug.Write("birthDate: " + birthDate + ", Type1: " + birthDate.GetType() + ", Type 2: " + birthDateString.GetType());
-                    //DateTime birthDate = Util.ParseDate(((TextBox)CustomerCreateForm.FindControl("BirthDateBox")).Text);
-                    //<asp:BoundField DataField="BirthDate" HeaderText="Birth date" dataformatstring="{0:dd-M-yyyy}" ReadOnly="true"/>
-
-                    //<asp:Label ID="BirthDate" runat="server" Text='<%# Eval("BirthDate", "{0:dd.MM.yyyy}") %>'  />
-                    //Text='<%# Eval("BirthDate", "{0:dd.MM.yyyy}") %>' 
-                }
-                else
-                {
+ 
+                //}
+                //else
+                //{
                     //Hint: Make use of the "Result.Label"!
-                    ResultLabel.Text = String.Format("Customer not created");
-                    ResultLabel.CssClass = "error";
+                    //ResultLabel.Text = String.Format("Customer created: " + NameBox.Text);
+                    //ResultLabel.CssClass = "success";
 
+                /*
                     if (evaluationEmail == false && evaluationPhone == false)
                     {
                     ResultLabelEmailValidation.Text = String.Format("Email format is not correct");
@@ -76,6 +72,7 @@ namespace WebLayer.Customer
                     ResultLabelPhoneValidation.CssClass = "error";
                     }
                 }
+                 */
             }
             catch (ArgumentException ex)
             {
@@ -83,7 +80,19 @@ namespace WebLayer.Customer
                 ResultLabel.CssClass = "error";
             }
         }
+    }
+}
 
+/*
+    <div class="result">
+        <asp:Label ID="ResultLabelPhoneValidation" runat="server"></asp:Label>
+    </div>
+    <div class="result">
+        <asp:Label ID="ResultLabelEmailValidation" runat="server"></asp:Label>
+    </div>
+ */
+
+        /*
         protected void RegexEmail ()
         {
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
@@ -110,22 +119,21 @@ namespace WebLayer.Customer
                 evaluationPhone = true;
             }
         }
-
-        /*
-        protected string EmailValidator()
-        {
-            return "Please use the common form (E.g.: name@example.com). " + RegexEmail();
-         * <span><%= EmailValidator() %></span>
-        }
-
-        protected string TelephoneValidator()
-        {
-            return "Please use the common form (International, e.g.: 492518338250). " + RegexPhone();
-            <span><%= TelephoneValidator() %></span>
-        }
          */
-    }
+
+/*
+protected string EmailValidator()
+{
+    return "Please use the common form (E.g.: name@example.com). " + RegexEmail();
+ * <span><%= EmailValidator() %></span>
 }
+
+protected string TelephoneValidator()
+{
+    return "Please use the common form (International, e.g.: 492518338250). " + RegexPhone();
+    <span><%= TelephoneValidator() %></span>
+}
+ */
 
 /*
 <asp:RequiredFieldValidator ID="EmailBoxValidator2" runat="server" 

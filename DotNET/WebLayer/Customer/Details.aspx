@@ -46,7 +46,7 @@
                         <asp:Label ID="BirthDateLabel" runat="server" Text='<%# Eval("BirthDate", "{0:dd.MM.yyyy}") %>'  />
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox ID="BirthDateBox" runat="server" Text='<%# String.Format("{0:dd.MM.yyyy}", DateTime.Now) %>' TextMode="DateTime" ReadOnly="false" />
+                        <asp:TextBox ID="BirthDateBox" runat="server" Text='<%# Bind("BirthDate", "{0:dd.MM.yyyy}") %>' TextMode="DateTime" ReadOnly="false" />
                     </EditItemTemplate>
                 </asp:TemplateField>
 

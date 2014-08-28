@@ -18,8 +18,10 @@ namespace WebLayer.Customer
 
         }
         
-        public void Update_Command(object sender, EventArgs e)
+        protected void Update_Command(object sender, EventArgs e)
         {
+            //Text='<%# String.Format("{0:dd.MM.yyyy}", DateTime.Now) %>'
+
             TextBox birthDateString = CustomerDetailsView.FindControl("BirthDateBox") as TextBox;
             DateTime birthDate = Util.ParseDate(birthDateString.Text);
 

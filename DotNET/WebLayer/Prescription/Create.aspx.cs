@@ -27,7 +27,6 @@ namespace WebLayer.Prescription
                 return;
 
             Pharmacy.BusinessLayer.Data.Prescription p = Pharmacy.BusinessLayer.Logic.CustomerService.CreatePrescription(GetCustomerId(), IssuerBox.Text);
-            // TODO redirect to prescription
             Response.Redirect(String.Format("Details.aspx?id={0}", p.Id));
         }
 

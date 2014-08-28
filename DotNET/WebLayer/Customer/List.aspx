@@ -10,6 +10,7 @@
             <Columns>
                 <asp:BoundField DataField="Name" HeaderText="Name" />
                 <asp:BoundField DataField="TelephoneNumber" HeaderText="Telephone Number" />
+                <asp:BoundField DataField="BirthDate" HeaderText="Birth date" dataformatstring="{0:dd.MM.yyyy}" />
                 <asp:HyperLinkField DataNavigateUrlFields="Id" DataNavigateUrlFormatString="Details.aspx?id={0}"
                     Text="Details" />
             </Columns>
