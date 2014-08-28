@@ -17,6 +17,24 @@ namespace WebLayer.Customer
         {
 
         }
+        
+        public void Update_Command(object sender, EventArgs e)
+        {
+            TextBox birthDateString = CustomerDetailsView.FindControl("BirthDateBox") as TextBox;
+            DateTime birthDate = Util.ParseDate(birthDateString.Text);
+
+            TextBox telephoneNumberString = CustomerDetailsView.FindControl("TelephoneNumber") as TextBox;
+            String telephoneNumber = telephoneNumberString.Text;
+
+            TextBox addressString = CustomerDetailsView.FindControl("Address") as TextBox;
+            String address = addressString.Text;
+
+            TextBox emailString = CustomerDetailsView.FindControl("Email") as TextBox;
+            String email = emailString.Text;
+
+            Pharmacy.BusinessLayer.Data.Customer customer = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"]));
+            Pharmacy.BusinessLayer.Logic.CustomerService.UpdateCustomer(customer, telephoneNumber, address, email, birthDate);
+        }
 
     protected void SendMailBtnException_Click(object sender, EventArgs e) {
                 

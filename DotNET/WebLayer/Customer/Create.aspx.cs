@@ -10,7 +10,6 @@ namespace WebLayer.Customer
 {
     public partial class Create : System.Web.UI.Page
     {
-
         Boolean evaluationPhone;
         Boolean evaluationEmail;
 
@@ -32,18 +31,30 @@ namespace WebLayer.Customer
                 RegexEmail();
                 if (evaluationPhone == true && evaluationEmail == true)
                 {
+                    string birthDateString = ((TextBox)CustomerCreateForm.FindControl("BirthDateBox")).Text;
+                    DateTime birthDate = Util.ParseDate(birthDateString);
+
                     Pharmacy.BusinessLayer.Data.Customer result =
-                        Pharmacy.BusinessLayer.Logic.CustomerService.CreateCustomer(NameBox.Text, TelephoneNumberBox.Text, AddressBox.Text, EmailBox.Text);
+                        Pharmacy.BusinessLayer.Logic.CustomerService.CreateCustomer(NameBox.Text, TelephoneNumberBox.Text, AddressBox.Text, EmailBox.Text, birthDate);
                     ResultLabel.Text = String.Format("Customer '{0}' created.", result.Name);
                     ResultLabel.CssClass = "success";
                     NameBox.Text = "";
                     TelephoneNumberBox.Text = "";
                     AddressBox.Text = "";
                     EmailBox.Text = "";
+                    BirthDateBox.Text = "";
+
+                    //DateTime dt = DateTime.ParseExact("24/01/2013", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    System.Diagnostics.Debug.Write("birthDate: " + birthDate + ", Type1: " + birthDate.GetType() + ", Type 2: " + birthDateString.GetType());
+                    //DateTime birthDate = Util.ParseDate(((TextBox)CustomerCreateForm.FindControl("BirthDateBox")).Text);
+                    //<asp:BoundField DataField="BirthDate" HeaderText="Birth date" dataformatstring="{0:dd-M-yyyy}" ReadOnly="true"/>
+
+                    //<asp:Label ID="BirthDate" runat="server" Text='<%# Eval("BirthDate", "{0:dd.MM.yyyy}") %>'  />
+                    //Text='<%# Eval("BirthDate", "{0:dd.MM.yyyy}") %>' 
                 }
                 else
                 {
-                    //Make use of the "Result.Label"!
+                    //Hint: Make use of the "Result.Label"!
                     ResultLabel.Text = String.Format("Customer not created");
                     ResultLabel.CssClass = "error";
 

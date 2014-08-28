@@ -85,6 +85,33 @@ namespace WebLayer.Customer {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailBoxValidator;
         
         /// <summary>
+        /// BirthDateBox-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox BirthDateBox;
+        
+        /// <summary>
+        /// RequiredBirthDate-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredBirthDate;
+        
+        /// <summary>
+        /// ValidBirthDate-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator ValidBirthDate;
+        
+        /// <summary>
         /// SubmitBtn-Steuerelement
         /// </summary>
         /// <remarks>

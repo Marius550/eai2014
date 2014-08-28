@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/26/2014 10:00:50
+-- Date Created: 08/28/2014 16:03:23
 -- Generated from EDMX file: C:\Users\Marius\Documents\GitHub\eai2014\DotNET\BusinessLayer\Data\Pharmacy.edmx
 -- --------------------------------------------------
 
@@ -151,7 +151,9 @@ CREATE TABLE [dbo].[CustomerSet] (
     [Name] nvarchar(max)  NOT NULL,
     [TelephoneNumber] nvarchar(max)  NOT NULL,
     [Address] nvarchar(max)  NULL,
-    [Email] nvarchar(max)  NOT NULL
+    [Email] nvarchar(max)  NOT NULL,
+    [PrescriptionBill] float  NOT NULL,
+    [BirthDate] datetime  NOT NULL
 );
 GO
 

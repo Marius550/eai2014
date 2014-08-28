@@ -3,13 +3,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentHolder" runat="server">
     <form id="CustomerDetailsForm" runat="server">
         <asp:ObjectDataSource ID="CustomerDataSource" runat="server"
-            SelectMethod="GetCustomer" UpdateMethod="UpdateCustomer"
+            SelectMethod="GetCustomer"
             TypeName="Pharmacy.BusinessLayer.Logic.CustomerService"
             DataObjectTypeName="Pharmacy.BusinessLayer.Data.Customer">
             <SelectParameters>
                 <asp:QueryStringParameter Name="id" QueryStringField="id" Type="Int32" />
             </SelectParameters>
         </asp:ObjectDataSource>
+
         <asp:DetailsView ID="CustomerDetailsView" runat="server" AutoGenerateRows="false"
             BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4"
             ForeColor="Black" GridLines="Horizontal" Height="50px" 
@@ -39,6 +40,16 @@
                         <asp:TextBox ID="Address" runat="server" Text='<%# Bind("Address") %>' TextMode="MultiLine" ReadOnly="false" />
                     </EditItemTemplate>
                 </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Birth date">
+                    <ItemTemplate>
+                        <asp:Label ID="BirthDateLabel" runat="server" Text='<%# Eval("BirthDate", "{0:dd.MM.yyyy}") %>'  />
+                    </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:TextBox ID="BirthDateBox" runat="server" Text='<%# String.Format("{0:dd.MM.yyyy}", DateTime.Now) %>' TextMode="DateTime" ReadOnly="false" />
+                    </EditItemTemplate>
+                </asp:TemplateField>
+
                 <asp:TemplateField HeaderText="Email">
                     <ItemTemplate>
                         <asp:Label ID="Email" runat="server" Text='<%# Eval("Email") %>' />
@@ -47,6 +58,7 @@
                         <asp:TextBox ID="Email" runat="server" Text='<%# Bind("Email") %>' TextMode="MultiLine" ReadOnly="false" />
                     </EditItemTemplate>
                 </asp:TemplateField>
+
                 <asp:CommandField ButtonType="Button" ShowEditButton="true" CancelText="Cancel" EditText="Edit" UpdateText="Update" />
 
                 <asp:HyperLinkField DataNavigateUrlFields="Id"
@@ -59,8 +71,11 @@
         </asp:DetailsView>
 
         <p class="form-footer">
-
             <asp:Button ID="SendMailBtnException" runat="server" Text="Send mail" onclick="SendMailBtnException_Click" />
+        </p>
+
+        <p class="form-footer">
+            <asp:Button ID="UpdateButton" runat="server" Text="Update inputs" onclick="Update_Command" />
         </p>
 
         <div class="result">

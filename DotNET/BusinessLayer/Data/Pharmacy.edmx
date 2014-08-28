@@ -123,6 +123,8 @@
     <Property Name="TelephoneNumber" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Address" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PrescriptionBill" Type="float" Nullable="false" />
+    <Property Name="BirthDate" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="InventoryEventSet_WithdrawEvent">
     <Key>
@@ -439,6 +441,8 @@
           <Property Type="String" Name="Address" Nullable="true" />
           <NavigationProperty Name="Prescriptions" Relationship="Pharmacy.BusinessLayer.Data.CustomerPrescription" FromRole="Customer" ToRole="Prescription" />
           <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="PrescriptionBill" Type="Double" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" />
         </EntityType>
         <Association Name="CustomerPrescription">
           <End Type="Pharmacy.BusinessLayer.Data.Customer" Role="Customer" Multiplicity="1" />
@@ -548,6 +552,8 @@
           <ScalarProperty Name="TelephoneNumber" ColumnName="TelephoneNumber" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PrescriptionBill" ColumnName="PrescriptionBill" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

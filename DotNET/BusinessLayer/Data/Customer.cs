@@ -36,6 +36,10 @@ public partial class Customer
 
     public string Email { get; set; }
 
+    public double PrescriptionBill { get; set; }
+
+    public System.DateTime BirthDate { get; set; }
+
 
 
     public virtual ICollection<Prescription> Prescriptions { get; set; }

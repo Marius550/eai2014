@@ -135,9 +135,7 @@ namespace WebLayer.Prescription
             Int32 prescriptionId = Int32.Parse(Request.Params["id"]);
             Int32 amountOfItemsInPrescription = Pharmacy.BusinessLayer.Logic.PrescriptionService.GetPrescription(prescriptionId).Items.Count;
             return amountOfItemsInPrescription;
-                
-           //Int32.Parse(Request.Params["id"]);//Returns prescription Id
-            //System.Diagnostics.Debug.WriteLine("GetAmountOfDrugs()");
+
         }
 
         protected double GetTotalPrescriptionCost()

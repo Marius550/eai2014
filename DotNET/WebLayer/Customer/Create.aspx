@@ -25,6 +25,7 @@
         <p class="value">
             <asp:TextBox ID="AddressBox" runat="server" TextMode="MultiLine"></asp:TextBox>
         </p>
+
         <p class="label">Email</p>
         <p class="value">
             <asp:TextBox ID="EmailBox" runat="server" TextMode="MultiLine"></asp:TextBox>
@@ -34,7 +35,21 @@
                 <span class="error">Email required! Please use the common form (E.g.: name@example.com).</span>
             </asp:RequiredFieldValidator>
         </p>
+
+        <p class="label">Birth date</p>
+        <p class="value">
         
+            <asp:TextBox ID="BirthDateBox" TextMode="DateTime" runat="server" />
+            <asp:RequiredFieldValidator ID="RequiredBirthDate" ControlToValidate="BirthDateBox" EnableClientScript="false" runat="server">
+                <span class="error">Birth date required </span>
+            </asp:RequiredFieldValidator>
+            <asp:RegularExpressionValidator ID="ValidBirthDate" ControlToValidate="BirthDateBox" 
+            EnableClientScript="false" runat="server"
+            ValidationExpression="\d{2}.\d{2}.\d{4}">
+            <span class="error">Invalid birth date (e.g. 24.12.2014) </span>
+        </asp:RegularExpressionValidator>
+        </p>
+
         <p class="form-footer">
             <asp:Button ID="SubmitBtn" runat="server" Text="Submit" onclick="SubmitBtn_Click" />
         </p>

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Pharmacy.BusinessLayer.Data;
+using System.Globalization;
 
 namespace Pharmacy.BusinessLayer.Logic
 {
     public static class CustomerService
     {
-        public static Customer CreateCustomer(string name, string telephoneNumber, string address, string email)
+        public static Customer CreateCustomer(string name, string telephoneNumber, string address, string email, DateTime birthDate)
         {
             Util.ConvertEmptyToNull(ref address);
 
@@ -18,7 +19,8 @@ namespace Pharmacy.BusinessLayer.Logic
                 Name = name,
                 TelephoneNumber = telephoneNumber,
                 Address = address,
-                Email = email
+                Email = email,
+                BirthDate = birthDate
             };
             return CreateCustomer(customer);
         }
@@ -56,12 +58,8 @@ namespace Pharmacy.BusinessLayer.Logic
             return result;
         }
 
-        public static Customer UpdateCustomer(Customer customer)
-        {
-            return UpdateCustomer(customer, customer.TelephoneNumber, customer.Address, customer.Email);
-        }
 
-        public static Customer UpdateCustomer(Customer customer, string telephoneNumber, string address, string email)
+        public static Customer UpdateCustomer(Customer customer, string telephoneNumber, string address, string email, DateTime birthDate)
         {
             Util.ConvertEmptyToNull(ref address);
 
@@ -71,9 +69,17 @@ namespace Pharmacy.BusinessLayer.Logic
                 attachedCustomer.TelephoneNumber = telephoneNumber;
                 attachedCustomer.Address = address;
                 attachedCustomer.Email = email;
+                attachedCustomer.BirthDate = birthDate;
+                System.Diagnostics.Debug.Write("Arrived at UpdateCustomer(...)" + "\n");
                 db.SaveChanges();
                 return attachedCustomer;
             }
+        }
+
+        public static Customer UpdateCustomer(Customer customer)
+        {
+            System.Diagnostics.Debug.Write("Arrived at UpdateCustomer()" + "\n");
+            return UpdateCustomer(customer, customer.TelephoneNumber, customer.Address, customer.Email, customer.BirthDate);
         }
 
         public static Prescription CreatePrescription(int customerId, string issuer)
@@ -86,8 +92,7 @@ namespace Pharmacy.BusinessLayer.Logic
                     Customer = currentCustomer,
                     IssuingPhysician = issuer,
                     IssueDate = DateTime.Now,
-                    EntryDate = DateTime.Now
-                    
+                    EntryDate = DateTime.Now  
                 };
                 currentCustomer.Prescriptions.Add(newPrescription);
                 db.SaveChanges();
