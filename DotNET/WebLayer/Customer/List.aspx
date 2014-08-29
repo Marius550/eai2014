@@ -9,8 +9,10 @@
         <asp:GridView ID="CustomerGridView" runat="server" DataSourceID="CustomerDataSource" AutoGenerateColumns="false">
             <Columns>
                 <asp:BoundField DataField="Name" HeaderText="Name" />
-                <asp:BoundField DataField="TelephoneNumber" HeaderText="Telephone Number" />
+                <asp:BoundField DataField="TelephoneNumber" HeaderText="Telephone number" />
+                <asp:BoundField DataField="Address" HeaderText="Address" />
                 <asp:BoundField DataField="BirthDate" HeaderText="Birth date" dataformatstring="{0:dd.MM.yyyy}" />
+                <asp:BoundField DataField="PrescriptionBill" HeaderText="Prescription bill" />
                 <asp:HyperLinkField DataNavigateUrlFields="Id" DataNavigateUrlFormatString="Details.aspx?id={0}"
                     Text="Details" />
             </Columns>

@@ -99,5 +99,39 @@ namespace Pharmacy.BusinessLayer.Logic
                 return newPrescription;
             }
         }
+
+        public static double getCustomerPrescriptionBill(int Id)
+        {
+            ICollection<Pharmacy.BusinessLayer.Data.Prescription> customerPrescriptions = new List<Pharmacy.BusinessLayer.Data.Prescription>();
+            customerPrescriptions = Pharmacy.BusinessLayer.Logic.PrescriptionService.GetAllPrescriptionsForCustomer(Id);
+
+            double PrescriptionBill = 0;
+
+            foreach (Pharmacy.BusinessLayer.Data.Prescription i in customerPrescriptions)
+            {
+                PrescriptionBill = PrescriptionBill + Pharmacy.BusinessLayer.Logic.PrescriptionService.GetPrescription(i.Id).TotalPrice;
+            }
+            return PrescriptionBill;
+        }
+
+        public static ICollection<Customer> GetAllCustomers()
+        {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                return db.CustomerSet.ToList();
+            }
+            
+        }
+
+        public static void UpdateCustomerPrescriptionBill(Int32 Id, double prescriptionBill)
+        {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                Customer attachedCustomer = GetCustomer(Id, db);
+                attachedCustomer.PrescriptionBill = prescriptionBill;
+                db.SaveChanges();
+            }
+        }
+
     }
 }

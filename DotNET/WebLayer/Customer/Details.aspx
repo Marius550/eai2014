@@ -59,6 +59,12 @@
                     </EditItemTemplate>
                 </asp:TemplateField>
 
+                <asp:TemplateField HeaderText="Prescription bill">
+                    <ItemTemplate>
+                        <asp:Label ID="PrescriptionBill" runat="server" Text='<%# Eval("PrescriptionBill") %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
+
                 <asp:CommandField ButtonType="Button" ShowEditButton="true" CancelText="Cancel" EditText="Edit" UpdateText="Update" />
 
                 <asp:HyperLinkField DataNavigateUrlFields="Id"
@@ -94,6 +100,7 @@
             <Columns>
                 <asp:BoundField DataField="ID" HeaderText="ID" />
                 <asp:BoundField DataField="IssuingPhysician" HeaderText="Issuer" />
+                <asp:BoundField DataField="TotalPrice" HeaderText="Total price" />
                 <asp:BoundField DataField="State" HeaderText="State" />
                 <asp:HyperLinkField DataNavigateUrlFields="ID" DataNavigateUrlFormatString="~/Prescription/Details.aspx?id={0}" Text="Details" />
             </Columns>
