@@ -61,7 +61,7 @@
 
                 <asp:TemplateField HeaderText="Prescription bill">
                     <ItemTemplate>
-                        <asp:Label ID="PrescriptionBill" runat="server" Text='<%# Eval("PrescriptionBill") %>' />
+                        <asp:Label ID="PrescriptionBill" runat="server" Text='<%# Eval("PrescriptionBill", "{0:C}") %>' />
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -100,7 +100,7 @@
             <Columns>
                 <asp:BoundField DataField="ID" HeaderText="ID" />
                 <asp:BoundField DataField="IssuingPhysician" HeaderText="Issuer" />
-                <asp:BoundField DataField="TotalPrice" HeaderText="Total price" />
+                <asp:BoundField DataField="TotalPrice" HeaderText="Total price" DataFormatString="{0:C2}"/>
                 <asp:BoundField DataField="State" HeaderText="State" />
                 <asp:HyperLinkField DataNavigateUrlFields="ID" DataNavigateUrlFormatString="~/Prescription/Details.aspx?id={0}" Text="Details" />
             </Columns>

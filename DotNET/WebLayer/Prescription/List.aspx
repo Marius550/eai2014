@@ -25,7 +25,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="IssuingPhysician" HeaderText="Issuer" />
-                <asp:BoundField DataField="TotalPrice" HeaderText="Total price" />
+                <asp:BoundField DataField="TotalPrice" HeaderText="Total price" DataFormatString="{0:C2}"/>
                 <asp:BoundField DataField="State" HeaderText="State" />
                 <asp:HyperLinkField DataNavigateUrlFields="ID" DataNavigateUrlFormatString="Details.aspx?id={0}" Text="Details" />
             </Columns>

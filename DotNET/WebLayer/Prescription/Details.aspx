@@ -50,8 +50,8 @@
 
                 <asp:TemplateField HeaderText="Total Price">
                     <ItemTemplate>
-                        <asp:Label ID="GetTotalPrescriptionCostBox" runat="server" Text='<%# GetTotalPrescriptionCost() %>' 
-                        Visible='<%# ((PrescriptionState)Eval("State")) != PrescriptionState.Entry %>' />
+                        <asp:Label ID="GetTotalPrescriptionCostBox" runat="server" Text='<%# GetTotalPrescriptionCost() %> ' 
+                        Visible='<%# ((PrescriptionState)Eval("State")) != PrescriptionState.Entry %>' DataFormatString="{0:C2}"/>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -157,7 +157,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="PrescribedDrug.Name" HeaderText="Name" />
-                <asp:BoundField DataField="PrescribedDrug.Price" HeaderText="Price" />
+                <asp:BoundField DataField="PrescribedDrug.Price" HeaderText="Price" DataFormatString="{0:C2}"/>
                 <asp:BoundField DataField="State" HeaderText="State" />
                 <asp:BoundField DataField="PrescribedDrug.Stock" HeaderText="In Stock" />
                 <asp:TemplateField HeaderText="Pending">

@@ -12,7 +12,7 @@
                 <asp:BoundField DataField="TelephoneNumber" HeaderText="Telephone number" />
                 <asp:BoundField DataField="Address" HeaderText="Address" />
                 <asp:BoundField DataField="BirthDate" HeaderText="Birth date" dataformatstring="{0:dd.MM.yyyy}" />
-                <asp:BoundField DataField="PrescriptionBill" HeaderText="Prescription bill" />
+                <asp:BoundField DataField="PrescriptionBill" HeaderText="Prescription bill" DataFormatString="{0:C2}"/>
                 <asp:HyperLinkField DataNavigateUrlFields="Id" DataNavigateUrlFormatString="Details.aspx?id={0}"
                     Text="Details" />
             </Columns>

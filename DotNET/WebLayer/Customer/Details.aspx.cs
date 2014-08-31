@@ -38,21 +38,61 @@ namespace WebLayer.Customer
             Pharmacy.BusinessLayer.Logic.CustomerService.UpdateCustomer(customer, telephoneNumber, address, email, birthDate);
         }
 
-    protected void SendMailBtnException_Click(object sender, EventArgs e) {
-                
-            String receiver = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Email;
-            String recipientName = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Name;
-            String recipientEmail = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Email;
+        public string buildCustomerEmailinformationString(int prescriptionIndex, Int32 customerId)
+        {
+            ICollection<Pharmacy.BusinessLayer.Data.Prescription> customerPrescriptions = new List<Pharmacy.BusinessLayer.Data.Prescription>();
+            customerPrescriptions = Pharmacy.BusinessLayer.Logic.PrescriptionService.GetAllPrescriptionsForCustomer(customerId);
 
-                MailMessage mailMessage = new MailMessage("pharmacy04@web.de", receiver);
+            List<string> prescriptionIdList = new List<string>();
+            List<string> prescriptionIssuingPhysicianList = new List<string>();
+            List<string> prescriptionTotalPriceList = new List<string>();
+            foreach (Pharmacy.BusinessLayer.Data.Prescription i in customerPrescriptions)
+            {
+                prescriptionIdList.Add(Convert.ToString((Pharmacy.BusinessLayer.Logic.PrescriptionService.GetPrescription(i.Id).Id)));
+                prescriptionIssuingPhysicianList.Add(Pharmacy.BusinessLayer.Logic.PrescriptionService.GetPrescription(i.Id).IssuingPhysician);
+                prescriptionTotalPriceList.Add(Convert.ToString(Pharmacy.BusinessLayer.Logic.PrescriptionService.GetPrescription(i.Id).TotalPrice));
+            }
+            return prescriptionIdList[prescriptionIndex] + " " + prescriptionIssuingPhysicianList[prescriptionIndex] + " " + prescriptionTotalPriceList[prescriptionIndex];
+        }
+
+        protected string buildCustomerEmailInformationStringHandler()
+        {
+            Int32 customerId = Convert.ToInt32(Request.QueryString["id"]);
+            int customerPrescriptionCollectionLength = Pharmacy.BusinessLayer.Logic.PrescriptionService.GetAllPrescriptionsForCustomer(customerId).Count;
+
+            string customerEmailinformationOutputString = null;
+
+            if (customerPrescriptionCollectionLength != 0)
+            {
+                for (int prescriptionIndex = 0; prescriptionIndex < customerPrescriptionCollectionLength; prescriptionIndex++)
+                {
+                    customerEmailinformationOutputString = customerEmailinformationOutputString + buildCustomerEmailinformationString(prescriptionIndex, customerId) + "\n";
+                }
+            }
+            else
+            {
+                customerEmailinformationOutputString = "No prescription submitted yet.";
+            }
+            return customerEmailinformationOutputString;
+        }
+
+    protected void SendMailBtnException_Click(object sender, EventArgs e) {
+
+            Int32 customerId = Convert.ToInt32(Request.QueryString["id"]);
+
+            String recipientName = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(customerId).Name;
+            String recipientEmail = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(customerId).Email;
+            double prescriptionBill = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(customerId).PrescriptionBill;
+
+            MailMessage mailMessage = new MailMessage("pharmacy04@web.de", recipientEmail);
                 mailMessage.Subject = "C# Pharmacy04 - Prescription Bill";
-                mailMessage.Body = "Dear " + recipientName + ", \n\n Your overall prescription bill is: XXX" + "€." +
+                mailMessage.Body = "Dear " + recipientName + ", \n\n Your overall prescription bill is: " + prescriptionBill + "€." +
                     "\n\n Below you can check your prescription details: "
-                    + "\n\n<Id> <Total Price> <Issuer>"
-                    + "\n\n" + "XXX"
+                    + "\n\n<Id> <Issuer> <Total Price>"
+                    + "\n\n" + buildCustomerEmailInformationStringHandler()
                     + " \n\n\n Best regards, \n\n C# Pharmacy04";
 
-                SmtpClient smtpClient = new SmtpClient("smtp.web.de", 587); //"smtp.gmail.com"
+                SmtpClient smtpClient = new SmtpClient("smtp.web.de", 587);
                 smtpClient.Credentials = new System.Net.NetworkCredential()
                 {
                     UserName = "pharmacy04@web.de",
@@ -77,7 +117,6 @@ namespace WebLayer.Customer
                         ResultLabel.Text = String.Format("Delivery failed - retrying in 5 seconds.");
                         ResultLabel.CssClass = "error";
 
-					    //System.Diagnostics.Debug.Write("Delivery failed - retrying in 5 seconds.");
 						System.Threading.Thread.Sleep(5000);
                         smtpClient.Send(mailMessage);
 					}
@@ -85,7 +124,6 @@ namespace WebLayer.Customer
 					{
                         ResultLabel.Text = String.Format("Failed to deliver message to " + recipientEmail);
                         ResultLabel.CssClass = "error";
-                       // System.Diagnostics.Debug.Write("Failed to deliver message to " + recipientEmail, ex.InnerExceptions[i].FailedRecipient);
 					}
 				}
 			}
@@ -93,11 +131,8 @@ namespace WebLayer.Customer
             {
                 ResultLabel.Text = String.Format("Exception caught in RetryIfBusy(): " + ex);
                 ResultLabel.CssClass = "error";
-                //System.Diagnostics.Debug.Write("Exception caught in RetryIfBusy(): " + ex, ex.ToString() );
             }
         }
-
-
 
         private void Page_Error(object sender, EventArgs e)
         {
@@ -107,46 +142,3 @@ namespace WebLayer.Customer
         }
     }
 }
-
-/*
-        protected void SendMailBtn_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                
-                String receiver = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Email;
-                String recipientName = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Name;
-                String recipientEmail = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Email;
-
-                MailMessage mailMessage = new MailMessage("pharmacy04@web.de", receiver);
-                mailMessage.Subject = "C# Pharmacy04 - Prescription Bill";
-                mailMessage.Body = "Dear " + recipientName + ", \n\n Your overall prescription bill is: XXX" + "€." +
-                    "\n\n Below you can check your prescription details: "
-                    + "\n\n<Id> <Total Price> <Issuer>"
-                    + "\n\n" + "XXX"
-                    + " \n\n\n Best regards, \n\n C# Pharmacy04";
-
-                SmtpClient smtpClient = new SmtpClient("smtp.web.de", 587); //"smtp.gmail.com"
-                smtpClient.Credentials = new System.Net.NetworkCredential()
-                {
-                    UserName = "pharmacy04@web.de",
-                    Password = "pharmacy04ß?!z"
-                };
-
-                smtpClient.EnableSsl = true;
-                smtpClient.Send(mailMessage);
-
-                System.Threading.Thread.Sleep(5000);
-
-                ResultLabel.Text = String.Format("Sending email to " + recipientEmail + " succeeded");
-                ResultLabel.CssClass = "success";
-            }
-            catch
-            {
-                String recipientEmail = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(Convert.ToInt32(Request.QueryString["id"])).Email;
-                ResultLabel.Text = String.Format("Sending email to " + recipientEmail + " failed");
-                ResultLabel.CssClass = "error";
-                //System.Diagnostics.Debug.Write("Sending email failed");
-            }
-        }
-*/

@@ -28,7 +28,7 @@
 
             <asp:TemplateField HeaderText="Price">
                 <ItemTemplate>
-                    <asp:Label ID="Price" runat="server" Text='<%# Eval("Price") %>' />
+                    <asp:Label ID="Price" runat="server" Text='<%# Eval("Price", "{0:C}") %>' />
                 </ItemTemplate>
                 <EditItemTemplate>
                     <asp:TextBox ID="Price" runat="server" Text='<%# Bind("Price") %>' TextMode="MultiLine" ReadOnly="true" Enabled="false" />
