@@ -28,6 +28,10 @@
         <f:facet name="header">Address</f:facet>
         #{cur.address}
       </h:column>
+      <h:column>
+        <f:facet name="header">Birth date</f:facet>
+        #{cur.birthDate}
+      </h:column>
      <h:column>
 	  <h:form>
 		<h:commandButton value="Calculate Bill" action="#{customerList.submitUpdatePrescriptionBill(cur.id)}" />

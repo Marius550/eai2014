@@ -8,6 +8,16 @@
   <ui:define name="content">
     <div class="inputForm">
       <h:form>
+         <h:panelGrid columns="3"
+          columnClasses="form-label,form-output"
+          footerClass="form-header">     
+          <f:facet name="header">
+            <h:commandButton value="Randomize PZN" action="#{createDrug.refresh()}" />
+          </f:facet>
+          <h:outputLabel value="PZN copy proposal: " for="randomizedPZN" />
+          <h:outputText id="randomizedPZN" value="#{createDrug.randomizePZN()}" />
+          </h:panelGrid>
+          
         <h:panelGrid columns="3"
           columnClasses="form-label,form-input,form-message error"
           footerClass="form-footer">
