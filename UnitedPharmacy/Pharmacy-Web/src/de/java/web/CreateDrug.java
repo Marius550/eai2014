@@ -79,5 +79,5 @@ public class CreateDrug implements Serializable {
   
   public String refresh() {
 	  return "/drug/create.xhtml";
-  }
+  } 
 }

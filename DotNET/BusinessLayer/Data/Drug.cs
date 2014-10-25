@@ -46,6 +46,8 @@ public partial class Drug
 
     public double Price { get; set; }
 
+    public long DrugMinimumAgeYears { get; set; }
+
 
 
     public virtual ICollection<InventoryEvent> Events { get; set; }

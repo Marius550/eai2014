@@ -130,6 +130,9 @@
                             Text='<%# "Proceed to " + ((PrescriptionState)Eval("State")).Next() %>'
                             Enabled='<%# ((PrescriptionState)Eval("State")).Proceedable((ICollection<Item>)Eval("Items")) %>'
                             Visible='<%# ((PrescriptionState)Eval("State")).Proceedable((ICollection<Item>)Eval("Items")) %>' />
+                        <asp:Button OnCommand="Refresh_Command" CommandArgument='<%# Eval("ID") %>'
+                            Text="Refresh" runat="server"
+                            Visible="true" />
                         <asp:Button ID="CancelButton" runat="server" OnCommand="Cancel_Command" Text="Cancel"
                             Enabled='<%# ((PrescriptionState)Eval("State")).Cancellable() %>'
                             Visible='<%# ((PrescriptionState)Eval("State")).Cancellable() %>' />
@@ -198,6 +201,11 @@
             EnableClientScript="false">
             <span class="error">Enter valid PZN (8 digits)</span>
         </asp:RangeValidator>
+
+        <div class="error">
+            <asp:Label ID="ErrorLabel" runat="server"></asp:Label>
+        </div>
+
         <asp:Button ID="AddItemButton" runat="server" Text="Add Drug" Visible="false"
             OnCommand="AddDrug_Command" />
     </form>

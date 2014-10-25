@@ -9,7 +9,7 @@ namespace Pharmacy.BusinessLayer.Logic
 {
     public static class DrugService
     {
-        public static Drug CreateDrug(int pzn, string name, double price, string description)
+        public static Drug CreateDrug(int pzn, string name, double price, string description, Int64 drugMinimumAgeYears)
         {
             Util.ConvertEmptyToNull(ref description);
 
@@ -18,7 +18,8 @@ namespace Pharmacy.BusinessLayer.Logic
                 PZN = pzn,
                 Name = name,
                 Price = price,
-                Description = description
+                Description = description,
+                DrugMinimumAgeYears = drugMinimumAgeYears
             };
             return CreateDrug(newDrug);
         }
@@ -64,10 +65,10 @@ namespace Pharmacy.BusinessLayer.Logic
 
         public static Drug UpdateDrug(Drug drug)
         {
-            return UpdateDrug(drug, drug.Name, drug.Price, drug.Description, drug.MinimumInventoryLevel, drug.OptimalInventoryLevel);
+            return UpdateDrug(drug, drug.Name, drug.Price, drug.Description, drug.MinimumInventoryLevel, drug.OptimalInventoryLevel, drug.DrugMinimumAgeYears);
         }
 
-        public static Drug UpdateDrug(Drug drug, String name, double price, String description, int minimumInventoryLevel, int optimalInventoryLevel)
+        public static Drug UpdateDrug(Drug drug, String name, double price, String description, int minimumInventoryLevel, int optimalInventoryLevel, Int64 drugMinimumAgeYears)
         {
             Util.ConvertEmptyToNull(ref description);
 
@@ -79,6 +80,7 @@ namespace Pharmacy.BusinessLayer.Logic
                 attachedDrug.Description = description;
                 attachedDrug.MinimumInventoryLevel = minimumInventoryLevel;
                 attachedDrug.OptimalInventoryLevel = optimalInventoryLevel;
+                attachedDrug.DrugMinimumAgeYears = drugMinimumAgeYears;
                 db.SaveChanges();
                 return attachedDrug;
             }

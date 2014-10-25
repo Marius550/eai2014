@@ -64,6 +64,7 @@
     <Property Name="MinimumInventoryLevel" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="OptimalInventoryLevel" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="Price" Type="float" Nullable="false" />
+    <Property Name="DrugMinimumAgeYears" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="InventoryEventSet">
     <Key>
@@ -307,6 +308,7 @@
           <Property Type="Int32" Name="OptimalInventoryLevel" Nullable="false" DefaultValue="0" />
           <NavigationProperty Name="Events" Relationship="Pharmacy.BusinessLayer.Data.DrugInventoryEvent" FromRole="Drug" ToRole="InventoryEvent" />
           <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="DrugMinimumAgeYears" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="InventoryEvent" Abstract="true">
           <Key>
@@ -472,6 +474,7 @@
           <ScalarProperty Name="MinimumInventoryLevel" ColumnName="MinimumInventoryLevel" />
           <ScalarProperty Name="OptimalInventoryLevel" ColumnName="OptimalInventoryLevel" />
           <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="DrugMinimumAgeYears" ColumnName="DrugMinimumAgeYears" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -103,6 +103,7 @@ public class ApplicationInitialiser {
     maxMustermann.setBirthDate("1988-11-15");
     em.persist(maxMustermann);
     
+    /*
     Prescription fulfilledPrescription = maxMustermann.createPrescription();
     fulfilledPrescription.setState(PrescriptionState.FULFILLED);
     fulfilledPrescription.setFulfilmentDate(new Date());
@@ -114,6 +115,7 @@ public class ApplicationInitialiser {
     prescriptionInFulfilling.setState(PrescriptionState.FULFILLING);
     prescriptionInFulfilling.setIssuer("Dr. Borg");
     em.persist(prescriptionInFulfilling);
+    */
     
   }
 

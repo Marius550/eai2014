@@ -79,6 +79,11 @@ namespace WebLayer.Prescription
             Response.Redirect("List.aspx");
         }
 
+        protected void Refresh_Command(object sender, CommandEventArgs e)
+        {
+            Response.Redirect("Details.aspx?id=" + GetPrescriptionId());
+        }
+
         protected void UpdatePrescription_Command(object sender, CommandEventArgs e)
         {
             if (!Page.IsValid)
@@ -96,10 +101,72 @@ namespace WebLayer.Prescription
         {
             if (!Page.IsValid)
                 return;
-            PrescriptionService.AddDrug(GetPrescriptionId(), Int32.Parse(PZNBox.Text));
-            PZNBox.Text = "";
-            ItemsGridView.DataBind();
-            PrescriptionDetailsView.DataBind();
+
+            if (ErrorLabel.Text.Length != 0)
+            {
+                ErrorLabel.Text = "";
+            }
+
+            if (PZNBox.Text.Length == 0)
+            {
+                PZNBox.Text = "";
+
+                ErrorLabel.Text = String.Format("You need to enter the PZN!");
+                ErrorLabel.CssClass = "error";
+
+            }
+
+            else if (PZNBox.Text.Length != 0 & verifyDrugMinimumAgeYears())
+            {
+                PrescriptionService.AddDrug(GetPrescriptionId(), Int32.Parse(PZNBox.Text));
+                PZNBox.Text = "";
+                ItemsGridView.DataBind();
+                PrescriptionDetailsView.DataBind();
+            }
+            else
+            {
+                Int64 drugMinimumAgeYears = Pharmacy.BusinessLayer.Logic.DrugService.GetDrug(Int32.Parse(PZNBox.Text)).DrugMinimumAgeYears;
+
+                ErrorLabel.Text = String.Format("Customer is " + getCustomerAge() + ", but needs to be " + drugMinimumAgeYears + " old!");
+                ErrorLabel.CssClass = "error";
+            }
+        }
+
+        protected int getCustomerAge()
+        {
+            Int32 prescriptionId = Int32.Parse(Request.Params["id"]);
+            Int32 customerId = Pharmacy.BusinessLayer.Logic.PrescriptionService.GetPrescription(prescriptionId).CustomerId;
+            DateTime customerBirthDate = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(customerId).BirthDate;
+
+            DateTime zeroTime = new DateTime(1, 1, 1);
+            System.TimeSpan timespan = DateTime.Today - customerBirthDate;
+            int timespanYears = (zeroTime + timespan).Year - 1;
+
+            return timespanYears;
+        }
+
+        protected Boolean verifyDrugMinimumAgeYears()
+        {
+            Int32 prescriptionId = Int32.Parse(Request.Params["id"]);
+            Int32 customerId = Pharmacy.BusinessLayer.Logic.PrescriptionService.GetPrescription(prescriptionId).CustomerId;
+            DateTime customerBirthDate = Pharmacy.BusinessLayer.Logic.CustomerService.GetCustomer(customerId).BirthDate;
+            Int64 drugMinimumAgeYears = Pharmacy.BusinessLayer.Logic.DrugService.GetDrug(Int32.Parse(PZNBox.Text)).DrugMinimumAgeYears;
+
+            DateTime zeroTime = new DateTime(1, 1, 1);
+            System.TimeSpan timespan = DateTime.Today - customerBirthDate;
+            int timespanYears = (zeroTime + timespan).Year - 1;
+
+            Boolean ageCheck;
+
+            if (timespanYears >= drugMinimumAgeYears)
+            {
+                ageCheck = true;
+            }
+            else
+            {
+                ageCheck = false;
+            }
+            return ageCheck;
         }
 
         protected void RemoveDrug_Command(object sender, CommandEventArgs e)

@@ -35,6 +35,15 @@
                 </EditItemTemplate>
             </asp:TemplateField>
 
+            <asp:TemplateField HeaderText="Drug minimum age years">
+                <ItemTemplate>
+                    <asp:Label ID="DrugMinimumAgeYears" runat="server" Text='<%# Eval("DrugMinimumAgeYears") %>' />
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:TextBox ID="DrugMinimumAgeYears" runat="server" Text='<%# Bind("DrugMinimumAgeYears") %>' TextMode="MultiLine" ReadOnly="true" Enabled="false" />
+                </EditItemTemplate>
+            </asp:TemplateField>
+
             <asp:TemplateField HeaderText="Description">
                 <ItemTemplate>
                     <asp:Label ID="Description" runat="server" Text='<%# Eval("Description") %>' />

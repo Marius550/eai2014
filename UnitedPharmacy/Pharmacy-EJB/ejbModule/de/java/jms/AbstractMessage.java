@@ -18,7 +18,7 @@ import javax.naming.NamingException;
 public abstract class AbstractMessage {
 	
 	/**
-	 * Returns the Name of the queue a emssage should be sent to.
+	 * Returns the Name of the queue a message should be sent to.
 	 * Function is to be implemented in each message type.
 	 * 
 	 * @return Name of the message queue.

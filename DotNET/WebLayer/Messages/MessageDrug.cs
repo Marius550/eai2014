@@ -36,6 +36,9 @@ namespace WebLayer.Messages
         [DataMember]
         public int unfulfilledQuantity { get; set; }
 
+        [DataMember]
+        public Int64 drugMinimumAgeYears { get; set; }
+
         public MessageDrug()
         {
         }
@@ -53,6 +56,7 @@ namespace WebLayer.Messages
             description = drug.Description;
             minimumInventoryLevel = drug.MinimumInventoryLevel;
             optimalInventoryLevel = drug.OptimalInventoryLevel;
+            drugMinimumAgeYears = drug.DrugMinimumAgeYears;
             stock = drug.Stock;
         }
     }

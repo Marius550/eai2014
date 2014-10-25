@@ -34,14 +34,14 @@ namespace WebLayer
 
         public MessageDrug CreateDrug(MessageDrug drug)
         {
-            Pharmacy.BusinessLayer.Data.Drug d = DrugService.CreateDrug(drug.pzn, drug.name, drug.price, drug.description);
+            Pharmacy.BusinessLayer.Data.Drug d = DrugService.CreateDrug(drug.pzn, drug.name, drug.price, drug.description, drug.drugMinimumAgeYears);
             return Drug(d.PZN.ToString());
         }
 
         public MessageDrug UpdateDrug(MessageDrug drug, string pzn)
         {
             Pharmacy.BusinessLayer.Data.Drug d = DrugService.GetDrug(Int32.Parse(pzn));
-            DrugService.UpdateDrug(d, drug.name, drug.price, drug.description, d.MinimumInventoryLevel, d.OptimalInventoryLevel);
+            DrugService.UpdateDrug(d, drug.name, drug.price, drug.description, d.MinimumInventoryLevel, d.OptimalInventoryLevel, d.DrugMinimumAgeYears);
             return Drug(pzn);
         }
 
