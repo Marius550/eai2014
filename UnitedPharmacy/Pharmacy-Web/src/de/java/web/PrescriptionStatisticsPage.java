@@ -47,7 +47,7 @@ public class PrescriptionStatisticsPage implements Serializable {
 	public String getAverageNumberOfItemsInJava() {
 		return formatDouble(javaDO.getAverageNumberOfItemsPerPrescription());
 	}
-	public String getAverageTotalpricePerPrescription() {
+	public String getAverageTotalpricePerPrescriptionInJava() {
 		return formatDouble(javaDO.getAverageTotalpricePerPrescription());
 	}
 	public String getAverageTimespanOfFulfilmentInJava() {
@@ -62,6 +62,9 @@ public class PrescriptionStatisticsPage implements Serializable {
 	}
 	public String getAverageTimespanOfFulfilmentInDotNet() {
 		return formatTimeStamp(dotNetDO.getAverageTimeSpanOfFulfilment());
+	}
+	public String getAverageTotalpricePerPrescriptionInDotNet() {
+		return formatDouble(dotNetDO.getAverageTotalpricePerPrescription());
 	}
 	
 	/**

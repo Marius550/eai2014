@@ -60,6 +60,7 @@ namespace WebLayer
             }  
         }
 
+        /*
         public MessageStatistic GetStatistic()
         {
             MessageStatistic m = new MessageStatistic();
@@ -71,8 +72,12 @@ namespace WebLayer
             TimeSpan? ts = Pharmacy.BusinessLayer.Logic.PrescriptionService.AverageTimeSpanOfFulfilment();
             m.averageTimeSpanOfFulfilment = ts.HasValue ? (long)ts.Value.TotalSeconds : -1;
 
+            double? itemsperprescriptionTotalprice = Pharmacy.BusinessLayer.Logic.PrescriptionService.AverageTotalpricePerPrescription();
+            m.averageTotalpricePerPrescription = itemsperprescriptionTotalprice.HasValue ? itemsperprescriptionTotalprice.Value : -1;
+
             return m;
         }
+         * */
 
         public MessageStatistic GetStatisticInTimeSpan(string start, string end)
         {
@@ -87,6 +92,9 @@ namespace WebLayer
 
             TimeSpan? ts = Pharmacy.BusinessLayer.Logic.PrescriptionService.AverageTimeSpanOfFulfilment(start_dt, end_dt);
             m.averageTimeSpanOfFulfilment = ts.HasValue ? (long)ts.Value.TotalSeconds : -1;
+
+            double? itemsperprescriptionTotalprice = Pharmacy.BusinessLayer.Logic.PrescriptionService.AverageTotalpricePerPrescription(start_dt, end_dt);
+            m.averageTotalpricePerPrescription = itemsperprescriptionTotalprice.HasValue ? itemsperprescriptionTotalprice.Value : -1;
 
             return m;
         }

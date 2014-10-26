@@ -64,6 +64,7 @@ namespace WebLayer
         [WebInvoke(UriTemplate = "drug/create/batch", RequestFormat = WebMessageFormat.Json, Method = "POST")]
         void CreateDrugs(MessageDrug[] drugs);
 
+        /*
         /// <summary>
         /// Returns the statistic for the pharmacy
         /// </summary>
@@ -71,6 +72,7 @@ namespace WebLayer
         [OperationContract]
         [WebGet(UriTemplate = "statistic", ResponseFormat = WebMessageFormat.Json)]
         MessageStatistic GetStatistic();
+         * */
 
         /// <summary>
         /// Returns the statistic for the pharmacy in a given time span

@@ -42,6 +42,24 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
+        public static double GetTotalPriceOfAllPrescriptions()
+        {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                var allPrescriptions = db.PrescriptionSet.Include("Customer");
+                
+                double totalPriceSum = 0;
+
+                foreach (var item in allPrescriptions)
+                {
+                    totalPriceSum += item.TotalPrice;
+                }
+                //System.Diagnostics.Debug.WriteLine("totalPriceSum: " + totalPriceSum);
+
+                return totalPriceSum;
+            }
+        }
+
         public static PrescriptionState? ParseFromString(String state)
         {
             try {
@@ -249,18 +267,6 @@ namespace Pharmacy.BusinessLayer.Logic
         }
 
         /// <summary>
-        /// Returns the total number of prescriptions
-        /// </summary>
-        /// <returns>Total number of prescriptions</returns>
-        public static int TotalNumberOfPrescriptions()
-        {
-            using (PharmacyContainer db = new PharmacyContainer())
-            {
-                return db.PrescriptionSet.Count();
-            }
-        }
-
-        /// <summary>
         /// Returns the total number of prescriptions in a given time span
         /// </summary>
         /// <param name="start">The start date for the time span</param>
@@ -271,22 +277,6 @@ namespace Pharmacy.BusinessLayer.Logic
             using (PharmacyContainer db = new PharmacyContainer())
             {
                 return db.PrescriptionSet.Where(p => p.EntryDate >= start && p.EntryDate <= end).Count();
-            }
-        }
-
-        /// <summary>
-        /// Returns the average number of items per prescription
-        /// </summary>
-        /// <returns>The average number of items per prescription</returns>
-        public static double? AverageNumberOfItemsPerPrescription()
-        {
-            using (PharmacyContainer db = new PharmacyContainer())
-            {
-                var itemcount = db.PrescriptionSet.Include("Items").Where(p => p.Items.Count() > 0).Select(p => p.Items.Count());
-
-                if (itemcount.Any())
-                    return itemcount.Average();
-                return null;
             }
         }
 
@@ -311,23 +301,22 @@ namespace Pharmacy.BusinessLayer.Logic
         }
 
         /// <summary>
-        /// Returns the average time span of filfilment
+        /// Returns the average price per prescription in a given time span
         /// </summary>
-        /// <returns>The average time span of fulfilment in seconds</returns>
-        public static TimeSpan? AverageTimeSpanOfFulfilment()
+        /// <param name="start">The start date of the time span</param>
+        /// <param name="end">The end date of the time span</param>
+        /// <returns>The average price per prescription in a given time span</returns>
+        public static double? AverageTotalpricePerPrescription(DateTime start, DateTime end)
         {
             using (PharmacyContainer db = new PharmacyContainer())
             {
-                double? diff = db.PrescriptionSet
-                    .Where(p => p.State == PrescriptionState.Fulfilled)
-                    .Select(p => System.Data.Objects.SqlClient.SqlFunctions.DateDiff("ss", p.EntryDate, p.FulfilmentDate))
-                    .Where(t => t.HasValue)
-                    .Average();
+                double totalSumPriceAllPrescriptions = GetTotalPriceOfAllPrescriptions();
+                int numberPrescriptionsNotEmpty = db.PrescriptionSet.Where(p => p.EntryDate >= start && p.EntryDate <= end).Count();
 
-                if (diff.HasValue)
-                    return TimeSpan.FromSeconds(diff.Value);
-                else
-                    return null;
+                double averageTotalpricePerPrescription = totalSumPriceAllPrescriptions / numberPrescriptionsNotEmpty;
+
+                System.Diagnostics.Debug.WriteLine("averageTotalpricePerPrescription: " + averageTotalpricePerPrescription);
+                return averageTotalpricePerPrescription;
             }
         }
 
@@ -356,3 +345,56 @@ namespace Pharmacy.BusinessLayer.Logic
  
     }
 }
+
+/*
+ * 
+ *        /// <summary>
+        /// Returns the average number of items per prescription
+        /// </summary>
+        /// <returns>The average number of items per prescription</returns>
+        public static double? AverageNumberOfItemsPerPrescription()
+        {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                var itemcount = db.PrescriptionSet.Include("Items").Where(p => p.Items.Count() > 0).Select(p => p.Items.Count());
+
+                if (itemcount.Any())
+                    return itemcount.Average();
+                return null;
+            }
+        }
+ * 
+ *         /// <summary>
+        /// Returns the average time span of filfilment
+        /// </summary>
+        /// <returns>The average time span of fulfilment in seconds</returns>
+        public static TimeSpan? AverageTimeSpanOfFulfilment()
+        {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                double? diff = db.PrescriptionSet
+                    .Where(p => p.State == PrescriptionState.Fulfilled)
+                    .Select(p => System.Data.Objects.SqlClient.SqlFunctions.DateDiff("ss", p.EntryDate, p.FulfilmentDate))
+                    .Where(t => t.HasValue)
+                    .Average();
+
+                if (diff.HasValue)
+                    return TimeSpan.FromSeconds(diff.Value);
+                else
+                    return null;
+            }
+        }
+ * 
+ *         /// <summary>
+        /// Returns the total number of prescriptions
+        /// </summary>
+        /// <returns>Total number of prescriptions</returns>
+        public static int TotalNumberOfPrescriptions()
+        {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                return db.PrescriptionSet.Count();
+            }
+        }
+ * 
+ * */

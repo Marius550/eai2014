@@ -109,13 +109,9 @@ namespace WebLayer.Prescription
 
             if (PZNBox.Text.Length == 0)
             {
-                PZNBox.Text = "";
-
                 ErrorLabel.Text = String.Format("You need to enter the PZN!");
                 ErrorLabel.CssClass = "error";
-
             }
-
             else if (PZNBox.Text.Length != 0 & verifyDrugMinimumAgeYears())
             {
                 PrescriptionService.AddDrug(GetPrescriptionId(), Int32.Parse(PZNBox.Text));

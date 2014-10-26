@@ -28,6 +28,13 @@
                 <asp:BoundField DataField="TotalPrice" HeaderText="Total price" DataFormatString="{0:C2}"/>
                 <asp:BoundField DataField="State" HeaderText="State" />
                 <asp:HyperLinkField DataNavigateUrlFields="ID" DataNavigateUrlFormatString="Details.aspx?id={0}" Text="Details" />
+
+                <asp:TemplateField HeaderText = "Total prescription prices">
+                    <ItemTemplate>
+                        <asp:Label ID="GetTotalPriceOfAllPrescriptions" runat="server" Text= '<%# Pharmacy.BusinessLayer.Logic.PrescriptionService.GetTotalPriceOfAllPrescriptions() %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
             </Columns>
             <EmptyDataTemplate>
                 No prescriptions (in the filtered state) yet.

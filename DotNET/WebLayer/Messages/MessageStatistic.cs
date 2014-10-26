@@ -18,5 +18,8 @@ namespace WebLayer.Messages
         [DataMember]
         public long averageTimeSpanOfFulfilment { get; set; }
 
+        [DataMember]
+        public double averageTotalpricePerPrescription { get; set; }
+
     }
 }
