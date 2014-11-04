@@ -1,5 +1,5 @@
 package de.java.ws;
-
+ 
 import de.java.domain.Drug;
 
 /**
@@ -9,7 +9,7 @@ import de.java.domain.Drug;
  */
 public class MessageDrug implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
-	// Master data
+	// Master data 
 	private int pzn;
 	private String name;
 	private double price;

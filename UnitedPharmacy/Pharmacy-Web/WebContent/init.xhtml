@@ -6,9 +6,9 @@
 <ui:composition template="/resources/master.xhtml">
   <ui:define name="title">Initialize Drugs</ui:define>
   <ui:define name="content">
-  		<h:outputText rendered="#{initDrugs.initialized}" styleClass="error"
-			value="Error: The database has already been initialized!" />
+  		<h:outputText rendered="#{initDrugs.initialized}" styleClass="error" value="Error: The database has already been initialized!" />
   <h:panelGroup rendered="#{!initDrugs.initialized}">
+  
   	<h3>Drugs in JaVa-Database</h3>
   	<h:dataTable value="#{initDrugs.jDrugs.values()}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
@@ -74,6 +74,30 @@
         #{cur.description}
       </h:column>
     </h:dataTable>
+    
+    <br></br>
+    <h3>Customers in JaVa-Database</h3> 
+    <h:dataTable value="#{initCustomers.jCustomers.values()}" var="cur"
+      styleClass="data-table" headerClass="data-cell header-cell"
+      columnClasses="data-cell,data-cell,data-cell,data-cell">
+       <h:column>
+        <f:facet name="header">Id</f:facet>
+        #{cur.id}
+       </h:column>
+       <h:column>
+        <f:facet name="header">Name</f:facet>
+        #{cur.name}
+       </h:column>
+       <h:column>
+        <f:facet name="header">Email</f:facet>
+        #{cur.email}
+       </h:column>
+       <h:column>
+        <f:facet name="header">Prescription Bill</f:facet>
+        #{cur.prescriptionBill}
+       </h:column>
+     </h:dataTable>
+          
     </h:panelGroup>
 	</ui:define>
 </ui:composition>

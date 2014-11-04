@@ -14,15 +14,14 @@ import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
-import de.java.domain.Drug;
-import de.java.jms.DrugMessage;
+import de.java.domain.Customer;
+import de.java.jms.CustomerMessage;
 import de.java.jms.MessageSender;
-import de.java.ws.DrugResourceClientDotNet;
-import de.java.ws.DrugResourceClientJava;
-import de.java.ws.MessageDrug;
+import de.java.ws.CustomerResourceClientJava;
+import de.java.ws.MessageCustomer;
 
 @Stateless
-public class DrugServiceBean implements DrugService {
+public class CustomerServiceBean implements CustomerService {
 
   // URLs of the webservices	
   private static final String BASE_URI_JAVA = "http://localhost:8080/Pharmacy04-Web/api";
@@ -35,27 +34,30 @@ public class DrugServiceBean implements DrugService {
    * Prepares a rest-webservice-proxy for connection to JaVa
    * @return WebService proxy for JaVa
    */
-  private DrugResourceClientJava prepareDrugResourceClientJava (){
+  private CustomerResourceClientJava prepareCustomerResourceClientJava (){
 	  RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
 	  ResteasyWebTarget target = new ResteasyClientBuilder().build().target(BASE_URI_JAVA);
-	  return target.proxy(DrugResourceClientJava.class);
+	  return target.proxy(CustomerResourceClientJava.class);
   }
   
   /**
    * Prepares a rest-webservice-proxy for connection to C.Sharpe
    * @return WebService proxy for C.Sharpe
    */
+  /*
   private DrugResourceClientDotNet prepareDrugResourceClientDotNet(){
 	  RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
 	  ResteasyWebTarget target = new ResteasyClientBuilder().build().target(BASE_URI_DOTNET);
 	  return target.proxy(DrugResourceClientDotNet.class);
   }
+  */
 
   @Override
-  public Collection<Drug> getAllDrugs() {
-    return em.createQuery("FROM Drug", Drug.class).getResultList();
+  public Collection<Customer> getAllCustomers() {
+    return em.createQuery("FROM Customer", Customer.class).getResultList();
   }
 
+  /*
   @Override
   public Collection<Drug> getAllDrugsLike(String searchTerm) {
     if (empty(searchTerm)) {
@@ -68,6 +70,9 @@ public class DrugServiceBean implements DrugService {
         .setParameter("pzn", parseIntOrDefaultToZero(searchTerm))
         .getResultList();
   }
+  */
+  
+  /*
 
   private boolean empty(String searchTerm) {
     return searchTerm == null || searchTerm.trim().isEmpty();
@@ -85,44 +90,51 @@ public class DrugServiceBean implements DrugService {
     return "%" + searchTerm.toLowerCase() + "%";
   }
 
+*/
+  
   @Override
-  public Drug getDrug(int pzn) {
-    return em.find(Drug.class, pzn);
+  public Customer getCustomer(long id) {
+    return em.find(Customer.class, id);
   }
   
   @Override
-  public MessageDrug getDrugFromJava(int pzn){
-	  return prepareDrugResourceClientJava().getDrug(pzn);
+  public MessageCustomer getCustomerFromJava(long id){
+	  return prepareCustomerResourceClientJava().getCustomer(id);
   }
   
+  /*
   @Override
   public MessageDrug getDrugFromDotNet(int pzn){
 	  return prepareDrugResourceClientDotNet().getDrug(pzn);
   }
+  */
   
   @Override
-  public Map<Integer, MessageDrug> getAllDrugsFromJava(){
-	  return convertMessageDrugCollectionIntoHashMap(prepareDrugResourceClientJava().getAllDrugs());
+  public Map<Long, MessageCustomer> getAllCustomersFromJava(){
+	  return convertMessageCustomerCollectionIntoHashMap(prepareCustomerResourceClientJava().getAllCustomers());
   }
   
+  /*
   @Override
   public Map<Integer, MessageDrug> getAllDrugsFromDotNet(){
 	  return convertMessageDrugCollectionIntoHashMap(prepareDrugResourceClientDotNet().getAllDrugs());
   }
+  */
   
   /**
-   * Converts a Collection of MessageDrugs into a HashMap in order to search through them by pzn
-   * @param collection the collection of MessageDrug's to convert
-   * @return a HashMap with pzn as key and the MessageDrug-object as value
+   * Converts a Collection of MessageCustomers into a HashMap in order to search through them by id
+   * @param collection the collection of MessageCustomer's to convert
+   * @return a HashMap with id as key and the MessageCustomer-object as value
    */
-  private Map<Integer, MessageDrug> convertMessageDrugCollectionIntoHashMap (Collection<MessageDrug> collection){
-	  Map<Integer, MessageDrug> map = new HashMap<Integer, MessageDrug>();
-	  for (MessageDrug mDrug : collection){
-		  map.put(mDrug.getPzn(), mDrug);
+  private Map<Long, MessageCustomer> convertMessageCustomerCollectionIntoHashMap (Collection<MessageCustomer> collection){
+	  Map<Long, MessageCustomer> map = new HashMap<Long, MessageCustomer>();
+	  for (MessageCustomer mCustomer : collection){
+		  map.put(mCustomer.getId(), mCustomer);
 	  }
 	  return map;
   }
 
+  /*
   @Override
   public Drug createDrug(Drug newDrug) {
 	createDrugLocally(newDrug);
@@ -132,12 +144,14 @@ public class DrugServiceBean implements DrugService {
     
     return newDrug;
   }
+  */
   
   /**
    * Creates a drug only in the HO-database and does not publish it to JaVa and C.Sharpe
    * @param newDrug the drug to create
    * @return the created drug
    */
+  /*
   private Drug createDrugLocally(Drug newDrug) {
   	if (em.createQuery("SELECT COUNT(*) FROM Drug WHERE pzn=:pzn",
 			Long.class).setParameter("pzn", newDrug.getPzn())
@@ -148,21 +162,25 @@ public class DrugServiceBean implements DrugService {
   	em.persist(newDrug);
 	return newDrug;
   }
+  */
   
   /**
    * Persists creation of a drug to JaVa via a rest webservice
    * @param drug
    */
+  /*
   private void persistCreateDrugToJava(Drug drug){
 	  // OLD drug creation via WS. Now using JMS
 	  // prepareDrugResourceClientJava().createDrug(mDrug);
 	  MessageSender.send(new DrugMessage(drug, "create"));
   }
+  */
   
   /**
    * Persists creation of a drug to C.Sharpe via a rest webservice
    * @param mDrug
    */
+  /*
   private void persistCreateDrugToDotNet(Drug drug){
 	  prepareDrugResourceClientDotNet().createDrug(new MessageDrug(drug));
   }
@@ -180,26 +198,32 @@ public class DrugServiceBean implements DrugService {
     
     return drug;
   }
+  */
   
   /**
    * Persists update of a drug to JaVa via a rest webservice
    * @param mDrug
    */
+  /*
   private void persistUpdateMasterDataToJava(Drug drug){
 	  // OLD update was done via WS. Now using JMS:
 	  // prepareDrugResourceClientJava().updateDrug(drug.getPzn(), new MessageDrug(drug));
 	  MessageSender.send(new DrugMessage(drug, "update"));
 	  
   }
+  */
   
   /**
    * Persists update of a drug to C.Sharpe via a rest webservice
    * @param mDrug
    */
+  /*
   private void persistUpdateMasterDataToDotNet(Drug drug){
 	  prepareDrugResourceClientDotNet().updateDrug(drug.getPzn(), new MessageDrug(drug));
   }
+  */
 
+  /*
 	@Override
 	public Collection<MessageDrug> initDatabase(Map<Integer, MessageDrug> jDrugs, Map<Integer, MessageDrug> cDrugs) {
 		// Prevent method from getting called, when drugs are already there
@@ -252,6 +276,7 @@ public class DrugServiceBean implements DrugService {
 		
 		return locallyCreatedDrugs;	
 	}
+	*/
 	
 	/**
 	 * Compares the master data (pzn, name and description) of two message drugs
@@ -259,6 +284,8 @@ public class DrugServiceBean implements DrugService {
 	 * @param d2 MessageDrug 2 to compare
 	 * @return true, if the pzn, name, price and description are equal
 	 */
+  
+  /*
 	private boolean drugMasterDataIsEqual(MessageDrug d1, MessageDrug d2){
 		return d1.getPzn() == d2.getPzn() && 
 				d1.getName() == d2.getName() && 
@@ -273,4 +300,5 @@ public class DrugServiceBean implements DrugService {
 
 	    em.remove(drug);
 	  }
+	  */
 }

@@ -11,6 +11,7 @@ public class RootImpl implements Root {
 	public Map<String, Map<String, URI>> links(UriInfo uriInfo) {
 		Map<String, URI> links = new HashMap<>();
 		links.put("drug", drugUri(uriInfo));
+		links.put("customer", customerUri(uriInfo));
 		
 		Map<String, Map<String, URI>> map = new HashMap<>();
 		map.put("links", links);
@@ -20,6 +21,12 @@ public class RootImpl implements Root {
 	private URI drugUri(UriInfo uriInfo) {
 		return uriInfo.getBaseUriBuilder()
 				.path(DrugResource.class)
+				.build();
+	}
+	
+	private URI customerUri(UriInfo uriInfo) {
+		return uriInfo.getBaseUriBuilder() 
+				.path(CustomerResource.class)
 				.build();
 	}
 }

@@ -171,6 +171,9 @@
             #{cur.quantityRequired}
           </h:column>
           <h:column rendered="#{prescriptionPage.prescription.state == 'FULFILLING'}">
+          
+          <f:event type="preRenderView" listener="#{customerList.submitUpdatePrescriptionBill(prescriptionPage.prescription.customer.id)}"/>
+          
             <h:commandButton value="Fulfil"
               action="#{prescriptionPage.fulfil(cur)}"
               rendered="#{not cur.fulfilled}"
@@ -179,6 +182,7 @@
               action="#{prescriptionPage.replenish(cur)}"
               rendered="#{cur.quantityRequired > 0}" />
           </h:column>
+    	
         </h:dataTable>
       </h:form>
     </div>
