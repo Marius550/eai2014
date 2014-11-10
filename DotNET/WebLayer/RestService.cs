@@ -13,6 +13,26 @@ namespace WebLayer
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class RestService : IRestService
     {
+        public MessageCustomer[] Customers()
+        {
+            return CustomerService.GetAllCustomers().Select(c => new MessageCustomer(c)
+            {
+                //pendingQuantity = DrugService.GetQuantityPending(d),
+                //unfulfilledQuantity = PrescriptionService.GetQuantityUnfulfilledForDrug(d.PZN)
+            }).ToArray();
+        }
+
+        public MessageCustomer Customer(string id)
+        {
+            Pharmacy.BusinessLayer.Data.Customer c = CustomerService.GetCustomer(Int32.Parse(id));
+            return new MessageCustomer(c)
+            {
+                //pendingQuantity = DrugService.GetQuantityPending(d),
+                //unfulfilledQuantity = PrescriptionService.GetQuantityUnfulfilledForDrug(d.PZN)
+            };
+        }
+
+
         public MessageDrug[] Drugs()
         {
             return DrugService.GetAllDrugs().Select(d => new MessageDrug(d)

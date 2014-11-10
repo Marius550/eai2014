@@ -24,7 +24,7 @@ Map<Long, MessageCustomer> getAllCustomersFromJava();
 /**
  * @return all customers from the C Sharpe pharmacy database in a HashMap of id and MessagCustomer
  */
-//Map<Integer, MessageDrug> getAllDrugsFromDotNet();
+Map<Long, MessageCustomer> getAllCustomersFromDotNet();
 
   /**
  * @param searchTerm : name or id to be searched for
@@ -48,7 +48,7 @@ MessageCustomer getCustomerFromJava(long id);//
 * @param id
 * @return customer with the id from the C Sharp pharmacy database, accessed via webservices
 */
-//MessageDrug getDrugFromDotNet(int pzn);
+MessageCustomer getCustomerFromDotNet(int id);
 
   /**
  * @param customer
@@ -79,7 +79,7 @@ MessageCustomer getCustomerFromJava(long id);//
  * @param cDrugs a map of all (already fetched) drugs from C.Sharpe
  * @return collection of all drugs, that are in the HO-database now
  */
-//Collection<MessageDrug> initDatabase(Map<Integer, MessageDrug> jDrugs, Map<Integer, MessageDrug> cDrugs);
+Collection<MessageCustomer> initDatabase(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers);//Adjust javaDoc!!!
 
 //void removeDrug(int DrugPZN);
 }

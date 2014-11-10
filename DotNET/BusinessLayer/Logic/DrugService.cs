@@ -63,35 +63,6 @@ namespace Pharmacy.BusinessLayer.Logic
             return result;
         }
 
-        /*
-        internal static Drug GetDrugTest(Int32 pzn, PharmacyContainer db)
-        {
-            try
-            {
-                Drug result = (from d in db.DrugSet where d.PZN == pzn select d).FirstOrDefault();
-                if (result == default(Drug))
-                    new ArgumentException(String.Format("Drug with PZN {0} not found", pzn.ToString()));
-
-                System.Diagnostics.Debug.WriteLine("Before return - try");
-
-                return result;
-            }
-            catch (ArgumentException ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Exception caught 1: " + ex);
-
-                throw;
-            }
-            catch (Exception ex) {
-
-                System.Diagnostics.Debug.WriteLine("Exception caught 2: " + ex);
-
-                throw;
-            }
-            System.Diagnostics.Debug.WriteLine("Code after try-catch block");
-        }
-         * */
-
         public static Drug UpdateDrug(Drug drug)
         {
             return UpdateDrug(drug, drug.Name, drug.Price, drug.Description, drug.MinimumInventoryLevel, drug.OptimalInventoryLevel, drug.DrugMinimumAgeYears);

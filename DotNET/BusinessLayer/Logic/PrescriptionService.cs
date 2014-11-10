@@ -192,10 +192,10 @@ namespace Pharmacy.BusinessLayer.Logic
             {
                 Prescription p = GetPrescription(id, db);
                 Drug d = DrugService.GetDrug(pzn, db);
-                
-                if (p.Items.Any(i => i.PrescribedDrug.PZN == pzn))
-                    throw new ArgumentException(String.Format("Drug with pzn {0} already contained in prescription with id {1}", pzn, id));
 
+                if (p.Items.Any(i => i.PrescribedDrug.PZN == pzn)) {               
+                        throw new ArgumentException(String.Format("Drug with pzn {0} already contained in prescription with id {1}", pzn, id));
+                    }
                 p.Items.Add(new Item { Prescription = p, PrescribedDrug = d });
                 db.SaveChanges();
             }

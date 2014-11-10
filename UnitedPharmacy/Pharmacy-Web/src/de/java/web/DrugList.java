@@ -28,11 +28,6 @@ public class DrugList implements Serializable {
     return drugService.getAllDrugsLike(searchTerm);
   }
   
-  //testing
-//  public void removeDrug1() {
-//	  drugService.getAllDrugs().remove(getjDrugs());
-//	  }
-  
   public Map<Integer, MessageDrug> getjDrugs(){
 	  if (jDrugs == null){
 		  jDrugs = drugService.getAllDrugsFromJava();

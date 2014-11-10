@@ -4,15 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-//using System.Text.RegularExpressions;
 
 namespace WebLayer.Customer
 {
     public partial class Create : System.Web.UI.Page
     {
-        //Boolean evaluationPhone;
-        //Boolean evaluationEmail;
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -24,13 +20,6 @@ namespace WebLayer.Customer
                 return;
             try
             {
-                //ResultLabelEmailValidation.Text = null;
-                //ResultLabelPhoneValidation.Text = null;
-
-                //RegexPhone();
-                //RegexEmail();
-                //if (evaluationPhone == true && evaluationEmail == true)
-                //{
                     string birthDateString = ((TextBox)CustomerCreateForm.FindControl("BirthDateBox")).Text;
                     DateTime birthDate = Util.ParseDate(birthDateString);
 
@@ -45,34 +34,6 @@ namespace WebLayer.Customer
                     AddressBox.Text = "";
                     EmailBox.Text = "";
                     BirthDateBox.Text = "";
- 
-                //}
-                //else
-                //{
-                    //Hint: Make use of the "Result.Label"!
-                    //ResultLabel.Text = String.Format("Customer created: " + NameBox.Text);
-                    //ResultLabel.CssClass = "success";
-
-                /*
-                    if (evaluationEmail == false && evaluationPhone == false)
-                    {
-                    ResultLabelEmailValidation.Text = String.Format("Email format is not correct");
-                    ResultLabelEmailValidation.CssClass = "error";
-                    ResultLabelPhoneValidation.Text = String.Format("Telephone number format is not correct");
-                    ResultLabelPhoneValidation.CssClass = "error";
-                    }
-                    else if (evaluationEmail == false && evaluationPhone == true)
-                    {
-                    ResultLabelEmailValidation.Text = String.Format("Email format is not correct");
-                    ResultLabelEmailValidation.CssClass = "error";
-                    }
-                    else if (evaluationEmail == true && evaluationPhone == false)
-                    {
-                    ResultLabelPhoneValidation.Text = String.Format("Telephone number format is not correct");
-                    ResultLabelPhoneValidation.CssClass = "error";
-                    }
-                }
-                 */
             }
             catch (ArgumentException ex)
             {
@@ -150,3 +111,39 @@ protected string TelephoneValidator()
         <span class="error">Email required</span> 
     </asp:RequiredFieldValidator>
 */
+
+//ResultLabelEmailValidation.Text = null;
+//ResultLabelPhoneValidation.Text = null;
+
+//RegexPhone();
+//RegexEmail();
+//if (evaluationPhone == true && evaluationEmail == true)
+//{
+
+//}
+//else
+//{
+//Hint: Make use of the "Result.Label"!
+//ResultLabel.Text = String.Format("Customer created: " + NameBox.Text);
+//ResultLabel.CssClass = "success";
+
+/*
+    if (evaluationEmail == false && evaluationPhone == false)
+    {
+    ResultLabelEmailValidation.Text = String.Format("Email format is not correct");
+    ResultLabelEmailValidation.CssClass = "error";
+    ResultLabelPhoneValidation.Text = String.Format("Telephone number format is not correct");
+    ResultLabelPhoneValidation.CssClass = "error";
+    }
+    else if (evaluationEmail == false && evaluationPhone == true)
+    {
+    ResultLabelEmailValidation.Text = String.Format("Email format is not correct");
+    ResultLabelEmailValidation.CssClass = "error";
+    }
+    else if (evaluationEmail == true && evaluationPhone == false)
+    {
+    ResultLabelPhoneValidation.Text = String.Format("Telephone number format is not correct");
+    ResultLabelPhoneValidation.CssClass = "error";
+    }
+}
+ */

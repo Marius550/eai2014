@@ -13,6 +13,23 @@ namespace WebLayer
     public interface IRestService
     {
         /// <summary>
+        /// Returns a list of all customers in the database.
+        /// </summary>
+        /// <returns>The customer list</returns>
+        [OperationContract]
+        [WebGet(UriTemplate = "customer", ResponseFormat = WebMessageFormat.Json)]
+        MessageCustomer[] Customers();
+
+        /// <summary>
+        /// Returns a single customer.
+        /// </summary>
+        /// <param name="id">The id of the customer</param>
+        /// <returns>The customer</returns>
+        [OperationContract]
+        [WebGet(UriTemplate = "customer/{id}", ResponseFormat = WebMessageFormat.Json)]
+        MessageCustomer Customer(string id);   
+
+        /// <summary>
         /// Returns a list of all drugs in the database.
         /// </summary>
         /// <returns>The drug list</returns>

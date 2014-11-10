@@ -16,16 +16,13 @@ public class InitCustomers implements Serializable {
   
   // All customers at JaVa
   private Map<Long, MessageCustomer> jCustomers;
-  
-  // All drugs at C. Sharpe
-  //private Map<Integer, MessageDrug> cDrugs;
+  // All customers at C. Sharpe
+  private Map<Long, MessageCustomer> cCustomers;
   // All maps in the HO-database, after running the init script
-  //private Collection<MessageDrug> mergedDrugs;
+  private Collection<MessageCustomer> mergedCustomers;
   
   @EJB
   private CustomerService customerService;
-  
-  //Map<Long, MessageCustomer> getAllCustomersFromJava();//
   
   public Map<Long, MessageCustomer> getjCustomers (){
 	  if (jCustomers == null){
@@ -34,27 +31,26 @@ public class InitCustomers implements Serializable {
 	  return jCustomers;
   }
   
-  /*
-  public Map<Integer, MessageDrug> getcDrugs (){
-	  if (cDrugs == null){
-		  cDrugs = drugService.getAllDrugsFromDotNet();
+  
+  public Map<Long, MessageCustomer> getcCustomers (){
+	  if (cCustomers == null){
+		  cCustomers = customerService.getAllCustomersFromDotNet();
 	  }
-	  return cDrugs;
+	  return cCustomers;
   }
   
-  public Collection<MessageDrug> getMergedDrugs() {
-	  if (mergedDrugs == null) {
+  public Collection<MessageCustomer> getMergedCustomers() {
+	  if (mergedCustomers == null) {
 		  // Run init script
-		  // Pass jDrugs and cDrugs to the init-function to avoid another webservice call
-		  mergedDrugs = drugService.initDatabase(getjDrugs(), getcDrugs());
+		  // Pass jCustomers and cCustomers to the init-function to avoid another webservice call
+		  mergedCustomers = customerService.initDatabase(getjCustomers(), getcCustomers());
 	  }
-	  return mergedDrugs;
+	  return mergedCustomers;
   }
-  */
     
   /**
    * The main office database is initialized, if customers are in the database
-   * @return true, if the database contains drugs i.e. is initialized
+   * @return true, if the database contains customers i.e. is initialized
    */
   public boolean isInitialized(){
 	  return !customerService.getAllCustomers().isEmpty();

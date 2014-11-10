@@ -76,13 +76,13 @@ namespace WebLayer.Prescription {
         protected global::System.Web.UI.WebControls.RangeValidator PZNNumberValidator;
         
         /// <summary>
-        /// ErrorLabel-Steuerelement
+        /// ResultLabel-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorLabel;
+        protected global::System.Web.UI.WebControls.Label ResultLabel;
         
         /// <summary>
         /// AddItemButton-Steuerelement

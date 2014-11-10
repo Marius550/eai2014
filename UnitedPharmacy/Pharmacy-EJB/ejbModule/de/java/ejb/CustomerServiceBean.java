@@ -15,9 +15,10 @@ import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import de.java.domain.Customer;
-import de.java.jms.CustomerMessage;
-import de.java.jms.MessageSender;
+//import de.java.jms.CustomerMessage;
+//import de.java.jms.MessageSender;
 import de.java.ws.CustomerResourceClientJava;
+import de.java.ws.CustomerResourceClientDotNet;
 import de.java.ws.MessageCustomer;
 
 @Stateless
@@ -44,13 +45,13 @@ public class CustomerServiceBean implements CustomerService {
    * Prepares a rest-webservice-proxy for connection to C.Sharpe
    * @return WebService proxy for C.Sharpe
    */
-  /*
-  private DrugResourceClientDotNet prepareDrugResourceClientDotNet(){
+  
+  private CustomerResourceClientDotNet prepareCustomerResourceClientDotNet(){
 	  RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
 	  ResteasyWebTarget target = new ResteasyClientBuilder().build().target(BASE_URI_DOTNET);
-	  return target.proxy(DrugResourceClientDotNet.class);
+	  return target.proxy(CustomerResourceClientDotNet.class);
   }
-  */
+  
 
   @Override
   public Collection<Customer> getAllCustomers() {
@@ -102,24 +103,23 @@ public class CustomerServiceBean implements CustomerService {
 	  return prepareCustomerResourceClientJava().getCustomer(id);
   }
   
-  /*
+  
   @Override
-  public MessageDrug getDrugFromDotNet(int pzn){
-	  return prepareDrugResourceClientDotNet().getDrug(pzn);
+  public MessageCustomer getCustomerFromDotNet(int id){
+	  return prepareCustomerResourceClientDotNet().getCustomer(id);
   }
-  */
+  
   
   @Override
   public Map<Long, MessageCustomer> getAllCustomersFromJava(){
 	  return convertMessageCustomerCollectionIntoHashMap(prepareCustomerResourceClientJava().getAllCustomers());
   }
   
-  /*
+  
   @Override
-  public Map<Integer, MessageDrug> getAllDrugsFromDotNet(){
-	  return convertMessageDrugCollectionIntoHashMap(prepareDrugResourceClientDotNet().getAllDrugs());
+  public Map<Long, MessageCustomer> getAllCustomersFromDotNet(){
+	  return convertMessageCustomerCollectionIntoHashMap(prepareCustomerResourceClientDotNet().getAllCustomers());
   }
-  */
   
   /**
    * Converts a Collection of MessageCustomers into a HashMap in order to search through them by id
@@ -225,19 +225,20 @@ public class CustomerServiceBean implements CustomerService {
 
   /*
 	@Override
-	public Collection<MessageDrug> initDatabase(Map<Integer, MessageDrug> jDrugs, Map<Integer, MessageDrug> cDrugs) {
-		// Prevent method from getting called, when drugs are already there
-		if (getAllDrugs().size() > 0){
+	public Collection<MessageCustomer> initDatabase(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
+		// Prevent method from getting called, when customers are already there
+		if (getAllCustomers().size() > 0){
 			return null;
 		}
 		
-		// Collections of message drugs, that are filled to call webservices with batches
+		// Collections of message customers, that are filled to call webservices with batches
 		// rather than multiple times (to keep web-service calls low)
-		Collection<MessageDrug> drugsToCreateAtJava = new ArrayList<MessageDrug>();
-		Collection<MessageDrug> drugsToCreateAtDotNet = new ArrayList<MessageDrug>();
-		Collection<MessageDrug> drugsToUpdateAtDotNet = new ArrayList<MessageDrug>();
+		Collection<MessageCustomer> customersToCreateAtJava = new ArrayList<MessageCustomer>();
+		Collection<MessageCustomer> customersToCreateAtDotNet = new ArrayList<MessageCustomer>();
+		//Collection<MessageCustomer> customersToUpdateAtDotNet = new ArrayList<MessageCustomer>();
+		
 		// return-object for displaying the resulting database
-		Collection<MessageDrug> locallyCreatedDrugs = new ArrayList<MessageDrug>();
+		//Collection<MessageDrug> locallyCreatedDrugs = new ArrayList<MessageDrug>();
 		
 		// First go through drugs at JaVa, since they are created either way
 		for (MessageDrug d : jDrugs.values()){
@@ -285,7 +286,24 @@ public class CustomerServiceBean implements CustomerService {
 	 * @return true, if the pzn, name, price and description are equal
 	 */
   
-  /*
+	@Override
+	public Collection<MessageCustomer> initDatabase(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
+		
+		Collection<MessageCustomer> mergedCustomers = new ArrayList<MessageCustomer>();
+		
+		for (MessageCustomer c : jCustomers.values()){
+
+			mergedCustomers.add(c);
+		}
+		for (MessageCustomer c : cCustomers.values()){
+
+			mergedCustomers.add(c);
+		}
+		
+		return mergedCustomers;
+	}
+	
+	/*
 	private boolean drugMasterDataIsEqual(MessageDrug d1, MessageDrug d2){
 		return d1.getPzn() == d2.getPzn() && 
 				d1.getName() == d2.getName() && 
@@ -293,12 +311,14 @@ public class CustomerServiceBean implements CustomerService {
 				d1.getDescription() == d2.getDescription() &&
 				d1.getDrugMinimumAgeYears() == d2.getDrugMinimumAgeYears();
 	}
+	*/
 	
+	/*
 	  @Override
 	  public void removeDrug(int DrugPZN) {
 	    Drug drug = getDrug(DrugPZN);
 
 	    em.remove(drug);
 	  }
-	  */
+	*/  
 }

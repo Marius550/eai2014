@@ -97,10 +97,10 @@ public class ApplicationInitialiser {
 
   private void populateAppWithSampleCustomers() {
     Customer maxMustermann = new Customer();
-    maxMustermann.setName("Max Mustermann");
+    maxMustermann.setName("Jason Java");
     maxMustermann.setTelephoneNumber("+49 123 456 78");
-    maxMustermann.setEmail("max.mustermann@gmail.com");
-    maxMustermann.setBirthDate("1988-11-15");
+    maxMustermann.setEmail("jason.java@gmail.com"); 
+    maxMustermann.setBirthDate("1988-10-16");
     em.persist(maxMustermann);
     
     /*

@@ -139,6 +139,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IRestService.cs" />
+    <Compile Include="Messages\MessageCustomer.cs" />
     <Compile Include="Messages\MessageDrug.cs" />
     <Compile Include="Messages\MessageStatistic.cs" />
     <Compile Include="Prescription\Create.aspx.cs">

@@ -101,30 +101,29 @@ namespace WebLayer.Prescription
         {
             if (!Page.IsValid)
                 return;
+            try
+            {
+                //ResultLabel.Text = ""; Not working yet to clear the resultLabel after drug has been added
 
-            if (ErrorLabel.Text.Length != 0)
-            {
-                ErrorLabel.Text = "";
-            }
+                if (PZNBox.Text.Length == 0)
+                {
+                    throw new ArgumentException(String.Format("Input string was not in a correct format."));
+                }
+                else if (!verifyDrugMinimumAgeYears())
+                {
+                    Int64 drugMinimumAgeYears = Pharmacy.BusinessLayer.Logic.DrugService.GetDrug(Int32.Parse(PZNBox.Text)).DrugMinimumAgeYears;
+                    throw new ArgumentException(String.Format("Customer is " + getCustomerAge() + ", but needs to be " + drugMinimumAgeYears + " old to be allowed to pursue this drug!"));
+                }
 
-            if (PZNBox.Text.Length == 0)
-            {
-                ErrorLabel.Text = String.Format("You need to enter the PZN!");
-                ErrorLabel.CssClass = "error";
-            }
-            else if (PZNBox.Text.Length != 0 & verifyDrugMinimumAgeYears())
-            {
                 PrescriptionService.AddDrug(GetPrescriptionId(), Int32.Parse(PZNBox.Text));
                 PZNBox.Text = "";
                 ItemsGridView.DataBind();
                 PrescriptionDetailsView.DataBind();
-            }
-            else
-            {
-                Int64 drugMinimumAgeYears = Pharmacy.BusinessLayer.Logic.DrugService.GetDrug(Int32.Parse(PZNBox.Text)).DrugMinimumAgeYears;
 
-                ErrorLabel.Text = String.Format("Customer is " + getCustomerAge() + ", but needs to be " + drugMinimumAgeYears + " old!");
-                ErrorLabel.CssClass = "error";
+            }   catch (ArgumentException ex)
+            {
+                ResultLabel.Text = String.Format("Customer not created: {0}", ex.Message);
+                ResultLabel.CssClass = "error";
             }
         }
 

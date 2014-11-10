@@ -202,11 +202,11 @@
             <span class="error">Enter valid PZN (8 digits)</span>
         </asp:RangeValidator>
 
-        <div class="error">
-            <asp:Label ID="ErrorLabel" runat="server"></asp:Label>
-        </div>
+    <div class="result">
+        <asp:Label ID="ResultLabel" runat="server"></asp:Label>
+    </div>
 
-        <asp:Button ID="AddItemButton" runat="server" Text="Add Drug" Visible="false"
-            OnCommand="AddDrug_Command" />
+        <asp:Button ID="AddItemButton" runat="server" Text="Add Drug" Visible="false" OnCommand="AddDrug_Command" />
+
     </form>
 </asp:Content>
