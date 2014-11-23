@@ -63,5 +63,9 @@ public class CustomerList implements Serializable {
 	  System.out.println(getcCustomers().get(id).getName());
 	  return getcCustomers().get(id);
   }
+  
+  public String refresh() {
+	    return "/customer/list.xhtml";
+	  }
 
 }

@@ -134,57 +134,7 @@ public class CustomerServiceBean implements CustomerService {
 	  return map;
   }
 
-  /*
-  @Override
-  public Drug createDrug(Drug newDrug) {
-	createDrugLocally(newDrug);
-
-    persistCreateDrugToJava(newDrug);
-    persistCreateDrugToDotNet(newDrug);
-    
-    return newDrug;
-  }
-  */
-  
-  /**
-   * Creates a drug only in the HO-database and does not publish it to JaVa and C.Sharpe
-   * @param newDrug the drug to create
-   * @return the created drug
-   */
-  /*
-  private Drug createDrugLocally(Drug newDrug) {
-  	if (em.createQuery("SELECT COUNT(*) FROM Drug WHERE pzn=:pzn",
-			Long.class).setParameter("pzn", newDrug.getPzn())
-			.getSingleResult() > 0)
-		throw new KeyConstraintViolation(String.format(
-				"Drug with PZN: %s already in database", newDrug.getPzn()));
-
-  	em.persist(newDrug);
-	return newDrug;
-  }
-  */
-  
-  /**
-   * Persists creation of a drug to JaVa via a rest webservice
-   * @param drug
-   */
-  /*
-  private void persistCreateDrugToJava(Drug drug){
-	  // OLD drug creation via WS. Now using JMS
-	  // prepareDrugResourceClientJava().createDrug(mDrug);
-	  MessageSender.send(new DrugMessage(drug, "create"));
-  }
-  */
-  
-  /**
-   * Persists creation of a drug to C.Sharpe via a rest webservice
-   * @param mDrug
-   */
-  /*
-  private void persistCreateDrugToDotNet(Drug drug){
-	  prepareDrugResourceClientDotNet().createDrug(new MessageDrug(drug));
-  }
-
+/*
   @Override
   public Drug updateMasterData(int pzn, String name, double price, String description, long drugMinimumAgeYears) {
     Drug drug = getDrug(pzn);
@@ -200,125 +150,31 @@ public class CustomerServiceBean implements CustomerService {
   }
   */
   
-  /**
-   * Persists update of a drug to JaVa via a rest webservice
-   * @param mDrug
-   */
-  /*
-  private void persistUpdateMasterDataToJava(Drug drug){
-	  // OLD update was done via WS. Now using JMS:
-	  // prepareDrugResourceClientJava().updateDrug(drug.getPzn(), new MessageDrug(drug));
-	  MessageSender.send(new DrugMessage(drug, "update"));
-	  
-  }
-  */
-  
-  /**
-   * Persists update of a drug to C.Sharpe via a rest webservice
-   * @param mDrug
-   */
-  /*
-  private void persistUpdateMasterDataToDotNet(Drug drug){
-	  prepareDrugResourceClientDotNet().updateDrug(drug.getPzn(), new MessageDrug(drug));
-  }
-  */
-
-  /*
-	@Override
-	public Collection<MessageCustomer> initDatabase(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
-		// Prevent method from getting called, when customers are already there
-		if (getAllCustomers().size() > 0){
-			return null;
-		}
-		
-		// Collections of message customers, that are filled to call webservices with batches
-		// rather than multiple times (to keep web-service calls low)
-		Collection<MessageCustomer> customersToCreateAtJava = new ArrayList<MessageCustomer>();
-		Collection<MessageCustomer> customersToCreateAtDotNet = new ArrayList<MessageCustomer>();
-		//Collection<MessageCustomer> customersToUpdateAtDotNet = new ArrayList<MessageCustomer>();
-		
-		// return-object for displaying the resulting database
-		//Collection<MessageDrug> locallyCreatedDrugs = new ArrayList<MessageDrug>();
-		
-		// First go through drugs at JaVa, since they are created either way
-		for (MessageDrug d : jDrugs.values()){
-			// Create drug in local db
-			createDrugLocally(d.convertToDrug());
-			locallyCreatedDrugs.add(d);
-			
-			if (cDrugs.containsKey(d.getPzn())){
-				// Drug is already at C.Sharpe (pzn-match true)
-				if (!drugMasterDataIsEqual(d, cDrugs.get(d.getPzn()))){
-					// Drug Master Data at C.Sharpe is differing and needs to get update
-					 drugsToUpdateAtDotNet.add(d);
-				}
-				// Remove drug from C.Sharpe Wrapper, as pzn-based match resulted true
-				// and therefore the drug is already processed
-				cDrugs.remove(d.getPzn());
-			} else {
-				// Drug is not yet at C.Sharpe, so create it there
-				drugsToCreateAtDotNet.add(d);
-			}
-		}
-		// Afterwards process remaining drugs at C.Sharpe (that are therefore not at JaVa)
-		for (MessageDrug d : cDrugs.values()){
-			// create drugs locally
-			createDrugLocally(d.convertToDrug());
-			locallyCreatedDrugs.add(d);
-			
-			// add new drug to JaVa
-			drugsToCreateAtJava.add(d);			
-		}
-		
-		// Persist to Java and DotNet
-		prepareDrugResourceClientJava().createDrugs(drugsToCreateAtJava);
-		prepareDrugResourceClientDotNet().createDrugs(drugsToCreateAtDotNet);
-		prepareDrugResourceClientDotNet().updateDrugs(drugsToUpdateAtDotNet);
-		
-		return locallyCreatedDrugs;	
-	}
-	*/
-	
-	/**
-	 * Compares the master data (pzn, name and description) of two message drugs
-	 * @param d1 MessageDrug 1 to compare
-	 * @param d2 MessageDrug 2 to compare
-	 * @return true, if the pzn, name, price and description are equal
-	 */
-  
 	@Override
 	public Collection<MessageCustomer> initDatabase(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
 		
 		Collection<MessageCustomer> mergedCustomers = new ArrayList<MessageCustomer>();
 		
-		for (MessageCustomer c : jCustomers.values()){
+			for (MessageCustomer customerJava : jCustomers.values()){
+				for (MessageCustomer customerCSharpe : cCustomers.values()){
+					if(customerJava.getName().equals(customerCSharpe.getName()) && 
+					   customerJava.getAddress().equals(customerCSharpe.getAddress()) &&
+					   customerJava.getEmail().equals(customerCSharpe.getEmail())) {
+						double combinedPrescriptionBillJavaCSharpe = customerJava.getPrescriptionBill() + customerCSharpe.getPrescriptionBill();	
+						customerCSharpe.setPrescriptionBill(combinedPrescriptionBillJavaCSharpe);
+						jCustomers.remove(customerJava.getId());
+					}
+				}
+			}
+			for (MessageCustomer customerJava : jCustomers.values()){
+				mergedCustomers.add(customerJava);				
+			}			 	
+			
+		for (MessageCustomer customerCSharpe : cCustomers.values()){
 
-			mergedCustomers.add(c);
+			mergedCustomers.add(customerCSharpe);
 		}
-		for (MessageCustomer c : cCustomers.values()){
-
-			mergedCustomers.add(c);
-		}
-		
 		return mergedCustomers;
 	}
 	
-	/*
-	private boolean drugMasterDataIsEqual(MessageDrug d1, MessageDrug d2){
-		return d1.getPzn() == d2.getPzn() && 
-				d1.getName() == d2.getName() && 
-				d1.getPrice() == d2.getPrice() && 
-				d1.getDescription() == d2.getDescription() &&
-				d1.getDrugMinimumAgeYears() == d2.getDrugMinimumAgeYears();
-	}
-	*/
-	
-	/*
-	  @Override
-	  public void removeDrug(int DrugPZN) {
-	    Drug drug = getDrug(DrugPZN);
-
-	    em.remove(drug);
-	  }
-	*/  
 }

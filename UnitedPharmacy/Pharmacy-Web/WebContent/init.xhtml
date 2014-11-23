@@ -79,7 +79,7 @@
     <h3>Customers in JaVa-Database</h3> 
     <h:dataTable value="#{initCustomers.jCustomers.values()}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell,data-cell">
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell">
        <h:column>
         <f:facet name="header">Id</f:facet>
         #{cur.id}
@@ -87,6 +87,10 @@
        <h:column>
         <f:facet name="header">Name</f:facet>
         #{cur.name}
+       </h:column>
+       <h:column>
+        <f:facet name="header">Address</f:facet>
+        #{cur.address}
        </h:column>
        <h:column>
         <f:facet name="header">Email</f:facet>
@@ -102,7 +106,7 @@
     <h3>Customers in C.Sharpe-Database</h3>  
     <h:dataTable value="#{initCustomers.cCustomers.values()}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell,data-cell">
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell">
        <h:column>
         <f:facet name="header">Id</f:facet>
         #{cur.id}
@@ -110,6 +114,10 @@
        <h:column>
         <f:facet name="header">Name</f:facet>
         #{cur.name}
+       </h:column>
+       <h:column>
+        <f:facet name="header">Address</f:facet>
+        #{cur.address}
        </h:column>
        <h:column>
         <f:facet name="header">Email</f:facet>
@@ -124,7 +132,7 @@
     <h3>Merged Customer Database</h3>
   	<h:dataTable value="#{initCustomers.mergedCustomers}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell,data-cell"> 
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"> 
        <h:column>
         <f:facet name="header">Id</f:facet> 
         #{cur.id}
@@ -132,6 +140,10 @@
       <h:column>
         <f:facet name="header">Name</f:facet>
         #{cur.name}
+      </h:column>
+      <h:column>
+        <f:facet name="header">Address</f:facet>
+        #{cur.address}
       </h:column>
       <h:column>
         <f:facet name="header">Email</f:facet>
