@@ -17,6 +17,11 @@ public interface CustomerService {
 Collection<Customer> getAllCustomers();
 
 /**
+ * @return amount of customers in the database of the HO
+ */
+int getAmountOfAllCustomers();
+
+/**
  * @return all customers from the JaVa pharmacy database in a HashMap of id and MessagCustomer
  */
 Map<Long, MessageCustomer> getAllCustomersFromJava();
@@ -30,7 +35,7 @@ Map<Long, MessageCustomer> getAllCustomersFromDotNet();
  * @param searchTerm : name or id to be searched for
  * @return all customers with id oder name equal to the seachTerm from the database of the HO
  */
-//Collection<Drug> getAllDrugsLike(String searchTerm);
+Collection<Customer> getAllCustomersLike(String searchTermCustomer);
 
   /**
  * @param id
@@ -66,20 +71,9 @@ MessageCustomer getCustomerFromDotNet(int id);
  */
 //Drug updateMasterData(int pzn, String name, double price, String description, long drugMinimumAgeYears);
 
+//Initialize customers and merge them into entity manager (Java customers are missing because merging them as well causes an error I yet do not know how to fix)
+Collection<MessageCustomer> initDatabaseEntityManager(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers);
 
-/**
- * Runs an initialization script for the main office database. 
- * Only runs, if the HO-database contains no drugs 
- * 1. Drugs from jDrugs and cDrugs are parameters, as they are already fetched in InitDrugs()
- * 2. Pzn based match is performed
- * 3. Is a drug missing on one side, it is created there. If a drug is on both sides, the values
- * 	  of JaVa contain the true data.
- * 4. All drugs are created in the HO-database.
- * @param jDrugs a map of all (already fetched) drugs from JaVa
- * @param cDrugs a map of all (already fetched) drugs from C.Sharpe
- * @return collection of all drugs, that are in the HO-database now
- */
-Collection<MessageCustomer> initDatabase(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers);//Adjust javaDoc!!!
-
-//void removeDrug(int DrugPZN);
+//Since initDatabaseEntityManager() does not contain Java customers, this is an alternative which does not persist customers to the entity manager but therefore contains all of them
+Collection<MessageCustomer> initDatabaseCollectionOnly(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers);
 }

@@ -15,10 +15,11 @@ import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import de.java.domain.Customer;
+import de.java.ws.CustomerResourceClientDotNet;
+//import de.java.domain.Drug;
 //import de.java.jms.CustomerMessage;
 //import de.java.jms.MessageSender;
 import de.java.ws.CustomerResourceClientJava;
-import de.java.ws.CustomerResourceClientDotNet;
 import de.java.ws.MessageCustomer;
 
 @Stateless
@@ -52,46 +53,50 @@ public class CustomerServiceBean implements CustomerService {
 	  return target.proxy(CustomerResourceClientDotNet.class);
   }
   
-
+  
   @Override
   public Collection<Customer> getAllCustomers() {
     return em.createQuery("FROM Customer", Customer.class).getResultList();
   }
-
-  /*
+  
+  
   @Override
-  public Collection<Drug> getAllDrugsLike(String searchTerm) {
-    if (empty(searchTerm)) {
-      return getAllDrugs();
-    }
-
-    final String query = "SELECT d FROM Drug d WHERE d.pzn = :pzn OR lower(d.name) LIKE :searchTerm";
-    return em.createQuery(query, Drug.class)
-        .setParameter("searchTerm", prepareUniversalMatch(searchTerm))
-        .setParameter("pzn", parseIntOrDefaultToZero(searchTerm))
+  public int getAmountOfAllCustomers() {
+    return em.createQuery("FROM Customer", Customer.class).getResultList().size();
+  }
+  
+  
+  @Override
+  public Collection<Customer> getAllCustomersLike(String searchTermCustomer) {
+    if (empty(searchTermCustomer)) {
+      return getAllCustomers();
+    }					 
+    final String query = "SELECT c FROM Customer c WHERE c.id = :id OR lower(c.name) LIKE :searchTermCustomer";
+    return em.createQuery(query, Customer.class)
+        .setParameter("searchTermCustomer", prepareUniversalMatch(searchTermCustomer))
+        .setParameter("id", parseLongOrDefaultToZero(searchTermCustomer))	//c.id = :id OR
         .getResultList();
   }
-  */
   
-  /*
-
-  private boolean empty(String searchTerm) {
-    return searchTerm == null || searchTerm.trim().isEmpty();
+  
+  private boolean empty(String searchTermCustomer) {
+    return searchTermCustomer == null || searchTermCustomer.trim().isEmpty();
   }
-
-  private int parseIntOrDefaultToZero(String searchTerm) {
+ 
+  
+  private long parseLongOrDefaultToZero(String searchTermCustomer) {
     try {
-      return Integer.parseInt(searchTerm);
+      return Long.parseLong(searchTermCustomer);
     } catch (NumberFormatException e) {
       return 0;
     }
+  } 
+
+  
+  private String prepareUniversalMatch(String searchTermCustomer) {
+    return "%" + searchTermCustomer.toLowerCase() + "%";
   }
 
-  private String prepareUniversalMatch(String searchTerm) {
-    return "%" + searchTerm.toLowerCase() + "%";
-  }
-
-*/
   
   @Override
   public Customer getCustomer(long id) {
@@ -140,7 +145,7 @@ public class CustomerServiceBean implements CustomerService {
     Drug drug = getDrug(pzn);
     drug.setName(name);
     drug.setPrice(price);
-    drug.setDescription(description);
+    drug.setDescription(description); 
     drug.setDrugMinimumAgeYears(drugMinimumAgeYears);
     
     persistUpdateMasterDataToDotNet(drug);
@@ -150,31 +155,87 @@ public class CustomerServiceBean implements CustomerService {
   }
   */
   
+  /**
+   * Creates a customer only in the HO-database and does not publish it to JaVa and C.Sharpe
+   * @param newCustomer the customer to create
+   * @return the created customer
+   */
+  private Customer createCustomerEntityManager(Customer newCustomer) {
+	  System.out.println("newCustomer EntityManager: " + newCustomer.getName() + ", ID: " + newCustomer.getId() + ", prescriptionBill: " + newCustomer.getPrescriptionBill());
+	  if (em.createQuery("SELECT COUNT(*) FROM Customer WHERE id=:id",
+			Long.class).setParameter("id", newCustomer.getId())
+			.getSingleResult() > 0) 
+		  
+		throw new KeyConstraintViolation(String.format(
+				"Customer with Id: %s already in database!", newCustomer.getId()));
+	  //Attention: previously persist(), but that does not work
+	  em.merge(newCustomer);  
+	return newCustomer;
+  }
+  
 	@Override
-	public Collection<MessageCustomer> initDatabase(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
-		
+	public Collection<MessageCustomer> initDatabaseEntityManager(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
 		Collection<MessageCustomer> mergedCustomers = new ArrayList<MessageCustomer>();
-		
+		try {
 			for (MessageCustomer customerJava : jCustomers.values()){
 				for (MessageCustomer customerCSharpe : cCustomers.values()){
+					customerCSharpe.setPharmacySource("C# Pharmacy");
 					if(customerJava.getName().equals(customerCSharpe.getName()) && 
 					   customerJava.getAddress().equals(customerCSharpe.getAddress()) &&
 					   customerJava.getEmail().equals(customerCSharpe.getEmail())) {
-						double combinedPrescriptionBillJavaCSharpe = customerJava.getPrescriptionBill() + customerCSharpe.getPrescriptionBill();	
+						double combinedPrescriptionBillJavaCSharpe = customerJava.getPrescriptionBill() + customerCSharpe.getPrescriptionBill();
+						customerCSharpe.setPharmacySource("Both pharmacies");
+						customerCSharpe.setPrescriptionBill(combinedPrescriptionBillJavaCSharpe);
+						jCustomers.remove(customerJava.getId());
+						System.out.println("Equal customers in Java and C#: " + customerCSharpe.getName());
+					}
+				}
+			}
+			for (MessageCustomer customerJava : jCustomers.values()){
+				customerJava.setPharmacySource("Java Pharmacy");
+				mergedCustomers.add(customerJava);	
+			}			 	 
+		for (MessageCustomer customerCSharpe : cCustomers.values()){
+			mergedCustomers.add(customerCSharpe);
+			createCustomerEntityManager(customerCSharpe.convertToCustomer());
+		}
+		
+		} catch(Exception ex) {
+			throw new KeyConstraintViolation(String.format("Failure in initializing customers in Entity Manager: initDatabaseEntityManager(): " + ex));
+		}
+		return mergedCustomers;
+	}
+	 
+	@Override
+	public Collection<MessageCustomer> initDatabaseCollectionOnly(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
+		Collection<MessageCustomer> mergedCustomers = new ArrayList<MessageCustomer>();
+		try {
+			for (MessageCustomer customerJava : jCustomers.values()){
+				for (MessageCustomer customerCSharpe : cCustomers.values()){
+					customerCSharpe.setPharmacySource("C# Pharmacy");
+					if(customerJava.getName().equals(customerCSharpe.getName()) && 
+					   customerJava.getAddress().equals(customerCSharpe.getAddress()) &&
+					   customerJava.getEmail().equals(customerCSharpe.getEmail())) {
+						double combinedPrescriptionBillJavaCSharpe = customerJava.getPrescriptionBill() + customerCSharpe.getPrescriptionBill();
+						customerCSharpe.setPharmacySource("Both pharmacies");
 						customerCSharpe.setPrescriptionBill(combinedPrescriptionBillJavaCSharpe);
 						jCustomers.remove(customerJava.getId());
 					}
 				}
 			}
 			for (MessageCustomer customerJava : jCustomers.values()){
-				mergedCustomers.add(customerJava);				
-			}			 	
+				customerJava.setPharmacySource("Java Pharmacy");
+				mergedCustomers.add(customerJava);	
+			}			 	 
 			
 		for (MessageCustomer customerCSharpe : cCustomers.values()){
-
 			mergedCustomers.add(customerCSharpe);
 		}
-		return mergedCustomers;
+		
+		} catch(Exception ex) {
+			throw new KeyConstraintViolation(String.format("Failure in initializing customers in mergedCustomers collection: initDatabaseCollectionOnly(): " + ex));
+		}
+		return mergedCustomers; 
 	}
 	
 }

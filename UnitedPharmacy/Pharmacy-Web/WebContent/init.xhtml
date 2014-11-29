@@ -9,6 +9,7 @@
   		<h:outputText rendered="#{initDrugs.initialized}" styleClass="error" value="Error: The database has already been initialized!" />
   <h:panelGroup rendered="#{!initDrugs.initialized}">
   
+  	<h2>Drugs initialization</h2>
   	<h3>Drugs in JaVa-Database</h3>
   	<h:dataTable value="#{initDrugs.jDrugs.values()}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
@@ -74,8 +75,9 @@
         #{cur.description}
       </h:column>
     </h:dataTable>
-    
     <br></br>
+    
+    <h2>Customers initialization</h2>
     <h3>Customers in JaVa-Database</h3> 
     <h:dataTable value="#{initCustomers.jCustomers.values()}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
@@ -132,7 +134,7 @@
     <h3>Merged Customer Database</h3>
   	<h:dataTable value="#{initCustomers.mergedCustomers}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"> 
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"> 
        <h:column>
         <f:facet name="header">Id</f:facet> 
         #{cur.id}
@@ -152,6 +154,10 @@
        <h:column>
         <f:facet name="header">Prescription Bill</f:facet>
         #{cur.prescriptionBill}
+       </h:column>
+       <h:column>
+        <f:facet name="header">Pharmacy source</f:facet>
+        #{cur.pharmacySource}
        </h:column>
     </h:dataTable>
     

@@ -47,16 +47,25 @@ namespace Pharmacy.BusinessLayer.Logic
             using (PharmacyContainer db = new PharmacyContainer())
             {
                 var allPrescriptions = db.PrescriptionSet.Include("Customer");
-                
                 double totalPriceSum = 0;
-
                 foreach (var item in allPrescriptions)
                 {
                     totalPriceSum += item.TotalPrice;
                 }
-                //System.Diagnostics.Debug.WriteLine("totalPriceSum: " + totalPriceSum);
-
                 return totalPriceSum;
+            }
+        }
+
+        //Test method for exam studying...
+        public static void CalculatePrescriptionsTotalForCustomer(Int32 customerId)
+        {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                double prescriptionsTotalForCustomerWithId = (from p in db.PrescriptionSet
+                                                              where p.CustomerId == customerId
+                                                              && p.State == PrescriptionState.Fulfilled
+                                                              select p.TotalPrice).Sum();
+                System.Diagnostics.Debug.WriteLine("CalculatePrescriptionsTotalForCustomer: " + customerId + ", Total: " + prescriptionsTotalForCustomerWithId);
             }
         }
 

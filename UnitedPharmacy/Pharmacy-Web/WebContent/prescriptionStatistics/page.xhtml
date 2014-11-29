@@ -27,21 +27,24 @@
           </h:panelGrid>
 			<h:commandButton value="Request statistics" action="#{prescriptionStatisticsPage.requestStatistics}" />
 			<br /><br />
-		<h:panelGrid columns="5" border="1">
+		<h:panelGrid columns="6" border="1">
 			<h:panelGroup></h:panelGroup>
 			<h:panelGroup><strong>Total number of prescriptions</strong></h:panelGroup>
+			<h:panelGroup><strong>Total number of customers</strong></h:panelGroup>
 			<h:panelGroup><strong>Average number of items per prescription</strong></h:panelGroup>
 			<h:panelGroup><strong>Average timespan of fulfilment per prescription</strong></h:panelGroup>
 			<h:panelGroup><strong>Average total cost per prescription</strong></h:panelGroup>
 
 			<h:panelGroup>JaVa</h:panelGroup>
 			<h:panelGroup><h:outputText id="totalNumberOfPrescriptionsInJava" 		value="#{prescriptionStatisticsPage.totalNumberOfPrescriptionsInJava}" /></h:panelGroup>
+			<h:panelGroup><h:outputText id="totalNumberOfPrescriptionsInJava2" 		value="#{prescriptionStatisticsPage.totalNumberOfPrescriptionsInJava}" /></h:panelGroup>
 			<h:panelGroup><h:outputText id="averageNumberOfItemsInJava" 			value="#{prescriptionStatisticsPage.averageNumberOfItemsInJava}" /></h:panelGroup>
 			<h:panelGroup><h:outputText id="averageTimespanOfFulfilmentInJava" 		value="#{prescriptionStatisticsPage.averageTimespanOfFulfilmentInJava}" /></h:panelGroup>
 			<h:panelGroup><h:outputText id="averageTotalpricePerPrescriptionInJava" value="#{prescriptionStatisticsPage.averageTotalpricePerPrescriptionInJava}" /></h:panelGroup>
 
 			<h:panelGroup>C. Sharpe</h:panelGroup>
 			<h:panelGroup><h:outputText id="totalNumberOfPrescriptionsInDotNet"      	value="#{prescriptionStatisticsPage.totalNumberOfPrescriptionsInDotNet}" /></h:panelGroup>
+			<h:panelGroup><h:outputText id="totalNumberOfPrescriptionsInDotNet2"      	value="#{prescriptionStatisticsPage.totalNumberOfPrescriptionsInDotNet}" /></h:panelGroup>
 			<h:panelGroup><h:outputText id="averageNumberOfItemsInDotNet" 			 	value="#{prescriptionStatisticsPage.averageNumberOfItemsInDotNet}" /></h:panelGroup>
 			<h:panelGroup><h:outputText id="averageTimespanOfFulfilmentInDotNet"     	value="#{prescriptionStatisticsPage.averageTimespanOfFulfilmentInDotNet}" /></h:panelGroup>
 			<h:panelGroup><h:outputText id="averageTotalpricePerPrescriptionInDotNet"   value="#{prescriptionStatisticsPage.averageTotalpricePerPrescriptionInDotNet}" /></h:panelGroup>

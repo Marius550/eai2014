@@ -3,73 +3,93 @@
   xmlns:h="http://java.sun.com/jsf/html"
   xmlns:f="http://java.sun.com/jsf/core"
   xmlns:ui="http://java.sun.com/jsf/facelets">
-
 <ui:composition template="/resources/master.xhtml">
   <ui:define name="metadata">
     <f:metadata>
-      <f:viewParam name="search" value="#{drugList.searchTerm}"></f:viewParam>
+      <f:viewParam name="search" value="#{customerList.searchTermCustomer}"></f:viewParam>
     </f:metadata>
   </ui:define>
   <ui:define name="title">Customer List</ui:define>
   <ui:define name="content">
-   <h:panelGroup rendered="#{!drugList.initialized}">
+   <h:panelGroup rendered="#{!customerList.initialized}">
   	  <p><h:outputText value="Database has not yet been initialized. Please initialize database:"/></p>
   	  <p><h:link outcome="/init.xhtml">Initialize Database</h:link></p>
   </h:panelGroup>
-  <h:panelGroup rendered="#{drugList.initialized}">
+  <h:panelGroup rendered="#{customerList.initialized}">
     <h:form>
-
       <h:commandButton action="#{customerList.refresh}" value="refresh" />
-
-    </h:form>
-    <h:dataTable value="#{drugList.drugs}" var="cur"
+    </h:form>    
+    <p></p>
+    
+      <h:dataTable value="#{customerList.invokeInitDatabaseCollectionOnly()}" var="cur"
       styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
-      rendered="#{not empty drugList.drugs}" footerClass="data-cell footer-cell">
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
+      rendered="#{not empty customerList.customers}" footerClass="data-cell footer-cell">
       <h:column>
-        <f:facet name="header">PZN</f:facet>
-        #{cur.pzn}
+        <f:facet name="header">Id</f:facet>
+        #{cur.id}
       </h:column>
       <h:column>
         <f:facet name="header">Name</f:facet>
         #{cur.name}
-        <f:facet name="footer">Amount of drugs: #{drugList.getAmountOfPharmacyHODrugs()}</f:facet>
+        <f:facet name="footer">Amount of customers: #{customerList.getAmountOfPharmacyHOCustomersCollection()}</f:facet>
       </h:column>
       <h:column>
-      <f:facet name="header">Price</f:facet>
-        #{cur.price}
-      <f:facet name="footer">#{drugList.sumUpPrices()}</f:facet>
+      <f:facet name="header">Address</f:facet>
+        #{cur.address}
       </h:column>
       <h:column>
-        <f:facet name="header">Drug min. age years</f:facet>
-        #{cur.drugMinimumAgeYears}
+      <f:facet name="header">Email</f:facet>
+        #{cur.email}
       </h:column>
       <h:column>
-	      <f:facet name="header">Stock</f:facet>
-	      #{drugList.getjDrug(cur.pzn).stock + drugList.getcDrug(cur.pzn).stock}	
-	      <f:facet name="footer">#{drugList.sumUpStock()}</f:facet>
+      <f:facet name="header">Prescription bill</f:facet>
+        #{cur.prescriptionBill}
       </h:column>
       <h:column>
-	      <f:facet name="header">Pending</f:facet>
-	      #{drugList.getjDrug(cur.pzn).pendingQuantity + drugList.getcDrug(cur.pzn).pendingQuantity}	
-	      <f:facet name="footer">#{drugList.sumUpPendingQuantity()}</f:facet>
-      </h:column>
-      <h:column>
-	      <f:facet name="header">Unfulfilled</f:facet>
-	      #{drugList.getjDrug(cur.pzn).unfulfilledQuantity + drugList.getcDrug(cur.pzn).unfulfilledQuantity}	
-	      <f:facet name="footer">#{drugList.sumUpUnfulfilledQuantity()}</f:facet>
-      </h:column>
-      <h:column>
-        <h:link outcome="/drug/details.xhtml" value="Details">
-          <f:param name="pzn" value="#{cur.pzn}"></f:param>
-        </h:link>
-      </h:column>
-      <h:column>
-      	<h:form>
-        	<h:commandButton value="Remove" action="#{drugList.remove(cur)}" />
-        </h:form>
+      <f:facet name="header">Pharmacy source</f:facet>
+        #{cur.pharmacySource}
       </h:column>
     </h:dataTable>
+    
+    <h3>Customers in entity manager: Missing Java Customers</h3>
+    <p></p>
+    <h:form>
+      <h:inputText value="#{customerList.searchTermCustomer}"></h:inputText>
+      <h:commandButton action="#{customerList.search}" value="search" />
+    </h:form>
+    <p></p>
+    <h:dataTable value="#{customerList.customers}" var="cur"
+      styleClass="data-table" headerClass="data-cell header-cell"
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
+      rendered="#{not empty customerList.customers}" footerClass="data-cell footer-cell">
+      <h:column>
+        <f:facet name="header">Id</f:facet>
+        #{cur.id}
+      </h:column>
+      <h:column>
+        <f:facet name="header">Name</f:facet>
+        #{cur.name}
+        <f:facet name="footer">Amount of customers: #{customerList.getAmountOfPharmacyHOCustomersEntityManager()}</f:facet>
+      </h:column>
+      <h:column>
+      <f:facet name="header">Address</f:facet>
+        #{cur.address}
+      </h:column>
+      <h:column>
+      <f:facet name="header">Email</f:facet>
+        #{cur.email}
+      </h:column>
+      <h:column>
+      <f:facet name="header">Prescription bill</f:facet>
+        #{cur.prescriptionBill}
+      </h:column>
+      <h:column>
+      <f:facet name="header">Pharmacy source</f:facet>
+        #{cur.pharmacySource}
+      </h:column>
+    </h:dataTable>
+    
     </h:panelGroup>
   </ui:define>
 </ui:composition>

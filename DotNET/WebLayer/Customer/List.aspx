@@ -8,6 +8,7 @@
         <asp:HyperLink NavigateUrl="Create.aspx" Text="Create/add new customer" runat="server" />
         <asp:GridView ID="CustomerGridView" runat="server" DataSourceID="CustomerDataSource" AutoGenerateColumns="false">
             <Columns>
+                <asp:BoundField DataField="Id" HeaderText="Id" />
                 <asp:BoundField DataField="Name" HeaderText="Name" />
                 <asp:BoundField DataField="TelephoneNumber" HeaderText="Telephone number" />
                 <asp:BoundField DataField="Address" HeaderText="Address" />

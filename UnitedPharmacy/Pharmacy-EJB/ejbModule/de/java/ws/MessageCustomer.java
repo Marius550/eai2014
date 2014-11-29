@@ -18,6 +18,7 @@ public class MessageCustomer implements java.io.Serializable {
 	private String email;	
 	private String telephoneNumber;
 	private double prescriptionBill;
+	private String pharmacySource;
 	
 	public MessageCustomer(){
 		
@@ -38,6 +39,7 @@ public class MessageCustomer implements java.io.Serializable {
 		this.email = customer.getEmail();
 		this.telephoneNumber = customer.getTelephoneNumber();
 		this.prescriptionBill = customer.getPrescriptionBill();
+		this.pharmacySource = customer.getPharmacySource();
 	}
 	
 	// Lots of getters and setters
@@ -96,6 +98,14 @@ public class MessageCustomer implements java.io.Serializable {
 		  public void setBirthDate(String birthDate) {
 			this.birthDate = birthDate;
 		  }
+		  
+		  public String getPharmacySource() {
+			return pharmacySource;
+		  }
+
+		  public void setPharmacySource(String pharmacySource) {
+			this.pharmacySource = pharmacySource;
+		  }
 	
 	/**
 	 * Converts a Message customer to a real customer object ONLY USING id, name and ...
@@ -110,6 +120,7 @@ public class MessageCustomer implements java.io.Serializable {
 		realCustomer.setEmail(email);
 		realCustomer.setTelephoneNumber(telephoneNumber);
 		realCustomer.setPrescriptionBill(prescriptionBill);
+		realCustomer.setPharmacySource(pharmacySource);
 		return realCustomer;
 	}
 

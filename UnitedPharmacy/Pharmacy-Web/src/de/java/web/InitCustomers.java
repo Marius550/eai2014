@@ -43,7 +43,7 @@ public class InitCustomers implements Serializable {
 	  if (mergedCustomers == null) {
 		  // Run init script
 		  // Pass jCustomers and cCustomers to the init-function to avoid another webservice call
-		  mergedCustomers = customerService.initDatabase(getjCustomers(), getcCustomers());
+		  mergedCustomers = customerService.initDatabaseEntityManager(getjCustomers(), getcCustomers());
 	  }
 	  return mergedCustomers;
   }
