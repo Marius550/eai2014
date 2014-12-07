@@ -2,6 +2,7 @@ package de.java.ws;
 
 import de.java.domain.Customer;
 
+
 /**
  * Message Customer is an object representing a customer and used for exchange via rest webservices
  * Depending on the usage, only id, name and ... are filled (for create and update)
@@ -9,6 +10,7 @@ import de.java.domain.Customer;
  */
 public class MessageCustomer implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
+
 	// Master data
 	
 	private long id;
@@ -43,7 +45,7 @@ public class MessageCustomer implements java.io.Serializable {
 	}
 	
 	// Lots of getters and setters
-	  public long getId() {
+	  	  public long getId() {
 		    return id;
 		  }
 
@@ -109,11 +111,11 @@ public class MessageCustomer implements java.io.Serializable {
 	
 	/**
 	 * Converts a Message customer to a real customer object ONLY USING id, name and ...
-	 * @return
+	 * @return realCustomer
 	 */
-	public Customer convertToCustomer (){
+	public Customer convertToCustomerFromJava(int initializeCustomerId){
 		Customer realCustomer = new Customer();
-		realCustomer.setId(id);
+		realCustomer.setId(initializeCustomerId);
 		realCustomer.setName(name);
 		realCustomer.setAddress(address);
 		realCustomer.setBirthDate(birthDate);
@@ -123,5 +125,33 @@ public class MessageCustomer implements java.io.Serializable {
 		realCustomer.setPharmacySource(pharmacySource);
 		return realCustomer;
 	}
+	
+	/**
+	 * Converts a Message customer to a real customer object ONLY USING id, name and ...
+	 * @return realCustomer
+	 */
+	public Customer convertToCustomerFromDotNet(int initializeCustomerId){
+		Customer realCustomer = new Customer();
+		realCustomer.setId(initializeCustomerId);
+		realCustomer.setName(name);
+		realCustomer.setAddress(address);
+		realCustomer.setBirthDate(birthDate);
+		realCustomer.setEmail(email);
+		realCustomer.setTelephoneNumber(telephoneNumber);
+		realCustomer.setPrescriptionBill(prescriptionBill);
+		realCustomer.setPharmacySource(pharmacySource);
+		return realCustomer;
+	}
+	
+	/*
+	  private long getRandomNumber() {
+			Random random = new Random();
+			long randomNumber = 10 + random.nextInt(100);
+			if (randomNumber < 0) {
+				randomNumber *= -1;
+			}
+			  return randomNumber;  
+		  }
+		  */
 
 }

@@ -40,6 +40,16 @@ public class CreateCustomer implements Serializable {
   public String persist() {
     // Action
     try{
+    	/*
+    	if (customerService.getAllCustomers().size() == 1) {
+    		int numberOfCustomers = customerService.getAllCustomers().size() + 3;
+    	    customer.setId(numberOfCustomers);
+    	} else {
+    		int numberOfCustomers = (customerService.getAllCustomers().size() * 2) + 2;
+    	    customer.setId(numberOfCustomers);
+    	}
+    	*/
+
       lastCustomer = customerService.createCustomer(customer);
       customer = null;
       errorMessage = null;

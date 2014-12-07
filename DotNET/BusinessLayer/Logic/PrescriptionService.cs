@@ -289,6 +289,21 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
+        //Exam pratice
+        /*
+        public static ICollection<Prescription> TotalNumberOfPrescriptions(DateTime start, DateTime end)
+        {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                List<Prescription> result = new List<Prescription>();
+                result = (from p in db.PrescriptionSet
+                        where p.EntryDate >= start && p.EntryDate <= end
+                        select p).ToList();
+                return result;
+            }
+        }
+         * */
+
         /// <summary>
         /// Returns the average number of items per prescription in a given time span
         /// </summary>

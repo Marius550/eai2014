@@ -130,9 +130,7 @@
                             Text='<%# "Proceed to " + ((PrescriptionState)Eval("State")).Next() %>'
                             Enabled='<%# ((PrescriptionState)Eval("State")).Proceedable((ICollection<Item>)Eval("Items")) %>'
                             Visible='<%# ((PrescriptionState)Eval("State")).Proceedable((ICollection<Item>)Eval("Items")) %>' />
-                        <asp:Button OnCommand="Refresh_Command" CommandArgument='<%# Eval("ID") %>'
-                            Text="Refresh" runat="server"
-                            Visible="true" />
+
                         <asp:Button ID="CancelButton" runat="server" OnCommand="Cancel_Command" Text="Cancel"
                             Enabled='<%# ((PrescriptionState)Eval("State")).Cancellable() %>'
                             Visible='<%# ((PrescriptionState)Eval("State")).Cancellable() %>' />

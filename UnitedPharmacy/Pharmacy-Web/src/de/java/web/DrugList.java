@@ -171,7 +171,6 @@ public class DrugList implements Serializable {
   }
   
   public String refresh() {
-	  System.out.println("searchTerm refresh: " + searchTerm);
 	    return "/drug/list.xhtml";
 	  }
   

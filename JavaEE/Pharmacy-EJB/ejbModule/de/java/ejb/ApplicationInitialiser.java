@@ -11,8 +11,8 @@ import javax.persistence.PersistenceContext;
 
 import de.java.domain.Drug;
 import de.java.domain.customer.Customer;
-import de.java.domain.prescription.Prescription;
-import de.java.domain.prescription.PrescriptionState;
+//import de.java.domain.prescription.Prescription;
+//import de.java.domain.prescription.PrescriptionState;
 import de.java.domain.replenishment.OrderState;
 import de.java.domain.replenishment.Position;
 import de.java.domain.replenishment.ReplenishmentOrder;
@@ -97,9 +97,10 @@ public class ApplicationInitialiser {
 
   private void populateAppWithSampleCustomers() {
     Customer maxMustermann = new Customer();
+//    maxMustermann.setId(2);
     maxMustermann.setName("Jason Java");
     maxMustermann.setTelephoneNumber("+49 123 456 78");
-    maxMustermann.setEmail("jason.java@gmail.com"); 
+    maxMustermann.setEmail("jason.java@gmail.com");  
     maxMustermann.setBirthDate("1988-10-16");
     em.persist(maxMustermann);
     

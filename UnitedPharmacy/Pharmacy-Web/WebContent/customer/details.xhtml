@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="metadata">
+    <f:metadata>
+      <f:viewParam name="id" value="#{customerPage.id}"></f:viewParam>
+      <f:event listener="#{customerPage.ensureInitialized}" type="preRenderView"></f:event>
+    </f:metadata>
+  </ui:define>
+  <ui:define name="title">Customer Details - #{customerPage.customer.name}</ui:define>
+  <ui:define name="content">
+    <h:form>
+      <h3>#{customerPage.customer.name} (Id: #{customerPage.customer.id})</h3>
+      <h:panelGrid columns="2" columnClasses="label, value form-input"
+        footerClass="form-footer" styleClass="details-table">
+        Id
+        <h:outputText value="#{customerPage.customer.id}" />
+        Name
+        <h:outputText tabindex="1" id="name" value="#{customerPage.customer.name}" />
+        Address
+        <h:outputText tabindex="2" id="address" value="#{customerPage.customer.address}" />
+        Birth date
+        <h:outputText tabindex="3" id="birthDate" value="#{customerPage.customer.birthDate}" />
+        Email
+        <h:outputText tabindex="4" id="email" value="#{customerPage.customer.email}" />
+        Telephone number
+        <h:outputText tabindex="5" id="telephoneNumber" value="#{customerPage.customer.telephoneNumber}" />
+         Pharmacy source
+        <h:outputText tabindex="6" id="pharmacySource" value="#{customerPage.customer.pharmacySource}" />
+         Prescription bill
+        <h:outputText tabindex="7" id="prescriptionBill" value="#{customerPage.customer.prescriptionBill}" />
+      </h:panelGrid>
+      <h:messages for="name" styleClass="error" />
+    </h:form>
+	</ui:define>
+</ui:composition>
+</html>

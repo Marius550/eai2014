@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -15,8 +14,9 @@ public class Customer implements Serializable {
 
   private static final long serialVersionUID = 5610455835559750909L;
 
-  @Id
-  @GeneratedValue
+  @Id 
+  @NotNull
+  //@GeneratedValue
   private long id;
   
   @Column(unique=true)

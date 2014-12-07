@@ -47,7 +47,7 @@ Customer getCustomer(long id);
  * @param id
  * @return customer with the id from the JaVa pharmacy database, accessed via webservices
  */
-MessageCustomer getCustomerFromJava(long id);//
+MessageCustomer getCustomerFromJava(long id);
 
 /**
 * @param id
@@ -55,25 +55,31 @@ MessageCustomer getCustomerFromJava(long id);//
 */
 MessageCustomer getCustomerFromDotNet(int id);
 
-  /**
- * @param customer
- * @return the customer after it is created in the HO database and also in both JaVa and C Sharpe databases via webservices
+/**1. Customers from jCustomers and cCustomers are parameters, as they are already fetched in InitCustomers()
+ * 2. To summarize (only get) all customers from both pharmacies in the HO, customers are merged into the entity manager
+ * 3. Known issue: unfortunately this does not include Java customers since I could not figure out yet how to add customers 
+ * from both pharmacies to the entity manager without facing id conflicts
+ * 4. To summarize all customers initDatabaseEntityManager() is used
+ * @param jCustomers
+ * @param cCustomers
+ * @return collection of customers including C# customers, 'duplicate customers' but not java customers
  */
-//Drug createDrug(Drug drug);
+Collection<MessageCustomer> initDatabase(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers);
 
-  /**
- * @param pzn of the drug to be updated
- * @param new name of the drug
- * @param new name of the drug
- * @param new description of the drug
- * @param new drugMinimumAgeYears of the drug
- * @return the drug after it is updated in the HO database and also in both JaVa and C Sharpe databases via webservices
+/**
+ * @param jCustomers
+ * @param cCustomers
+ * @return the amount of customers who are registered in JavaPharmacy and C#Pharmacy (same name, address and email strings)
  */
-//Drug updateMasterData(int pzn, String name, double price, String description, long drugMinimumAgeYears);
+int getAmountOfDuplicateCustomers(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers);
 
-//Initialize customers and merge them into entity manager (Java customers are missing because merging them as well causes an error I yet do not know how to fix)
-Collection<MessageCustomer> initDatabaseEntityManager(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers);
+/**1. Summarizes (only get) all customers from both pharmacies within a collection
+ * 2. Disadvantage: customers not persisted into entity manager -> many useful functions can therefore not be used
+ * 3. Prescription bills of 'duplicate customers' are considered
+ * @param jCustomers
+ * @param cCustomers
+ * @return collection of all Java and C# customers
+ */
+//Collection<MessageCustomer> initDatabaseCollectionOnly(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers);
 
-//Since initDatabaseEntityManager() does not contain Java customers, this is an alternative which does not persist customers to the entity manager but therefore contains all of them
-Collection<MessageCustomer> initDatabaseCollectionOnly(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers);
 }

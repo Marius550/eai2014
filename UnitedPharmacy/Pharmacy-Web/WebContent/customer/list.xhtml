@@ -21,39 +21,6 @@
     </h:form>    
     <p></p>
     
-      <h:dataTable value="#{customerList.invokeInitDatabaseCollectionOnly()}" var="cur"
-      styleClass="data-table" headerClass="data-cell header-cell"
-      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
-      rendered="#{not empty customerList.customers}" footerClass="data-cell footer-cell">
-      <h:column>
-        <f:facet name="header">Id</f:facet>
-        #{cur.id}
-      </h:column>
-      <h:column>
-        <f:facet name="header">Name</f:facet>
-        #{cur.name}
-        <f:facet name="footer">Amount of customers: #{customerList.getAmountOfPharmacyHOCustomersCollection()}</f:facet>
-      </h:column>
-      <h:column>
-      <f:facet name="header">Address</f:facet>
-        #{cur.address}
-      </h:column>
-      <h:column>
-      <f:facet name="header">Email</f:facet>
-        #{cur.email}
-      </h:column>
-      <h:column>
-      <f:facet name="header">Prescription bill</f:facet>
-        #{cur.prescriptionBill}
-      </h:column>
-      <h:column>
-      <f:facet name="header">Pharmacy source</f:facet>
-        #{cur.pharmacySource}
-      </h:column>
-    </h:dataTable>
-    
-    <h3>Customers in entity manager: Missing Java Customers</h3>
-    <p></p>
     <h:form>
       <h:inputText value="#{customerList.searchTermCustomer}"></h:inputText>
       <h:commandButton action="#{customerList.search}" value="search" />
@@ -87,6 +54,11 @@
       <h:column>
       <f:facet name="header">Pharmacy source</f:facet>
         #{cur.pharmacySource}
+      </h:column>
+      <h:column>
+        <h:link outcome="/customer/details.xhtml" value="Details">
+          <f:param name="id" value="#{cur.id}"></f:param>
+        </h:link>
       </h:column>
     </h:dataTable>
     

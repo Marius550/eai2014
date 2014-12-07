@@ -8,7 +8,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 
 import de.java.domain.Customer;
-import de.java.domain.Drug;
 import de.java.ejb.CustomerService;
 import de.java.ws.MessageCustomer;
 
@@ -30,13 +29,29 @@ public class CustomerList implements Serializable {
 	  return customerService.getAllCustomersLike(searchTermCustomer);
   }
   
+  /*
   public Collection<MessageCustomer> invokeInitDatabaseCollectionOnly() {
 	  return customerService.initDatabaseCollectionOnly(getjCustomers(), getcCustomers());
   }
+  */
   
+  /*
   public int getAmountOfPharmacyHOCustomersCollection(){
 	  return invokeInitDatabaseCollectionOnly().size();
   } 
+  */
+  
+  public int getAmountOfCustomersInJava() {
+	  return getjCustomers().size();
+  }
+  
+  public int getAmountOfCustomersInDotNet() {
+	  return getcCustomers().size();
+  }
+  
+  public int getAmountOfDuplicateCustomers() { 
+	  return customerService.getAmountOfDuplicateCustomers(getjCustomers(), getcCustomers());
+  }
   
   
   /**

@@ -154,6 +154,23 @@ public class CustomerServiceBean implements CustomerService {
     return drug;
   }
   */
+  /*
+  private long setEvenCustomerId() {
+	Random random = new Random();
+	long randomNumber = 1000 + random.nextInt(9000);
+	if (randomNumber < 0) {
+		randomNumber *= -1;
+	}
+	  return randomNumber;  
+  }
+  
+  public Customer determineCustomerId(long customerId) {
+	  Customer c = getCustomer(customerId);
+	  c.setId(setEvenCustomerId());
+	  System.out.println("determineCustomerId: " + c.getName() + ", Id: " + c.getId());
+	  return  c;
+  }
+  */
   
   /**
    * Creates a customer only in the HO-database and does not publish it to JaVa and C.Sharpe
@@ -168,13 +185,13 @@ public class CustomerServiceBean implements CustomerService {
 		  
 		throw new KeyConstraintViolation(String.format(
 				"Customer with Id: %s already in database!", newCustomer.getId()));
-	  //Attention: previously persist(), but that does not work
-	  em.merge(newCustomer);  
+	  //Attention: previously merge(), but that does not work --> Delete @GeneratedValue for customerId in customer entity
+	  em.persist(newCustomer);  
 	return newCustomer;
   }
   
 	@Override
-	public Collection<MessageCustomer> initDatabaseEntityManager(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
+	public Collection<MessageCustomer> initDatabase(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
 		Collection<MessageCustomer> mergedCustomers = new ArrayList<MessageCustomer>();
 		try {
 			for (MessageCustomer customerJava : jCustomers.values()){
@@ -190,22 +207,45 @@ public class CustomerServiceBean implements CustomerService {
 						System.out.println("Equal customers in Java and C#: " + customerCSharpe.getName());
 					}
 				}
-			}
+			} 
 			for (MessageCustomer customerJava : jCustomers.values()){
 				customerJava.setPharmacySource("Java Pharmacy");
-				mergedCustomers.add(customerJava);	
+				mergedCustomers.add(customerJava);
+				int initializeCustomerId = getAmountOfAllCustomers() + 1;
+				createCustomerEntityManager(customerJava.convertToCustomerFromJava(initializeCustomerId));
 			}			 	 
 		for (MessageCustomer customerCSharpe : cCustomers.values()){
 			mergedCustomers.add(customerCSharpe);
-			createCustomerEntityManager(customerCSharpe.convertToCustomer());
+			int initializeCustomerId = getAmountOfAllCustomers() + 1;
+			createCustomerEntityManager(customerCSharpe.convertToCustomerFromDotNet(initializeCustomerId));
 		}
 		
 		} catch(Exception ex) {
-			throw new KeyConstraintViolation(String.format("Failure in initializing customers in Entity Manager: initDatabaseEntityManager(): " + ex));
+			throw new KeyConstraintViolation(String.format("Failure in initializing customers in Entity Manager: initDatabase(): " + ex));
 		}
 		return mergedCustomers;
 	}
+	
+	
+	@Override
+	public int getAmountOfDuplicateCustomers(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
+		Collection<MessageCustomer> duplicateCustomers = new ArrayList<MessageCustomer>();
+		for (MessageCustomer customerJava : jCustomers.values()){
+			for (MessageCustomer customerCSharpe : cCustomers.values()){
+				if(customerJava.getName().equals(customerCSharpe.getName()) && 
+				   customerJava.getAddress().equals(customerCSharpe.getAddress()) &&
+				   customerJava.getEmail().equals(customerCSharpe.getEmail())) {
+					
+					duplicateCustomers.add(customerJava);
+				}
+			}
+		}
+		return duplicateCustomers.size();
+	}
+	
+}
 	 
+	/*
 	@Override
 	public Collection<MessageCustomer> initDatabaseCollectionOnly(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
 		Collection<MessageCustomer> mergedCustomers = new ArrayList<MessageCustomer>();
@@ -237,5 +277,40 @@ public class CustomerServiceBean implements CustomerService {
 		}
 		return mergedCustomers; 
 	}
-	
-}
+	*/
+
+/*
+ *       <h:dataTable value="#{customerList.invokeInitDatabaseCollectionOnly()}" var="cur"
+      styleClass="data-table" headerClass="data-cell header-cell"
+      columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell,data-cell,data-cell"
+      rendered="#{not empty customerList.customers}" footerClass="data-cell footer-cell">
+      <h:column>
+        <f:facet name="header">Id</f:facet>
+        #{cur.id}
+      </h:column>
+      <h:column>
+        <f:facet name="header">Name</f:facet>
+        #{cur.name}
+        <f:facet name="footer">Amount of customers: #{customerList.getAmountOfPharmacyHOCustomersCollection()}</f:facet>
+      </h:column>
+      <h:column>
+      <f:facet name="header">Address</f:facet>
+        #{cur.address}
+      </h:column>
+      <h:column>
+      <f:facet name="header">Email</f:facet>
+        #{cur.email}
+      </h:column>
+      <h:column>
+      <f:facet name="header">Prescription bill</f:facet>
+        #{cur.prescriptionBill}
+      </h:column>
+      <h:column>
+      <f:facet name="header">Pharmacy source</f:facet>
+        #{cur.pharmacySource}
+      </h:column>
+    </h:dataTable>
+    
+    <h3>Customers in entity manager: Missing Java Customers</h3>
+    <p></p>
+    */
