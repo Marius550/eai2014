@@ -14,12 +14,12 @@ public class Customer implements Serializable {
 
   private static final long serialVersionUID = 5610455835559750909L;
 
-  @Id 
+  @Id  
   @NotNull
   //@GeneratedValue
   private long id;
   
-  @Column(unique=true)
+  @Column(unique=false)//Set to false otherwise customers with same name in Java and c# cannot be added
   @Size(min=1, message="Name required")
   @NotNull(message="Name required")
   private String name;

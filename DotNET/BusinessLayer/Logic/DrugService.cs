@@ -9,6 +9,33 @@ namespace Pharmacy.BusinessLayer.Logic
 {
     public static class DrugService
     {
+        /*
+         * Exam practice
+        public static Drug CreateDrug2(int pzn, string name, double price, string description, Int64 drugMinimumAgeYears)
+        {
+            using (PharmacyContainer db = new PharmacyContainer) {
+                Util.ConvertEmptyToNull(ref description);
+
+                Drug newDrug = new Drug();
+                newDrug.PZN = pzn;
+                newDrug.Name = name;
+                newDrug.Price = price;
+                newDrug.Description = description;
+                newDrug.DrugMinimumAgeYears = drugMinimumAgeYears;
+
+                var count = (from d in db.DrugSet where d.PZN == pzn select d).Count();
+
+                if (count > 0) {
+                    throw new ArgumentException(String.Format("Drug with PZN {0} already exists!", pzn));
+                }
+                db.DrugSet.Add(newDrug);
+                db.SaveChanges();
+                return newDrug;
+            }
+        }
+         * */
+
+
         public static Drug CreateDrug(int pzn, string name, double price, string description, Int64 drugMinimumAgeYears)
         {
             Util.ConvertEmptyToNull(ref description);
@@ -61,11 +88,6 @@ namespace Pharmacy.BusinessLayer.Logic
                 throw new ArgumentException(String.Format("Drug with PZN {0} not found", pzn.ToString()));
 
             return result;
-        }
-
-        public static Drug UpdateDrug(Drug drug)
-        {
-            return UpdateDrug(drug, drug.Name, drug.Price, drug.Description, drug.MinimumInventoryLevel, drug.OptimalInventoryLevel, drug.DrugMinimumAgeYears);
         }
 
         public static Drug UpdateDrug(Drug drug, String name, double price, String description, int minimumInventoryLevel, int optimalInventoryLevel, Int64 drugMinimumAgeYears)

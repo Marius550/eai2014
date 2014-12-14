@@ -163,7 +163,6 @@ public class DrugList implements Serializable {
 
   public void setSearchTerm(String searchTerm) {
     this.searchTerm = searchTerm;
-	System.out.println("searchTerm set: " + searchTerm);
   }
 
   public String search() {

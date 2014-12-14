@@ -113,7 +113,7 @@ public class MessageCustomer implements java.io.Serializable {
 	 * Converts a Message customer to a real customer object ONLY USING id, name and ...
 	 * @return realCustomer
 	 */
-	public Customer convertToCustomerFromJava(int initializeCustomerId){
+	public Customer convertToCustomerFromJava(long initializeCustomerId){
 		Customer realCustomer = new Customer();
 		realCustomer.setId(initializeCustomerId);
 		realCustomer.setName(name);
@@ -130,7 +130,7 @@ public class MessageCustomer implements java.io.Serializable {
 	 * Converts a Message customer to a real customer object ONLY USING id, name and ...
 	 * @return realCustomer
 	 */
-	public Customer convertToCustomerFromDotNet(int initializeCustomerId){
+	public Customer convertToCustomerFromDotNet(long initializeCustomerId){
 		Customer realCustomer = new Customer();
 		realCustomer.setId(initializeCustomerId);
 		realCustomer.setName(name);
@@ -142,16 +142,5 @@ public class MessageCustomer implements java.io.Serializable {
 		realCustomer.setPharmacySource(pharmacySource);
 		return realCustomer;
 	}
-	
-	/*
-	  private long getRandomNumber() {
-			Random random = new Random();
-			long randomNumber = 10 + random.nextInt(100);
-			if (randomNumber < 0) {
-				randomNumber *= -1;
-			}
-			  return randomNumber;  
-		  }
-		  */
 
 }

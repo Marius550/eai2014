@@ -33,6 +33,7 @@
                 No prescriptions (in the filtered state) yet.
             </EmptyDataTemplate>
         </asp:GridView>
+        <asp:Button ID="TestBtn" runat="server" Text="Exam practice" onclick="TestBtn_Click" />
     </form>
     <br/>
         <b><% Response.Write("Total prescription price: " + Pharmacy.BusinessLayer.Logic.PrescriptionService.GetTotalPriceOfAllPrescriptions() + ",00 Euro"); %></b>

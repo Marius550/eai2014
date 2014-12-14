@@ -17,6 +17,8 @@ public interface PrescriptionService {
   
   Collection<Prescription> getPrescriptionsInState(
       PrescriptionState filterForState);
+  
+  void getPrescriptionsForCustomer(long id);
 
   Prescription getPrescription(long id);
   

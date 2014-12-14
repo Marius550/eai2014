@@ -10,6 +10,34 @@ namespace Pharmacy.BusinessLayer.Logic
 {
     public static class CustomerService
     {
+        //Exam practice
+        public static Customer CreateCustomer(string name, string telephoneNumber, string address, string email, DateTime birthDate)
+        {
+            Util.ConvertEmptyToNull(ref address);
+
+            Customer newCustomer = new Customer();
+            newCustomer.Name = name;
+            newCustomer.TelephoneNumber = telephoneNumber;
+            newCustomer.Address = address;
+            newCustomer.Email = email;
+            newCustomer.BirthDate = birthDate;
+
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                var count = (from c in db.CustomerSet where c.Name == name select c).Count();
+
+                if (count > 0)
+                {
+                    throw new ArgumentException(String.Format("Customer with name {0} already exists!", newCustomer.Name));
+                }
+
+                db.CustomerSet.Add(newCustomer);
+                db.SaveChanges();
+                return newCustomer;
+            }
+        }
+
+        /*
         public static Customer CreateCustomer(string name, string telephoneNumber, string address, string email, DateTime birthDate)
         {
             Util.ConvertEmptyToNull(ref address);
@@ -39,6 +67,22 @@ namespace Pharmacy.BusinessLayer.Logic
                 return newCustomer;
             }
         }
+         * 
+         * //Exam practice
+        public static Customer GetCustomer(Int32 id)
+        {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                Customer result = (from c in db.CustomerSet where c.Id == id select c).FirstOrDefault();
+
+                if (result == default(Customer)) 
+                {
+                    throw new ArgumentException(String.Format("Customer with id {0} not found", id));
+                }
+                return result;
+            }
+        }
+         * */
 
         public static Customer GetCustomer(Int32 id)
         {
@@ -76,11 +120,6 @@ namespace Pharmacy.BusinessLayer.Logic
             }
         }
 
-        public static Customer UpdateCustomer(Customer customer)
-        {
-            System.Diagnostics.Debug.Write("Arrived at UpdateCustomer()" + "\n");
-            return UpdateCustomer(customer, customer.TelephoneNumber, customer.Address, customer.Email, customer.BirthDate);
-        }
 
         public static Prescription CreatePrescription(int customerId, string issuer)
         {
@@ -99,6 +138,25 @@ namespace Pharmacy.BusinessLayer.Logic
                 return newPrescription;
             }
         }
+
+        /* //Exam practice
+        public static Prescription CreatePrescription(int customerId, string issuer) {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                Customer currentCustomer = GetCustomer(customerId, db);
+                Prescription newPrescription = new Prescription();
+
+                newPrescription.Customer = currentCustomer;
+                newPrescription.IssuingPhysician = issuer;
+                newPrescription.IssueDate = DateTime.Now;
+                newPrescription.EntryDate = DateTime.Now;
+
+                currentCustomer.Prescriptions.Add(newPrescription);
+                db.SaveChanges();
+                return newPrescription;
+            }
+        }
+         */
 
         public static double getCustomerPrescriptionBill(int Id)
         {

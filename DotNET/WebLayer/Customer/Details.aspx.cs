@@ -79,7 +79,7 @@ namespace WebLayer.Customer
         protected void CalculatePrescriptionsTotalForCustomer_Click(object sender, EventArgs e)
         {
             Int32 customerId = Convert.ToInt32(Request.QueryString["id"]);
-            Pharmacy.BusinessLayer.Logic.PrescriptionService.CalculatePrescriptionsTotalForCustomer(customerId);
+            Pharmacy.BusinessLayer.Logic.PrescriptionService.CalculatePrescriptionsTotalForPrescriptionsInStateFulfilledForCustomer(customerId);
         }
 
     protected void SendMailBtnException_Click(object sender, EventArgs e) {

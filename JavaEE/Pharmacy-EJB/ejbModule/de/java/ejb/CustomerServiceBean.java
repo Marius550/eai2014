@@ -39,6 +39,7 @@ public class CustomerServiceBean implements CustomerService {
   @Override
   public Customer createCustomer(Customer newCustomer) {
     if (em
+    	//.createQuery("FROM Customer c WHERE c.name = :name SELECT c", Customer.class)
         .createQuery("SELECT COUNT(*) FROM Customer WHERE name = :name", Long.class)
         .setParameter("name", newCustomer.getName()).getSingleResult() > 0) {
       throw new KeyConstraintViolation(String.format(
@@ -73,5 +74,18 @@ public class CustomerServiceBean implements CustomerService {
     em.persist(newPrescription);
     return newPrescription;
   }
+  
+  /*
+   * public Invoice createInvoice(Customer c,Date invoiceDate, long totalInCent) {
+   * 
+   * Invoice newInvoice = new Invoice();
+   * newInvoice.setCustomer(c),
+   * newInvoice.setInvoiceDate(invoiceDate);
+   * newInvoice.setTotalInCent(totalInCent):
+   * 
+   * em.persist(newInvoice);
+   * return newInvoice;
+   * }
+   * */
 
 }

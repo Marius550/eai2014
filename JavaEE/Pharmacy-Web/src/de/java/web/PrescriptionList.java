@@ -39,6 +39,10 @@ public class PrescriptionList implements Serializable {
     this.filterForState = filterForState;
   }
   
+  public void getPrescriptionsForCustomer() {
+	  prescriptionService.getPrescriptionsForCustomer(7);
+  }
+  
 }
 
 ///**Transfer the prescription collection into a HashMap

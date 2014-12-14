@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.ejb.Stateless;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -22,7 +24,7 @@ import de.java.ws.CustomerResourceClientDotNet;
 import de.java.ws.CustomerResourceClientJava;
 import de.java.ws.MessageCustomer;
 
-@Stateless
+@Stateless 
 public class CustomerServiceBean implements CustomerService {
 
   // URLs of the webservices	
@@ -76,7 +78,24 @@ public class CustomerServiceBean implements CustomerService {
         .setParameter("searchTermCustomer", prepareUniversalMatch(searchTermCustomer))
         .setParameter("id", parseLongOrDefaultToZero(searchTermCustomer))	//c.id = :id OR
         .getResultList();
+  } 
+  
+  /*
+  @Override
+  public Collection<Customer> getAllCustomersLikeTest(String searchTermCustomer) {
+    if (empty(searchTermCustomer)) {
+      return getAllCustomers();
+    }					 
+    final String query2 = "SELECT c.name, COUNT(*) FROM Customer c GROUP BY c.name";
+    
+    int i = em.createQuery(query2, Customer.class).getResultList().size();
+    
+    System.out.println("SQL: " + i);
+    
+    final String query = "SELECT MAX(name), COUNT(name) anzahl FROM Customer GROUP BY name HAVING anzahl > 1";
+    return em.createQuery(query, Customer.class).getResultList();
   }
+  */
   
   
   private boolean empty(String searchTermCustomer) {
@@ -154,7 +173,7 @@ public class CustomerServiceBean implements CustomerService {
     return drug;
   }
   */
-  /*
+  
   private long setEvenCustomerId() {
 	Random random = new Random();
 	long randomNumber = 1000 + random.nextInt(9000);
@@ -170,7 +189,7 @@ public class CustomerServiceBean implements CustomerService {
 	  System.out.println("determineCustomerId: " + c.getName() + ", Id: " + c.getId());
 	  return  c;
   }
-  */
+  
   
   /**
    * Creates a customer only in the HO-database and does not publish it to JaVa and C.Sharpe
@@ -192,6 +211,48 @@ public class CustomerServiceBean implements CustomerService {
   
 	@Override
 	public Collection<MessageCustomer> initDatabase(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
+		Collection<MessageCustomer> mergedCustomers = new ArrayList<MessageCustomer>();
+		try {
+			for (MessageCustomer customerJava : jCustomers.values()){
+				customerJava.setPharmacySource("Java");
+				mergedCustomers.add(customerJava);
+				int initializeCustomerId = getAmountOfAllCustomers() + 1;
+				createCustomerEntityManager(customerJava.convertToCustomerFromJava(initializeCustomerId)); //@Column(unique=false)
+			}			 	 
+			for (MessageCustomer customerCSharpe : cCustomers.values()){
+				customerCSharpe.setPharmacySource("C#");
+				mergedCustomers.add(customerCSharpe);
+				int initializeCustomerId = getAmountOfAllCustomers() + 1;
+				createCustomerEntityManager(customerCSharpe.convertToCustomerFromDotNet(initializeCustomerId)); //@Column(unique=false)
+			}
+		} catch(Exception ex) {
+			throw new KeyConstraintViolation(String.format("Failure in initializing customers in Entity Manager: initDatabase(): " + ex));
+		}
+		return mergedCustomers;
+	}
+
+	@Override
+	public int getAmountOfDuplicateCustomers(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
+		Collection<MessageCustomer> duplicateCustomers = new ArrayList<MessageCustomer>();
+		for (MessageCustomer customerJava : jCustomers.values()){
+			for (MessageCustomer customerCSharpe : cCustomers.values()){
+				if(customerJava.getName().equals(customerCSharpe.getName()) && 
+				   customerJava.getAddress().equals(customerCSharpe.getAddress()) &&
+				   customerJava.getEmail().equals(customerCSharpe.getEmail())) {
+					
+				   duplicateCustomers.add(customerJava);
+				}
+			}
+		}
+		return duplicateCustomers.size();
+	}
+	
+}
+	
+	/*
+	@Override
+	public Collection<MessageCustomer> initDatabase(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
+		//adapt logic
 		Collection<MessageCustomer> mergedCustomers = new ArrayList<MessageCustomer>();
 		try {
 			for (MessageCustomer customerJava : jCustomers.values()){
@@ -225,25 +286,8 @@ public class CustomerServiceBean implements CustomerService {
 		}
 		return mergedCustomers;
 	}
-	
-	
-	@Override
-	public int getAmountOfDuplicateCustomers(Map<Long, MessageCustomer> jCustomers, Map<Long, MessageCustomer> cCustomers) {
-		Collection<MessageCustomer> duplicateCustomers = new ArrayList<MessageCustomer>();
-		for (MessageCustomer customerJava : jCustomers.values()){
-			for (MessageCustomer customerCSharpe : cCustomers.values()){
-				if(customerJava.getName().equals(customerCSharpe.getName()) && 
-				   customerJava.getAddress().equals(customerCSharpe.getAddress()) &&
-				   customerJava.getEmail().equals(customerCSharpe.getEmail())) {
-					
-					duplicateCustomers.add(customerJava);
-				}
-			}
-		}
-		return duplicateCustomers.size();
-	}
-	
-}
+	*/
+
 	 
 	/*
 	@Override

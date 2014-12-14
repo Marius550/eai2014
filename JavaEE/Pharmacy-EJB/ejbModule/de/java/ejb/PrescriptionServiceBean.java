@@ -16,6 +16,7 @@ import de.java.domain.prescription.Item;
 import de.java.domain.prescription.Prescription;
 import de.java.domain.prescription.PrescriptionState;
 import de.java.domain.prescription.WrappedItem;
+import de.java.ws.MessageCustomer;
 
 @Stateless
 public class PrescriptionServiceBean implements PrescriptionService {
@@ -25,6 +26,9 @@ public class PrescriptionServiceBean implements PrescriptionService {
 
   @EJB
   private DrugService drugService;
+  
+  @EJB
+  private CustomerService customerService;
 
   @EJB
   private ReplenishmentOrderService replenishmentOrderService;
@@ -43,6 +47,39 @@ public class PrescriptionServiceBean implements PrescriptionService {
         .setParameter("state", state)
         .getResultList();
   }
+   
+  //Exam practice
+  @Override
+  public void getPrescriptionsForCustomer(long id) {
+	  final String query = "FROM Prescription p JOIN p.customer c WHERE c.id = :id";
+	    int i =  em	.createQuery(query, Prescription.class)
+	    			.setParameter("id", id)
+	    			.getResultList().size();
+	    System.out.println("int i: " + i);
+  }
+  
+
+  
+  
+  //Exam practice
+  /*
+public Collection<Invoice> getAllUnpaidInvoicesForCustomer(Customer c) {
+	final String query = "FROM Invoice i JOIN i.customer c WHERE c.id = :customerId AND i.paymentStatus = 0"; // 0 represents unpaid
+	return em .createQuery(query, Invoice.class)
+		.setParameter("customerId", c.getId())
+		.getResultList();
+}
+  */
+  
+  
+  /*
+  public Collection<Invoice> getAllUnpaidInvoicesForCustomer(Customer c) {
+		final String query = "FROM Invoice i JOIN i.customer c WHERE c.id = :customerId AND i.paymentStatus = 0"; // 0 represents unpaid
+		return em .createQuery(query, Invoice.class)
+			.setParameter("customerId", c.getId())
+			.getResultList();
+	}
+	*/
 
   @Override
   public Prescription getPrescription(long id) {

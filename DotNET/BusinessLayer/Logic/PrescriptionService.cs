@@ -27,6 +27,7 @@ namespace Pharmacy.BusinessLayer.Logic
             return result;
         }
 
+        /*
         public static ICollection<Prescription> GetAllPrescriptionsInState(String filter)
         {
             using (PharmacyContainer db = new PharmacyContainer())
@@ -41,23 +42,58 @@ namespace Pharmacy.BusinessLayer.Logic
                 }
             }
         }
+        */
+         
+
+        //Exam practice
+        public static ICollection<Prescription> GetAllPrescriptionsInState(String filter)
+        {
+            using (PharmacyContainer db = new PharmacyContainer())
+            {
+                PrescriptionState? filteredState = ParseFromString(filter);
+
+                if (filteredState == null)
+                {
+                    return db.PrescriptionSet.Include("Customer").ToList();
+                }
+                else
+                {
+                    return (from p in db.PrescriptionSet where p.State == filteredState select p).ToList();
+                }
+            }
+        }
+
+        //Exam practice
+        public static void GetAllPrescriptionsInStateVoid(String filter)
+        {
+            ICollection<Prescription> prescriptionsInState = GetAllPrescriptionsInState(filter);
+
+            foreach (var p in prescriptionsInState) {
+                System.Diagnostics.Debug.WriteLine("Id: " + p.Id + ", IssuingPhysician: " + p.IssuingPhysician);
+            }
+        }
 
         public static double GetTotalPriceOfAllPrescriptions()
         {
             using (PharmacyContainer db = new PharmacyContainer())
             {
+                var totalPriceSum = (from p in db.PrescriptionSet select p.TotalPrice).Sum();
+
+                return totalPriceSum;
+            }
+        }
+                /*
                 var allPrescriptions = db.PrescriptionSet.Include("Customer");
                 double totalPriceSum = 0;
                 foreach (var item in allPrescriptions)
                 {
                     totalPriceSum += item.TotalPrice;
                 }
-                return totalPriceSum;
-            }
-        }
+                 * */
 
-        //Test method for exam studying...
-        public static void CalculatePrescriptionsTotalForCustomer(Int32 customerId)
+
+        //Test method for exam but also used
+        public static void CalculatePrescriptionsTotalForPrescriptionsInStateFulfilledForCustomer(Int32 customerId)
         {
             using (PharmacyContainer db = new PharmacyContainer())
             {
@@ -65,7 +101,6 @@ namespace Pharmacy.BusinessLayer.Logic
                                                               where p.CustomerId == customerId
                                                               && p.State == PrescriptionState.Fulfilled
                                                               select p.TotalPrice).Sum();
-                System.Diagnostics.Debug.WriteLine("CalculatePrescriptionsTotalForCustomer: " + customerId + ", Total: " + prescriptionsTotalForCustomerWithId);
             }
         }
 
@@ -285,7 +320,8 @@ namespace Pharmacy.BusinessLayer.Logic
         {
             using (PharmacyContainer db = new PharmacyContainer())
             {
-                return db.PrescriptionSet.Where(p => p.EntryDate >= start && p.EntryDate <= end).Count();
+                // return db.PrescriptionSet.Where(p => p.EntryDate >= start && p.EntryDate <= end).Count();
+                return (from p in db.PrescriptionSet where p.EntryDate >= start && p.EntryDate <= end select p).Count();
             }
         }
 
@@ -317,6 +353,8 @@ namespace Pharmacy.BusinessLayer.Logic
                 var itemcount = db.PrescriptionSet.Include("Items")
                     .Where(p => p.EntryDate >= start && p.EntryDate <= end && p.Items.Count() > 0)
                     .Select(p => p.Items.Count());
+                //Exam alternative
+                //var itemcount2 = (from p in db.PrescriptionSet.Include("Items") where p.EntryDate >= start && p.EntryDate <= end && p.Items.Count() > 0 select p.Items.Count());
 
                 if (itemcount.Any())
                     return itemcount.Average();
