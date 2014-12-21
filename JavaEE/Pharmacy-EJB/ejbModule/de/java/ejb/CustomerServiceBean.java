@@ -36,7 +36,7 @@ public class CustomerServiceBean implements CustomerService {
     return em.createQuery("From Customer", Customer.class).getResultList();
   }
 
-  @Override
+  @Override 
   public Customer createCustomer(Customer newCustomer) {
     if (em
     	//.createQuery("FROM Customer c WHERE c.name = :name SELECT c", Customer.class)
@@ -75,7 +75,7 @@ public class CustomerServiceBean implements CustomerService {
     return newPrescription;
   }
   
-  /*
+  /*Exam practice 
    * public Invoice createInvoice(Customer c,Date invoiceDate, long totalInCent) {
    * 
    * Invoice newInvoice = new Invoice();

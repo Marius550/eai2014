@@ -10,7 +10,7 @@ namespace Pharmacy.BusinessLayer.Logic
 {
     public static class CustomerService
     {
-        //Exam practice
+        /* Exam practice
         public static Customer CreateCustomer(string name, string telephoneNumber, string address, string email, DateTime birthDate)
         {
             Util.ConvertEmptyToNull(ref address);
@@ -36,8 +36,9 @@ namespace Pharmacy.BusinessLayer.Logic
                 return newCustomer;
             }
         }
+         */
 
-        /*
+        
         public static Customer CreateCustomer(string name, string telephoneNumber, string address, string email, DateTime birthDate)
         {
             Util.ConvertEmptyToNull(ref address);
@@ -67,8 +68,8 @@ namespace Pharmacy.BusinessLayer.Logic
                 return newCustomer;
             }
         }
-         * 
-         * //Exam practice
+          
+        /*Exam practice
         public static Customer GetCustomer(Int32 id)
         {
             using (PharmacyContainer db = new PharmacyContainer())
@@ -82,7 +83,7 @@ namespace Pharmacy.BusinessLayer.Logic
                 return result;
             }
         }
-         * */
+        */
 
         public static Customer GetCustomer(Int32 id)
         {

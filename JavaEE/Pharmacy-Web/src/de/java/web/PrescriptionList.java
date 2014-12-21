@@ -39,6 +39,7 @@ public class PrescriptionList implements Serializable {
     this.filterForState = filterForState;
   }
   
+  //Exam practice
   public void getPrescriptionsForCustomer() {
 	  prescriptionService.getPrescriptionsForCustomer(7);
   }

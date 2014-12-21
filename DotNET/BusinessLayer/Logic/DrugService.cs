@@ -9,9 +9,8 @@ namespace Pharmacy.BusinessLayer.Logic
 {
     public static class DrugService
     {
-        /*
-         * Exam practice
-        public static Drug CreateDrug2(int pzn, string name, double price, string description, Int64 drugMinimumAgeYears)
+        /*Exam practice
+        public static Drug CreateDrug(int pzn, string name, double price, string description, Int64 drugMinimumAgeYears)
         {
             using (PharmacyContainer db = new PharmacyContainer) {
                 Util.ConvertEmptyToNull(ref description);
@@ -33,7 +32,7 @@ namespace Pharmacy.BusinessLayer.Logic
                 return newDrug;
             }
         }
-         * */
+         */
 
 
         public static Drug CreateDrug(int pzn, string name, double price, string description, Int64 drugMinimumAgeYears)

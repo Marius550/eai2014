@@ -27,7 +27,7 @@ namespace Pharmacy.BusinessLayer.Logic
             return result;
         }
 
-        /*
+        
         public static ICollection<Prescription> GetAllPrescriptionsInState(String filter)
         {
             using (PharmacyContainer db = new PharmacyContainer())
@@ -42,10 +42,9 @@ namespace Pharmacy.BusinessLayer.Logic
                 }
             }
         }
-        */
          
 
-        //Exam practice
+        /*Exam practice
         public static ICollection<Prescription> GetAllPrescriptionsInState(String filter)
         {
             using (PharmacyContainer db = new PharmacyContainer())
@@ -62,8 +61,9 @@ namespace Pharmacy.BusinessLayer.Logic
                 }
             }
         }
+         * */
 
-        //Exam practice
+        /*Exam practice
         public static void GetAllPrescriptionsInStateVoid(String filter)
         {
             ICollection<Prescription> prescriptionsInState = GetAllPrescriptionsInState(filter);
@@ -72,13 +72,14 @@ namespace Pharmacy.BusinessLayer.Logic
                 System.Diagnostics.Debug.WriteLine("Id: " + p.Id + ", IssuingPhysician: " + p.IssuingPhysician);
             }
         }
+         * */
 
         public static double GetTotalPriceOfAllPrescriptions()
         {
             using (PharmacyContainer db = new PharmacyContainer())
             {
                 var totalPriceSum = (from p in db.PrescriptionSet select p.TotalPrice).Sum();
-
+                System.Diagnostics.Debug.WriteLine("totalPriceSum: " + totalPriceSum);
                 return totalPriceSum;
             }
         }

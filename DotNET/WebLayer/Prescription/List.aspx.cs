@@ -18,7 +18,7 @@ namespace WebLayer.Prescription
         //Exam practice
         protected void TestBtn_Click(object sender, EventArgs e)
         {
-            Pharmacy.BusinessLayer.Logic.PrescriptionService.GetAllPrescriptionsInStateVoid("Fulfilled");
+            //Pharmacy.BusinessLayer.Logic.PrescriptionService.GetAllPrescriptionsInStateVoid("Fulfilled");
             Pharmacy.BusinessLayer.Logic.PrescriptionService.GetTotalPriceOfAllPrescriptions();
         }
     }

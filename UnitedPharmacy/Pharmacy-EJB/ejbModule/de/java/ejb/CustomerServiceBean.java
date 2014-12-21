@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+//import java.util.Random;
 
 import javax.ejb.Stateless;
-import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -80,23 +79,6 @@ public class CustomerServiceBean implements CustomerService {
         .getResultList();
   } 
   
-  /*
-  @Override
-  public Collection<Customer> getAllCustomersLikeTest(String searchTermCustomer) {
-    if (empty(searchTermCustomer)) {
-      return getAllCustomers();
-    }					 
-    final String query2 = "SELECT c.name, COUNT(*) FROM Customer c GROUP BY c.name";
-    
-    int i = em.createQuery(query2, Customer.class).getResultList().size();
-    
-    System.out.println("SQL: " + i);
-    
-    final String query = "SELECT MAX(name), COUNT(name) anzahl FROM Customer GROUP BY name HAVING anzahl > 1";
-    return em.createQuery(query, Customer.class).getResultList();
-  }
-  */
-  
   
   private boolean empty(String searchTermCustomer) {
     return searchTermCustomer == null || searchTermCustomer.trim().isEmpty();
@@ -158,38 +140,6 @@ public class CustomerServiceBean implements CustomerService {
 	  return map;
   }
 
-/*
-  @Override
-  public Drug updateMasterData(int pzn, String name, double price, String description, long drugMinimumAgeYears) {
-    Drug drug = getDrug(pzn);
-    drug.setName(name);
-    drug.setPrice(price);
-    drug.setDescription(description); 
-    drug.setDrugMinimumAgeYears(drugMinimumAgeYears);
-    
-    persistUpdateMasterDataToDotNet(drug);
-    persistUpdateMasterDataToJava(drug);
-    
-    return drug;
-  }
-  */
-  
-  private long setEvenCustomerId() {
-	Random random = new Random();
-	long randomNumber = 1000 + random.nextInt(9000);
-	if (randomNumber < 0) {
-		randomNumber *= -1;
-	}
-	  return randomNumber;  
-  }
-  
-  public Customer determineCustomerId(long customerId) {
-	  Customer c = getCustomer(customerId);
-	  c.setId(setEvenCustomerId());
-	  System.out.println("determineCustomerId: " + c.getName() + ", Id: " + c.getId());
-	  return  c;
-  }
-  
   
   /**
    * Creates a customer only in the HO-database and does not publish it to JaVa and C.Sharpe
@@ -248,6 +198,40 @@ public class CustomerServiceBean implements CustomerService {
 	}
 	
 }
+
+/*
+@Override
+public Drug updateMasterData(int pzn, String name, double price, String description, long drugMinimumAgeYears) {
+  Drug drug = getDrug(pzn);
+  drug.setName(name);
+  drug.setPrice(price);
+  drug.setDescription(description); 
+  drug.setDrugMinimumAgeYears(drugMinimumAgeYears);
+  
+  persistUpdateMasterDataToDotNet(drug);
+  persistUpdateMasterDataToJava(drug);
+  
+  return drug;
+}
+*/
+
+/*
+private long setEvenCustomerId() {
+	Random random = new Random();
+	long randomNumber = 1000 + random.nextInt(9000);
+	if (randomNumber < 0) {
+		randomNumber *= -1;
+	}
+	  return randomNumber;  
+}
+
+public Customer determineCustomerId(long customerId) {
+	  Customer c = getCustomer(customerId);
+	  c.setId(setEvenCustomerId());
+	  System.out.println("determineCustomerId: " + c.getName() + ", Id: " + c.getId());
+	  return  c;
+}
+*/
 	
 	/*
 	@Override
