@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 //import java.util.Random;
 
+
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -139,7 +141,6 @@ public class CustomerServiceBean implements CustomerService {
 	  }
 	  return map;
   }
-
   
   /**
    * Creates a customer only in the HO-database and does not publish it to JaVa and C.Sharpe
@@ -147,7 +148,7 @@ public class CustomerServiceBean implements CustomerService {
    * @return the created customer
    */
   private Customer createCustomerEntityManager(Customer newCustomer) {
-	  System.out.println("newCustomer EntityManager: " + newCustomer.getName() + ", ID: " + newCustomer.getId() + ", prescriptionBill: " + newCustomer.getPrescriptionBill());
+	  //System.out.println("newCustomer EntityManager: " + newCustomer.getName() + ", ID: " + newCustomer.getId() + ", prescriptionBill: " + newCustomer.getPrescriptionBill());
 	  if (em.createQuery("SELECT COUNT(*) FROM Customer WHERE id=:id",
 			Long.class).setParameter("id", newCustomer.getId())
 			.getSingleResult() > 0) 

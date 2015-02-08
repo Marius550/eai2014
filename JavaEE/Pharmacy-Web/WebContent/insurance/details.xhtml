@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="metadata">
+    <f:metadata>
+      <f:viewParam name="id" value="#{insuredCustomerPage.id}"></f:viewParam>
+      <f:event listener="#{insuredCustomerPage.ensureInitialized}" type="preRenderView"></f:event>
+    </f:metadata>
+  </ui:define>
+  <ui:define name="title">Versicherten Details - #{insuredCustomerPage.insuredCustomer.nachname}</ui:define>
+  <ui:define name="content">
+    <h:form>
+      <h3>#{insuredCustomerPage.insuredCustomer.vorname} #{insuredCustomerPage.insuredCustomer.nachname}</h3>
+      <h:panelGrid columns="3" columnClasses="label, value form-input"
+        footerClass="form-footer" styleClass="details-table">
+        Id
+        <h:outputText tabindex="1" id="id" value="#{insuredCustomerPage.insuredCustomer.id}" />
+        <h:messages for="id" styleClass="error"/>
+        Vorname
+        <h:inputText tabindex="2" id="vorname" value="#{insuredCustomerPage.insuredCustomer.vorname}" />
+        <h:messages for="vorname" styleClass="error"/>
+        Nachname
+        <h:inputText tabindex="3" id="nachname" value="#{insuredCustomerPage.insuredCustomer.nachname}" />
+        <h:messages for="nachname" styleClass="error"/>
+        Email
+        <h:inputText tabindex="4" id="email" value="#{insuredCustomerPage.insuredCustomer.email}" />
+        <h:messages for="email" styleClass="error"/>
+
+        <f:facet name="footer">
+          <h:commandButton tabindex="5" value="Submit changes" action="#{insuredCustomerPage.submit()}" />
+          <h:commandButton tabindex="6" value="Send mail" action="#{insuredCustomerPage.sendEmailTLS(insuredCustomerPage.id)}" />
+        </f:facet>
+      </h:panelGrid>
+
+    </h:form>
+  </ui:define>
+</ui:composition>
+</html>

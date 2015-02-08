@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import de.java.domain.Drug;
+import de.java.domain.InsuredCustomer;
 import de.java.domain.customer.Customer;
 //import de.java.domain.prescription.Prescription;
 //import de.java.domain.prescription.PrescriptionState;
@@ -30,6 +31,7 @@ public class ApplicationInitialiser {
     if (noDrugsPersisted() && noCustomersPersisted()) {
       populateAppWithSampleDrugs();
       populateAppWithSampleCustomers();
+      populateAppWithSampleInsuredCustomers();
     }
   }
 
@@ -96,14 +98,22 @@ public class ApplicationInitialiser {
   }
 
   private void populateAppWithSampleCustomers() {
-    Customer maxMustermann = new Customer();
-//    maxMustermann.setId(2);
-    maxMustermann.setName("Jason Java");
-    maxMustermann.setTelephoneNumber("+49 123 456 78");
-    maxMustermann.setEmail("jason.java@gmail.com");  
-    maxMustermann.setBirthDate("1988-10-16");
-    em.persist(maxMustermann);
+    Customer jasonJava = new Customer();
+    jasonJava.setName("Jason Java");
+    jasonJava.setTelephoneNumber("+49 123 456 78");
+    jasonJava.setEmail("jason.java@gmail.com");  
+    jasonJava.setBirthDate("1988-10-16");
+    em.persist(jasonJava);
+  }
     
+  private void populateAppWithSampleInsuredCustomers() {
+    InsuredCustomer jasonJava = new InsuredCustomer();
+    jasonJava.setVorname("Jason");    
+    jasonJava.setNachname("Java");
+    jasonJava.setEmail("jason.java@gmail.com");  
+    em.persist(jasonJava);    
+  }
+}
     /*
     Prescription fulfilledPrescription = maxMustermann.createPrescription();
     fulfilledPrescription.setState(PrescriptionState.FULFILLED);
@@ -117,7 +127,6 @@ public class ApplicationInitialiser {
     prescriptionInFulfilling.setIssuer("Dr. Borg");
     em.persist(prescriptionInFulfilling);
     */
-    
-  }
+ 
 
-}
+

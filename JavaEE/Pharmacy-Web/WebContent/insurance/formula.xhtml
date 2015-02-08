@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/resources/master.xhtml">
+  <ui:define name="title">Kaufvertrag</ui:define>
+  <ui:define name="content">
+  <h2>Kaufvertrag für den privaten Verkauf eines gebrauchten Kraftfahrzeuges</h2>
+    <div class="inputForm">
+      <h:form>
+        <h:panelGrid columns="3"
+          columnClasses="form-label,form-input,form-message error"
+          footerClass="form-footer">
+          <h:outputLabel value="Vorname" for="vorname" />
+          <h:inputText id="vorname" value="#{createInsuredCustomer.insuredCustomer.vorname}" />
+          <h:message for="vorname" />
+          <h:outputLabel value="Nachname" for="nachname" />
+          <h:inputText id="nachname" value="#{createInsuredCustomer.insuredCustomer.nachname}" />
+          <h:message for="nachname" />
+          <h:outputLabel value="Email" for="email" />
+          <h:inputText id="email" value="#{createInsuredCustomer.insuredCustomer.email}" />
+          <h:message for="email" />
+         
+          <f:facet name="footer">
+            <h:commandButton value="Submit" action="#{createInsuredCustomer.persist}" />
+          </f:facet>
+        </h:panelGrid>
+      </h:form>
+    </div>
+    <div class="result">
+      <h:outputText rendered="#{createInsuredCustomer.success or createInsuredCustomer.error}"
+        styleClass="#{createInsuredCustomer.success ? 'success' : 'error'}"
+        value="#{createInsuredCustomer.lastResult}" />
+    </div>
+  </ui:define>
+</ui:composition>
+</html>
